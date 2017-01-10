@@ -16,3 +16,5 @@
 
 - Add feature to load existing XYZ8 test case
 - Add feature to update existing test file
+- Add sane yaml vim plugins and settings to editor
+- Add diff mode to editor

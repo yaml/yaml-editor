@@ -1,0 +1,24 @@
+Usage:
+
+alias ye=yaml-editor
+
+ye file.yaml
+ye file.yaml --views=libyaml,perl-pegex
+
+
+== Env Vars
+
+- YAML_EDITOR_ROOT
+- YAML_EDITOR_VIEWS
+- YAML_EDITOR_YAML_TEST_SUITE
+
+== Editor Commands:
+
+- S - Save
+- H - Help
+- C - Clear
+- D - Toggle diff
+
+== YAML Views
+
+- libyaml-parser-events
