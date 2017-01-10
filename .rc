@@ -1,0 +1,8 @@
+[[ -n ${ZSH_VERSION-} ]] &&
+  YAML_EDITOR_ROOT="$0" ||
+  YAML_EDITOR_ROOT="$BASH_SOURCE"
+[[ $YAML_EDITOR_ROOT =~ ^/ ]] ||
+  YAML_TEST_EDITOR="$PWD/$YAML_EDITOR_ROOT"
+export YAML_EDITOR_ROOT="$(cd "$(dirname $YAML_EDITOR_ROOT)"; pwd)"
+
+export PATH="$YAML_EDITOR_ROOT/bin:$PATH"

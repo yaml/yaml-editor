@@ -1,0 +1,11 @@
+#!/bin/bash
+
+root="$(cd $(dirname $0)/..; pwd)"
+
+(
+  cd $root
+  docker run --rm -it \
+    -v $PWD:/yaml-editor \
+    yamlio/yaml-editor \
+    yaml-editor.sh "$@"
+)
