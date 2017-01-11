@@ -34,10 +34,22 @@ RUN git clone https://github.com/yaml/libyaml /libyaml \
 
 COPY yaml-pegex-pm /build/yaml-pegex-pm
 
+RUN apt-get install -y wget \
+ && cd / \
+ && wget http://nim-lang.org/download/nim-0.16.0.tar.xz \
+ && tar xJf nim-0.16.0.tar.xz \
+ && cd nim-0.16.0 \
+ && sh build.sh \
+ && export PATH="${PWD}/bin:${PATH}" \
+ && nim c koch \
+ && ./koch tools \
+ && ( yes | nimble install yaml ) \
+ && true
+
 # COPY build.sh /build/build.sh
 # WORKDIR /build
 # RUN ./build.sh
 
 WORKDIR /yaml-editor
 
-ENV PATH="/yaml-editor/bin:${PATH}"
+ENV PATH="/yaml-editor/bin:/nim-0.16.0/bin:${PATH}"
