@@ -6,12 +6,12 @@ RUN apt-get update \
         build-essential \
         entr \
         libtool \
+        nodejs \
         perl \
         python \
         ruby \
-        nodejs \
+        wget \
         gist git tig vim \
- && mkdir /build \
  && true
 
 RUN apt-get install -y cpanminus \
@@ -32,27 +32,21 @@ RUN git clone https://github.com/yaml/libyaml /libyaml \
     ) \
  && true
 
-COPY yaml-pegex-pm /build/yaml-pegex-pm
+COPY . /
 
 RUN apt-get install -y wget \
- && cd / \
- && wget http://nim-lang.org/download/nim-0.16.0.tar.xz \
- && tar xJf nim-0.16.0.tar.xz \
- && cd nim-0.16.0 \
+ && cd nim \
  && sh build.sh \
  && export PATH="${PWD}/bin:${PATH}" \
  && nim c koch \
  && ./koch tools \
  && ( yes | nimble install yaml ) \
  && true
-ENV PATH="/yaml-editor/bin:/nim-0.16.0/bin:${PATH}"
-COPY nim_events.nim /build/nim_events.nim
-RUN nim compile /build/nim_events.nim \
- && mv /build/nim_events /usr/local/bin/nim-events \
- && true
 
-# COPY build.sh /build/build.sh
-# WORKDIR /build
-# RUN ./build.sh
+ENV PATH="/yaml-editor/bin:/nim/bin:${PATH}"
+
+RUN nim compile /nim_events.nim \
+ && mv /nim_events /usr/local/bin/nim-events \
+ && true
 
 WORKDIR /yaml-editor
