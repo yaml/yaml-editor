@@ -4,6 +4,15 @@ set -e
 
 file=test.yaml
 
+if [[ $1 == CHECK ]]; then
+  cd /tmp/yaml-editor
+  while [[ ! -e DONE ]]; do
+    sleep 0.05
+  done
+  rm DONE
+  exit 0
+fi
+
 if [[ $# -gt 0 ]]; then
   export RUN_LIST="$@"
   root="$(cd $(dirname $0)/..; pwd)"
@@ -55,3 +64,5 @@ fi
 for yaml in $RUN_LIST; do
   cat $file | $yaml &> $yaml.out || true
 done
+
+touch DONE
