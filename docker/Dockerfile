@@ -45,11 +45,14 @@ RUN apt-get install -y wget \
  && ./koch tools \
  && ( yes | nimble install yaml ) \
  && true
+ENV PATH="/yaml-editor/bin:/nim-0.16.0/bin:${PATH}"
+COPY nim_events.nim /build/nim_events.nim
+RUN nim compile /build/nim_events.nim \
+ && mv /build/nim_events /usr/local/bin/nim-events \
+ && true
 
 # COPY build.sh /build/build.sh
 # WORKDIR /build
 # RUN ./build.sh
 
 WORKDIR /yaml-editor
-
-ENV PATH="/yaml-editor/bin:/nim-0.16.0/bin:${PATH}"

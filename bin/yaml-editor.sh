@@ -24,7 +24,7 @@ if [[ $# -gt 0 ]]; then
 
   out=()
   for arg; do
-    if [[ ! $arg =~ ^(libyaml|perl-(pegex|pm|xs))$ ]]; then
+    if [[ ! $arg =~ ^(libyaml|nim-events|perl-(pegex|pm|xs))$ ]]; then
       echo "Invalid YAML framework: '$arg'."
       exit 1
     fi
@@ -42,6 +42,7 @@ elif [[ -z $RUN_LIST ]]; then
 You need to specify a list of YAML frameworks. Use these:
 
   libyaml     - libyaml Parser
+  nim-events  - NimYAML Events
   perl-pm     - Perl's YAML.pm Loader
   perl-xs     - Perl's YAML::XS Loader
   perl-pegex  - Perl's YAML::Pegex Parser
