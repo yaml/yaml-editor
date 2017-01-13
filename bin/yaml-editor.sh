@@ -10,6 +10,7 @@ if [[ $1 == CHECK ]]; then
     sleep 0.05
   done
   rm DONE
+  sleep 0.1
   exit 0
 fi
 
@@ -33,7 +34,7 @@ if [[ $# -gt 0 ]]; then
 
   out=()
   for arg; do
-    if [[ ! $arg =~ ^(libyaml|nim-events|perl-(pegex|pm|xs))$ ]]; then
+    if [[ ! $arg =~ ^((lib|js-)yaml|nim-events|perl-(pegex|pm|xs))$ ]]; then
       echo "Invalid YAML framework: '$arg'."
       exit 1
     fi
@@ -56,6 +57,7 @@ You need to specify a list of YAML frameworks. Use these:
   perl-xs     - Perl's YAML::XS Loader
   perl-pegex  - Perl's YAML::Pegex Parser
   python      - Python's PyYAML Loader
+  js-yaml     - Javascript's js-yaml Parser
 
 ...
   exit 1
