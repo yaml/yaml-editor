@@ -1,3 +1,14 @@
+== Next
+- Try removing entr
+- Try parallel or make -J
+- \t should not open multiple TEST.tml windows
+- SPACE should update TEST.tml
+- Edit existing test-suite cases
+- Add feature to load existing XYZ8 test case
+  - Add feature to update existing test file
+- Add diff mode to editor
+- Add ctl h j k l
+
 == yaml-editor
 
 - Write documentation for yaml-editor
@@ -13,8 +24,3 @@
 - Add output options:
   - JSON
   - YAML
-
-- Add feature to load existing XYZ8 test case
-- Add feature to update existing test file
-- Add sane yaml vim plugins and settings to editor
-- Add diff mode to editor

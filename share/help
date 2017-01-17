@@ -1,10 +1,16 @@
-# YAML Test Suite Editor
+# YAML Editor
 #
-# Use this editor (it's really 'vim') to write YAML and see it processed.
+# Use this editor (it's really 'vim') to write YAML and
+# see it processed by many YAML frameworks at once.
 #
 # Editor commands (press these keys in vim NORMAL mode):
 #
-# `     Run the current YAML text and see the output(s)
-# C     Clear the YAML pane (and put vim into INSERT mode)
-# S     Save this YAML as a new yaml-test-suite test case
-# Q     Quit the yaml-editor
+# \o        Open a new output pane below
+# \O        Open a new output pane to right
+# <space>   Run the current YAML text and see the output(s)
+# \g        Gist all the current files
+# \t        Create TestML from YAML
+# \s        Save TestML to $YAML_TEST_SUITE new test file
+# \c        Clear the YAML input pane
+# \q        Quit the yaml-editor
+# \h        View this help

@@ -1,8 +1,5 @@
 FROM ubuntu:16.04
 
-COPY . /
-ENV PATH="/yaml-editor/bin:/nim/bin:${PATH}"
-
 RUN apt-get update \
  && apt-get install -y \
     autoconf \
@@ -28,11 +25,18 @@ RUN apt-get update \
     YAML::XS \
     YAML::Tiny \
     YAML::Syck \
- && ( \
+ && true
+
+COPY files/ /
+ENV PATH="/yaml-editor/bin:/yaml-editor/sbin:/nim/bin:${PATH}" \
+    NODE_PATH=/usr/local/lib/node_modules
+
+RUN ( \
         git clone https://github.com/yaml/libyaml /libyaml \
         && cd /libyaml/tests/run-test-suite/src/ \
-        && LIBYAML_DIR=$PWD/../../.. make build \
+        && LIBYAML_DIR=/libyaml make build \
         && mv libyaml-parser /usr/local/bin \
+        && mv libyaml-emitter /usr/local/bin \
     ) \
  && ( \
         cd /nim \
@@ -42,9 +46,9 @@ RUN apt-get update \
         && ( yes | nimble install yaml ) \
     ) \
  && ( \
-        nim compile /nim_events.nim \
-        && mv /nim_events /usr/local/bin/nim-events \
+        nim compile /nimyaml_tokens.nim \
+        && mv /nimyaml_tokens /usr/local/bin/nimyaml-tokens \
     ) \
  && true
 
-WORKDIR /yaml-editor
+WORKDIR /yaml

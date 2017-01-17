@@ -1,11 +1,170 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-root="$(cd $(dirname $0)/..; pwd)"
+set -e
 
-(
-  cd $root
-  docker run --rm -it \
-    -v $PWD:/yaml-editor \
-    yamlio/yaml-editor \
-    yaml-editor.sh "$@"
+outputs=(
+  js-yaml.json
+
+  libyaml.events
+  libyaml.yaml
+
+  nimyaml.tokens
+
+  perl-yaml-pegex.events
+
+  perl-yaml-pm.dumper
+  perl-yaml-syck.dumper
+  perl-yaml-tiny.dumper
+  perl-yaml-xs.dumper
 )
+
+if [[ -n $YAML_EDITOR_VIEWS ]]; then
+  outputs=( $YAML_EDITOR_VIEWS )
+fi
+
+main() {
+  file=input.yaml
+  uid=$(stat -c%u $0)
+  gid=$(stat -c%g $0)
+
+  if [[ ! -e /.dockerenv ]]; then
+    docker-run "$@"
+  elif [[ $1 == CHECK ]]; then
+    "check-done"
+  elif [[ $1 == RUN ]]; then
+    "run-all"
+  elif [[ $1 == TESTML ]]; then
+    "show-tml"
+  elif [[ $1 == SAVE ]]; then
+    "save-tml"
+  elif [[ $# -eq 0 ]]; then
+    "editor-start"
+  else
+    die "Invalid usage '$0 $*'"
+  fi
+}
+
+docker-run() {
+  root=$(cd "$(dirname "$0")/.."; pwd)
+  work=$(mktemp -d)
+  mount_suite=''
+  if [[ -n $YAML_TEST_SUITE ]]; then
+    [[ -e $YAML_TEST_SUITE/test/229Q.tml ]] ||
+      die "YAML_TEST_SUITE='$YAML_TEST_SUITE' seems to be invalid"
+    mount_suite="-v $YAML_TEST_SUITE/test:/suite"
+  fi
+
+  docker run --rm -it \
+    -v "$work":/yaml \
+    -v "$root":/yaml-editor \
+    $mount_suite \
+    yamlio/yaml-editor \
+    yaml-editor "$@"
+
+  echo "Files saved in '$work'"
+}
+
+editor-start() {
+  touch $file
+  cp /yaml-editor/share/vimrc .vimrc
+  cp /yaml-editor/share/help help
+
+  for output in "${outputs[@]}"; do
+    touch $output
+  done
+
+  chown -R "$uid.$gid" .
+
+  (echo $file | entr "$0" RUN) &
+
+  vim -c 'source .vimrc' -c 'vsplit help' -c 'sbuffer input.yaml' $file
+}
+
+run-all() {
+  rm -f DONE
+
+  for output in "${outputs[@]}"; do
+    filter="${output/\./-}"
+    cat $file | $filter &> $output || true
+  done
+
+  touch DONE
+  chown "$uid.$gid" DONE
+}
+
+check-done() {
+  while [[ ! -e DONE ]]; do
+    sleep 0.05
+  done
+  rm -f DONE
+  sleep 0.1
+  exit 0
+}
+
+save-tml() {
+  local dir=
+  [[ -e /suite ]] && dir=/suite || dir=.
+  while true; do
+    id="$(
+      cat /dev/urandom |
+      LC_ALL=C tr -cd A-HJ-NP-Z2-9 |
+      fold -w4 |
+      grep [A-Z] |
+      grep [0-9] |
+      head -n1
+    )"
+    file="$dir/$id.tml"
+    [[ -e "$file" ]] || break
+  done
+
+  make-tml
+  echo "$tml" > $file
+  chown "$uid.$gid" $file
+  echo $file
+}
+
+show-tml() {
+  make-tml
+  echo "$tml" > TEST.tml
+  echo TEST.tml
+}
+
+make-tml() {
+  tml="\
+=== <label goes here>
+from: <Source URL or description>
+tags: <tag,words,separated,by,commas>
+
++++ in-yaml
+$(tml input.yaml)
+"
+  libyaml=$(tml libyaml.events)
+  if [[ $libyaml =~ (^|$'\n')[^\+\-\=] ]]; then
+    tml+="
++++ error
+"
+  else
+    tml+="
++++ out-yaml
+$(tml perl-yaml-xs.yaml)
+
++++ in-json
+$(tml js-yaml.json)
+
++++ test-event
+$(tml libyaml.events)
+"
+  fi
+}
+
+tml() {
+  file=$1
+  cat $1 | perl -pe 's/^(\s+$|%|#)/\\$1/'
+}
+
+die() {
+  echo "$*" >&2
+  exit 1
+}
+
+[[ $0 != "$BASH_SOURCE" ]] || main "$@"
