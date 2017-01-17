@@ -29,8 +29,6 @@ main() {
 
   if [[ ! -e /.dockerenv ]]; then
     docker-run "$@"
-  elif [[ $1 == CHECK ]]; then
-    "check-done"
   elif [[ $1 == RUN ]]; then
     "run-all"
   elif [[ $1 == TESTML ]]; then
@@ -75,30 +73,14 @@ editor-start() {
 
   chown -R "$uid.$gid" .
 
-  (echo $file | entr "$0" RUN) &
-
   vim -c 'source .vimrc' -c 'vsplit help' -c 'sbuffer input.yaml' $file
 }
 
 run-all() {
-  rm -f DONE
-
   for output in "${outputs[@]}"; do
     filter="${output/\./-}"
     cat $file | $filter &> $output || true
   done
-
-  touch DONE
-  chown "$uid.$gid" DONE
-}
-
-check-done() {
-  while [[ ! -e DONE ]]; do
-    sleep 0.05
-  done
-  rm -f DONE
-  sleep 0.1
-  exit 0
 }
 
 save-tml() {
