@@ -1,31 +1,64 @@
+" Settings for YAML:
+set expandtab
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
+set nosmartindent
+
+" YAML Editor netrw custom settings:
+let g:netrw_list_hide= '.*\.swp$,^.vimrc$,^\.\./$,^\./$,^help$,^TEST.tml$'
+let g:netrw_banner=0
+
+" YAML Editor vim settings:
+set number
 set switchbuf=useopen
 set autoread exrc
+
+" YAML Editor hotkeys:
 map \o :rightbelow split .<CR>
 map \O :rightbelow vsplit .<CR>
-map <SPACE> :sb input.yaml<CR>:w<BAR>!timeout 5 yaml-editor RUN<CR><CR>
-map \g :sb input.yaml<CR>:w<BAR>!timeout 5 yaml-editor RUN<CR><CR>:wa<BAR>!gist-paste *<CR>
-nnoremap <leader>t :sb input.yaml<CR>:w<BAR>!timeout 5 yaml-editor RUN<CR><CR>:rightbelow vsplit `yaml-editor TESTML`<CR>:wincmd L<CR>
-nnoremap <leader>s :sb input.yaml<CR>:w<BAR>!timeout 5 yaml-editor RUN<CR><CR>:rightbelow vsplit `yaml-editor SAVE`<CR>:wincmd L<CR>
+map <SPACE> :call RunYAML()<CR><CR>
+map \g :call RunYAML()<CR>:wa<BAR>!gist-paste *<CR>
+nnoremap \t :call WriteTestml()<CR><CR>
+" nnoremap \s :call RunYAML()<CR>:rightbelow vsplit `yaml-editor SAVE`<CR>:wincmd L<CR><CR>
+nnoremap \s :call SaveTestml()<CR><CR>
 map \c :sb input.yaml<CR><BAR>ggVGd
 map \q :qa!<CR>
 map \h :sb help<CR>:wincmd H<CR>
 
-set et
-set sw=2
-set ts=2
-set sts=2
-set nosmartindent
-set number
+" Handy window commands:
+nnoremap <c-j> <c-w>j<c-w><Esc>
+nnoremap <c-k> <c-w>k<c-w><Esc>
+nnoremap <c-l> <c-w>l<c-w><Esc>
+nnoremap <c-h> <c-w>h<c-w><Esc>
 
+" YAML Editor command functions:
+function RunYAML()
+  sb input.yaml
+  write
+  execute "!timeout 5 yaml-editor RUN"
+endfunction
+
+function WriteTestml()
+  call RunYAML()
+  rightbelow vsplit `yaml-editor TESTML`
+  wincmd L
+endfunction
+
+function SaveTestml()
+  call RunYAML()
+  let file = system("yaml-editor SAVE")
+  execute "rightbelow vsplit" file
+  wincmd L
+endfunction
+
+" A minimal YAML theme from the web:
 if exists("b:did_indent")
   finish
 endif
 "runtime! indent/ruby.vim
 "unlet! b:did_indent
 let b:did_indent = 1
-
-let g:netrw_list_hide= '.*\.swp$,^.vimrc$,^\.\./$,^\./$,^help$,^TEST.tml$'
-let g:netrw_banner=0
 
 setlocal autoindent sw=2 et
 setlocal indentexpr=GetYamlIndent()
