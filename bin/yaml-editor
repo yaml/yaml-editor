@@ -18,27 +18,73 @@ all_views=(
   perl-yaml-xs.dumper
 )
 
+YAML_EDITOR_ROOT=${YAML_EDITOR_ROOT:-$(cd $(dirname $BASH_SOURCE)/..; pwd)}
+export PATH="${YAML_EDITOR_ROOT:?}/lib:$PATH"
+source "$YAML_EDITOR_ROOT/lib/bash+.bash"
+bash+:import :std can
+use GetOpt
+
+GETOPT_SPEC="\
+  $(basename "$0") <options>
+
+See '$(basename "$0") help' for more help.
+
+Options:
+--
+h           Show the command summary
+help        Browse the complete '$(basename "$0")' documentation
+ 
+l,list      List the available views
+v,view=     Specify the views to use. /regex/ or comma,separated,list
+f,file=     Use a YAML file as starting input
+t,testml=   Use a \$YAML_TEST_SUITE case as YAML input
+ 
+x,debug     Debug - Turn on Bash trace (set -x) output
+"
+
 main() {
   file=input.yaml
-  uid=$(stat -c%u $0)
-  gid=$(stat -c%g $0)
+  if [[ $(uname) == Darwin ]]; then
+    uid=$(stat -f%u $0)
+    gid=$(stat -f%g $0)
+  else
+    uid=$(stat -c%u $0)
+    gid=$(stat -c%g $0)
+  fi
 
-  if [[ ! -e /.dockerenv ]]; then
+  get-options "$@"
+
+  if $option_list; then
+    list-all
+  elif [[ ! -e /.dockerenv ]]; then
     docker-run "$@"
-  elif [[ $1 == RUN ]]; then
+  elif [[ $command == RUN ]]; then
     "run-all"
-  elif [[ $1 == TESTML ]]; then
+  elif [[ $command == TESTML ]]; then
     "show-tml"
-  elif [[ $1 == SAVE ]]; then
+  elif [[ $command == SAVE ]]; then
     "save-tml"
   else
-    "editor-start" "$@"
+    "editor-start"
   fi
+}
+
+list-all() {
+  for view in ${all_views[@]}; do
+    echo $view
+  done
 }
 
 docker-run() {
   root=$(cd "$(dirname "$0")/.."; pwd)
   work=$(mktemp -d)
+
+  if [[ -n $option_file ]]; then
+    [[ -f $option_file ]] ||
+      die "Input file does not exist '$option_file'"
+    cp $option_file $work/$file
+  fi
+
   mount_suite=''
   if [[ -n $YAML_TEST_SUITE ]]; then
     [[ -e $YAML_TEST_SUITE/test/229Q.tml ]] ||
@@ -57,19 +103,8 @@ docker-run() {
 }
 
 editor-start() {
-  views=()
-  regex=$1
-  if [[ -n $regex ]]; then
-    for view in ${all_views[@]}; do
-      if [[ $view =~ $regex ]]; then
-        views+=($view)
-      fi
-    done
-    [[ ${#views[@]} -gt 0 ]] ||
-      die "No views match '$regex'"
-  else
-    views=("${all_views[@]}")
-  fi
+  get-views
+  get-yaml
   export YAML_EDITOR_VIEWS="${views[*]}"
 
   touch $file
@@ -82,11 +117,37 @@ editor-start() {
 
   chown -R "$uid.$gid" .
 
-  if [[ -z $regex ]]; then
-    vim -c 'source .vimrc' -c 'vsplit help' -c 'sbuffer input.yaml' $file
+  if $default_views; then
+    vim -c 'source .vimrc' -c 'vsplit help' -c "sbuffer $file" $file
   else
     vim -c 'source .vimrc' -c 'sbuffer input.yaml' $file ${views[@]} -O
   fi
+}
+
+get-yaml() {
+  [[ -n $option_testml ]] || return 0
+
+  [[ $option_testml =~ ^[A-Z0-9]{4}$ ]] ||
+    die "Invalid TestML id '$option_testml'"
+  if [[ -d /suite ]]; then
+    suite=/suite
+  elif [[ -n $YAML_TEST_SUITE ]]; then
+    suite=$YAML_TEST_SUITE/test
+  else
+    die "Can't use --testml without YAML_TEST_SUITE variable"
+  fi
+  [[ -f $suite/229Q.tml ]] ||
+    die "Invalid YAML_TEST_SUITE specified"
+  testml="$suite/$option_testml.tml"
+  [[ -f $testml ]] ||
+    die "No test file '$testml' found"
+  yaml=$(
+    cat $testml | perl -p0 \
+      -e 's/.*\n\+\+\+\ +in-yaml\n//s;' \
+      -e 's/^\+\+\+.*//ms;' \
+      -e 's/^\\//mg;'
+  )
+  echo "$yaml" > $file
 }
 
 run-all() {
@@ -152,8 +213,49 @@ $(tml libyaml.events)
   fi
 }
 
+get-views() {
+  views=()
+  default_views=false
+  if [[ -z $option_view ]]; then
+    default_views=true
+    views=("${all_views[@]}")
+  elif [[ $option_view =~ ^/ ]]; then
+    regex=${option_view#/}
+    regex=${regex%/}
+    for view in ${all_views[@]}; do
+      if [[ $view =~ $regex ]]; then
+        views+=($view)
+      fi
+    done
+    [[ ${#views[@]} -gt 0 ]] ||
+      die "No views match '$regex'"
+  else
+    views=(${option_view//,/ })
+    for view in ${views[@]}; do
+      ok=false
+      for v in ${all_views[@]}; do
+        if [[ $v == "$view" ]]; then
+          ok=true
+          break
+        fi
+      done
+      if ! $ok; then
+        die "Invalid view '$view'. Try --list."
+      fi
+    done
+  fi
+}
+
+get-options() {
+  GETOPT_ARGS='command' \
+  GETOPT_DEFAULT_HELP=false \
+    getopt "$@"
+  $option_debug && set -x
+  $option_help && exit 0
+  true
+}
+
 tml() {
-  file=$1
   cat $1 | perl -pe 's/^(\s+$|%|#)/\\$1/'
 }
 
