@@ -1,16 +1,22 @@
-# YAML Editor
-#
-# Use this editor (it's really 'vim') to write YAML and
-# see it processed by many YAML frameworks at once.
-#
-# Editor commands (press these keys in vim NORMAL mode):
-#
-# \o        Open a new output pane below
-# \O        Open a new output pane to right
-# <space>   Run the current YAML text and see the output(s)
-# \g        Gist all the current files
-# \t        Create TestML from YAML
-# \s        Save TestML to $YAML_TEST_SUITE new test file
-# \c        Clear the YAML input pane
-# \q        Quit the yaml-editor
-# \h        View this help
+YAML Editor
+
+Use this editor (it's really 'vim') to write YAML and
+see it processed by many YAML frameworks at once.
+
+Try it:
+* Use \o and \O to select your view windows
+* Use \i and enter some YAML
+* Hit spacebar and watch your views change
+* Use the other helpful key commands below:
+
+Editor commands (press these keys in vim NORMAL mode):
+
+\o        Open a new output pane below
+\O        Open a new output pane to right
+<space>   Run the current YAML text and see the output(s)
+\g        Gist all the current files
+\t        Create TestML from YAML
+\s        Save TestML to $YAML_TEST_SUITE new test file
+\c        Clear the YAML input pane
+\q        Quit the yaml-editor
+\h        View this help

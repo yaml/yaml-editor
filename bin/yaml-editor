@@ -2,7 +2,7 @@
 
 set -e
 
-outputs=(
+all_views=(
   js-yaml.json
 
   libyaml.events
@@ -18,10 +18,6 @@ outputs=(
   perl-yaml-xs.dumper
 )
 
-if [[ -n $YAML_EDITOR_VIEWS ]]; then
-  outputs=( $YAML_EDITOR_VIEWS )
-fi
-
 main() {
   file=input.yaml
   uid=$(stat -c%u $0)
@@ -35,10 +31,8 @@ main() {
     "show-tml"
   elif [[ $1 == SAVE ]]; then
     "save-tml"
-  elif [[ $# -eq 0 ]]; then
-    "editor-start"
   else
-    die "Invalid usage '$0 $*'"
+    "editor-start" "$@"
   fi
 }
 
@@ -63,23 +57,42 @@ docker-run() {
 }
 
 editor-start() {
+  views=()
+  regex=$1
+  if [[ -n $regex ]]; then
+    for view in ${all_views[@]}; do
+      if [[ $view =~ $regex ]]; then
+        views+=($view)
+      fi
+    done
+    [[ ${#views[@]} -gt 0 ]] ||
+      die "No views match '$regex'"
+  else
+    views=("${all_views[@]}")
+  fi
+  export YAML_EDITOR_VIEWS="${views[*]}"
+
   touch $file
   cp /yaml-editor/share/vimrc .vimrc
   cp /yaml-editor/share/help help
 
-  for output in "${outputs[@]}"; do
-    touch $output
+  for view in "${views[@]}"; do
+    touch $view
   done
 
   chown -R "$uid.$gid" .
 
-  vim -c 'source .vimrc' -c 'vsplit help' -c 'sbuffer input.yaml' $file
+  if [[ -z $regex ]]; then
+    vim -c 'source .vimrc' -c 'vsplit help' -c 'sbuffer input.yaml' $file
+  else
+    vim -c 'source .vimrc' -c 'sbuffer input.yaml' $file ${views[@]} -O
+  fi
 }
 
 run-all() {
-  for output in "${outputs[@]}"; do
-    filter="${output/\./-}"
-    cat $file | $filter &> $output || true
+  for view in $YAML_EDITOR_VIEWS; do
+    filter="${view/\./-}"
+    cat $file | $filter &> $view || true
   done
 }
 
@@ -128,7 +141,7 @@ $(tml input.yaml)
   else
     tml+="
 +++ out-yaml
-$(tml perl-yaml-xs.yaml)
+$(tml libyaml.yaml)
 
 +++ in-json
 $(tml js-yaml.json)

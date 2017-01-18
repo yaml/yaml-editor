@@ -1,22 +1,21 @@
 == Next
-- Try removing entr
+- Add --view=
+- Add getopt support
+- Use user's vim settings
 - Try parallel or make -J
 - \t should not open multiple TEST.tml windows
+- \n to toggle numbers
 - SPACE should update TEST.tml
 - Edit existing test-suite cases
 - Add feature to load existing XYZ8 test case
   - Add feature to update existing test file
 - Add diff mode to editor
-- Add ctl h j k l
 
 == yaml-editor
 
 - Write documentation for yaml-editor
 
-- Add S command for save to new test/ABC3.tml
-
 - Add support for:
-  - Nim
   - Python
   - Ruby
   - SnakeYAML
