@@ -2,28 +2,6 @@
 
 set -e
 
-all_views=(
-  js-yaml.json
-
-  libyaml.events
-  libyaml.yaml
-
-  nimyaml.tokens
-
-  perl-yaml-pegex.events
-
-  perl-yaml-pm.dumper
-  perl-yaml-syck.dumper
-  perl-yaml-tiny.dumper
-  perl-yaml-xs.dumper
-)
-
-YAML_EDITOR_ROOT=${YAML_EDITOR_ROOT:-$(cd $(dirname $BASH_SOURCE)/..; pwd)}
-export PATH="${YAML_EDITOR_ROOT:?}/lib:$PATH"
-source "$YAML_EDITOR_ROOT/lib/bash+.bash"
-bash+:import :std can
-use GetOpt
-
 GETOPT_SPEC="\
   $(basename "$0") <options>
 
@@ -41,6 +19,36 @@ t,testml=   Use a \$YAML_TEST_SUITE case as YAML input
  
 x,debug     Debug - Turn on Bash trace (set -x) output
 "
+
+all_views=(
+  js-yaml.json
+
+  libyaml.events
+  libyaml.yaml
+
+  nimyaml.tokens
+
+  perl-yaml-pegex.events
+
+  perl-yaml-pm.dumper
+  perl-yaml-syck.dumper
+  perl-yaml-tiny.dumper
+  perl-yaml-xs.dumper
+)
+
+: ${YAML_EDITOR_ROOT:=$(cd $(dirname $BASH_SOURCE)/..; pwd)}
+export PATH="${YAML_EDITOR_ROOT:?}/lib:$PATH"
+source "$YAML_EDITOR_ROOT/lib/bash+.bash"
+bash+:import :std can
+use GetOpt
+
+if [[ -z $YAML_TEST_SUITE ]]; then
+  if [[ -d ../yaml-test-suite ]]; then
+    export YAML_TEST_SUITE="$(dirname $PWD)/yaml-test-suite"
+  elif [[ -f ./test/229Q.tml ]]; then
+    export YAML_TEST_SUITE=$PWD
+  fi
+fi
 
 main() {
   file=input.yaml
@@ -174,8 +182,8 @@ save-tml() {
   done
 
   make-tml
-  echo "$tml" > $file
-  chown "$uid.$gid" $file
+  echo "$tml" > "$file"
+  chown "$uid.$gid" "$file"
   echo $file
 }
 
@@ -257,11 +265,6 @@ get-options() {
 
 tml() {
   cat $1 | perl -pe 's/^(\s+$|%|#)/\\$1/'
-}
-
-die() {
-  echo "$*" >&2
-  exit 1
 }
 
 [[ $0 != "$BASH_SOURCE" ]] || main "$@"
