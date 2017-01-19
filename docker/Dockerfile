@@ -7,10 +7,12 @@ RUN apt-get update \
     cpanminus \
     entr \
     libtool \
+    libyaml-dev \
     nodejs \
     npm \
     perl \
     python \
+    python-pip \
     ruby \
     wget \
     gist git tig vim \
@@ -25,6 +27,7 @@ RUN apt-get update \
     YAML::XS \
     YAML::Tiny \
     YAML::Syck \
+ && pip install pyyaml \
  && true
 
 COPY files/ /
@@ -46,15 +49,9 @@ RUN ( \
         && ( yes | nimble install yaml ) \
     ) \
  && ( \
-        nim compile /nimyaml_tokens.nim \
-        && mv /nimyaml_tokens /usr/local/bin/nimyaml-tokens \
+        nim compile /nimyaml_event.nim \
+        && mv /nimyaml_event /usr/local/bin/nimyaml-event \
     ) \
  && true
-
- RUN apt-get install -y \
-        libyaml-dev \
-        python-pip \
-  && pip install pyyaml \
-  && true
 
 WORKDIR /yaml

@@ -23,18 +23,18 @@ x,debug     Debug - Turn on Bash trace (set -x) output
 all_views=(
   js-yaml.json
 
-  libyaml.events
+  libyaml.event
   libyaml.yaml
 
-  nimyaml.tokens
+  nimyaml.event
 
-  perl-yaml-pegex.events
+  perl-yaml-pegex.event
+  perl-yaml-pm.pl
+  perl-yaml-syck.pl
+  perl-yaml-tiny.pl
+  perl-yaml-xs.pl
 
-  perl-yaml-pm.dumper
-  perl-yaml-syck.dumper
-  perl-yaml-tiny.dumper
-  perl-yaml-xs.dumper
-
+  pyyaml.event
   pyyaml.py
 )
 
@@ -204,7 +204,7 @@ tags: <tag,words,separated,by,commas>
 +++ in-yaml
 $(tml input.yaml)
 "
-  libyaml=$(tml libyaml.events)
+  libyaml=$(tml libyaml.event)
   if [[ $libyaml =~ (^|$'\n')[^\+\-\=] ]]; then
     tml+="
 +++ error
@@ -218,7 +218,7 @@ $(tml libyaml.yaml)
 $(tml js-yaml.json)
 
 +++ test-event
-$(tml libyaml.events)
+$(tml libyaml.event)
 "
   fi
 }
