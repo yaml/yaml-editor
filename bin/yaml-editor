@@ -34,6 +34,8 @@ all_views=(
   perl-yaml-syck.dumper
   perl-yaml-tiny.dumper
   perl-yaml-xs.dumper
+
+  pyyaml.py
 )
 
 : ${YAML_EDITOR_ROOT:=$(cd $(dirname $BASH_SOURCE)/..; pwd)}

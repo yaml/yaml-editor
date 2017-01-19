@@ -51,4 +51,10 @@ RUN ( \
     ) \
  && true
 
+ RUN apt-get install -y \
+        libyaml-dev \
+        python-pip \
+  && pip install pyyaml \
+  && true
+
 WORKDIR /yaml
