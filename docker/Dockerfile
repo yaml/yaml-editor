@@ -35,13 +35,6 @@ ENV PATH="/yaml-editor/bin:/yaml-editor/sbin:/nim/bin:${PATH}" \
     NODE_PATH=/usr/local/lib/node_modules
 
 RUN ( \
-        git clone https://github.com/yaml/libyaml /libyaml \
-        && cd /libyaml/tests/run-test-suite/src/ \
-        && LIBYAML_DIR=/libyaml make build \
-        && mv libyaml-parser /usr/local/bin \
-        && mv libyaml-emitter /usr/local/bin \
-    ) \
- && ( \
         cd /nim \
         && sh build.sh \
         && nim c koch \
@@ -51,6 +44,16 @@ RUN ( \
  && ( \
         nim compile /nimyaml_event.nim \
         && mv /nimyaml_event /usr/local/bin/nimyaml-event \
+    ) \
+ && mv /yaml2yeast /usr/local/bin/ \
+ && true
+
+RUN ( \
+        git clone https://github.com/yaml/libyaml /libyaml \
+        && cd /libyaml/tests/run-test-suite/src/ \
+        && LIBYAML_DIR=/libyaml make build \
+        && mv libyaml-parser /usr/local/bin \
+        && mv libyaml-emitter /usr/local/bin \
     ) \
  && true
 

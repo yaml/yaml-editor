@@ -36,6 +36,8 @@ all_views=(
 
   pyyaml.event
   pyyaml.py
+
+  ref.yeast
 )
 
 : ${YAML_EDITOR_ROOT:=$(cd $(dirname $BASH_SOURCE)/..; pwd)}

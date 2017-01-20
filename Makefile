@@ -1,12 +1,20 @@
+DOCKER_FILES := \
+    nim \
+    yaml2yeast \
+    yaml-pegex-pm \
+
+DOCKER_FILES := $(DOCKER_FILES:%=docker/files/%)
+
 default: help
 
 help:
 	@echo 'help   - Show help'
 
 clean:
-	rm -fr docker/files
+	rm -fr docker/files/yaml-pegex-pm/
+	git clean -dxf
 
-docker-build: docker/files/yaml-pegex-pm docker/files/nim
+docker-build: $(DOCKER_FILES)
 	docker build -t yamlio/yaml-editor ./docker
 
 docker-shell: docker-build
@@ -25,3 +33,6 @@ docker/files/nim:
 	tar xJf nim-0.16.0.tar.xz
 	mv nim-0.16.0 $@
 	rm nim-0.16.0.tar.xz
+
+docker/files/yaml2yeast:
+	cp ../yamlreference/dist/build/yaml2yeast/yaml2yeast $@
