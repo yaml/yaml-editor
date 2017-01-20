@@ -38,6 +38,8 @@ all_views=(
   pyyaml.py
 
   ref.yeast
+
+  ruby.json
 )
 
 : ${YAML_EDITOR_ROOT:=$(cd $(dirname $BASH_SOURCE)/..; pwd)}
