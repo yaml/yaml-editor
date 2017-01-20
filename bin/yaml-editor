@@ -34,6 +34,8 @@ all_views=(
   perl-yaml-tiny.pl
   perl-yaml-xs.pl
 
+  perl6.p6
+
   pyyaml.event
   pyyaml.py
 
@@ -97,6 +99,15 @@ docker-run() {
     [[ -f $option_file ]] ||
       die "Input file does not exist '$option_file'"
     cp $option_file $work/$file
+  else
+    cat <<'...' > $work/$file
+foo: bar
+
+# Press enter to render.
+# Press \h for help (more commands).
+# Press \c to clear the input.
+# Press \q to quit.
+...
   fi
 
   mount_suite=''
@@ -121,7 +132,6 @@ editor-start() {
   get-yaml
   export YAML_EDITOR_VIEWS="${views[*]}"
 
-  touch $file
   cp /yaml-editor/share/vimrc .vimrc
   cp /yaml-editor/share/help help
 
@@ -132,7 +142,7 @@ editor-start() {
   chown -R "$uid.$gid" .
 
   if $default_views; then
-    vim -c 'source .vimrc' -c 'vsplit help' -c "sbuffer $file" $file
+    vim -c 'source .vimrc' -c "sbuffer ." $file . -O
   else
     vim -c 'source .vimrc' -c 'sbuffer input.yaml' $file ${views[@]} -O
   fi

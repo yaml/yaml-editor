@@ -1,4 +1,5 @@
 DOCKER_FILES := \
+    filters \
     nim \
     yaml2yeast \
     yaml-pegex-pm \
@@ -24,6 +25,9 @@ docker-shell: docker-build
 
 docker-push:
 	docker push yamlio/yaml-editor
+
+docker/files/filters:
+	cp -r sbin $@
 
 docker/files/yaml-pegex-pm:
 	cp -r ../yaml-pegex-pm $@

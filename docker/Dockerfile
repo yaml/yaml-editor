@@ -31,7 +31,7 @@ RUN apt-get update \
  && true
 
 COPY files/ /
-ENV PATH="/yaml-editor/bin:/yaml-editor/sbin:/nim/bin:${PATH}" \
+ENV PATH="/yaml-editor/bin:/yaml-editor/sbin:/nim/bin:/filters:${PATH}" \
     NODE_PATH=/usr/local/lib/node_modules
 
 RUN ( \
@@ -55,6 +55,19 @@ RUN ( \
         && mv libyaml-parser /usr/local/bin \
         && mv libyaml-emitter /usr/local/bin \
     ) \
+ && true
+
+ENV PATH="/opt/rakudo-star-2016.11/bin:/opt/rakudo-star-2016.11/share/perl6/site/bin:${PATH}"
+RUN wget http://rakudo.org/downloads/star/rakudo-star-2016.11.tar.gz \
+ && tar xfz rakudo-star-2016.11.tar.gz \
+ && ( \
+        cd rakudo-star-2016.11 \
+        && perl Configure.pl --gen-moar --prefix /opt/rakudo-star-2016.11 \
+        && make install \
+    ) \
+ && panda update \
+ && panda install YAMLish \
+ && panda install Data::Dump \
  && true
 
 WORKDIR /yaml
