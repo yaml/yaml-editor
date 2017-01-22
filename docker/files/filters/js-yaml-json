@@ -1,7 +1,0 @@
-#!/usr/bin/env coffee
-
-fs = require 'fs'
-YAML = require 'js-yaml'
-
-YAML.loadAll fs.readFileSync('/dev/stdin').toString(), (document)->
-  fs.writeSync 1, JSON.stringify(document, null, 2) + "\n"
