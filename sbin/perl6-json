@@ -1,0 +1,9 @@
+#!/usr/bin/env perl6
+
+use v6;
+use YAMLish;
+use JSON::Tiny;
+
+for load-yamls(slurp) -> $doc {
+    say to-json $doc;
+}

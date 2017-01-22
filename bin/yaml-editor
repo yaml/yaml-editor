@@ -34,6 +34,7 @@ all_views=(
   perl-yaml-tiny.pl
   perl-yaml-xs.pl
 
+  perl6.json
   perl6.p6
 
   pyyaml.event
