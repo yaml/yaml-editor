@@ -1,5 +1,11 @@
 /build/
+/pegex-pm/
 /test-base-pm/
-/yaml-libyaml-pm/
-/yaml-pm/
+/testml-pm/
 /yamlish/
+/yaml-libyaml-pm/
+/yaml-pegex-pm/
+/yaml-pm/
+/YAML-PP-p5/
+/YAML-Syck/
+/YAML-Tiny/

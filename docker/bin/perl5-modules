@@ -12,7 +12,20 @@ if [[ $ok -ne 0 ]]; then
   echo "Repo not in clean state: '$repo'"
   exit 1
 fi
-zild dist
+
+if [[ -f Meta ]]; then
+  zild dist
+elif [[ lib/perl5/YAML/PP/Parser.pm ]]; then
+  true
+elif [[ -f dist.ini ]]; then
+  dzil build
+elif [[ -f Makefile.PL ]]; then
+  perl Makefile.PL
+  make dist
+else
+  echo "Unknown Perl build system"
+fi
+
 cpanm -n -L /work/build *.tar.gz
 git clean -dxf
 
