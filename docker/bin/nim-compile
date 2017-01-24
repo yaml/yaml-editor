@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -ex
+
+source=$1
+target=$2
+
+yes | nimble install nimyaml
+mkdir -p /work/build/root
+cp -r /root/.nimble /work/build/root/.nimble
+
+nim c /work/$source
+mv /work/${source%.nim} /work/$target
+rm -fr /work/src/nimcache
+
+set-perms

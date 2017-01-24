@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -ex
+
+if [[ $(uname) == Darwin ]]; then
+  uid=$(stat -f%u $0)
+  gid=$(stat -f%g $0)
+else
+  uid=$(stat -c%u $0)
+  gid=$(stat -c%g $0)
+fi
+
+chown -R $uid.$gid /work/build
