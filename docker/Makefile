@@ -103,4 +103,4 @@ builder-%: builder
 	git clone git@github.com:leont/yamlish $@
 
 clean:
-	rm -fr build/ pegex-pm/ test-base-pm/ testml-pm/ yaml-* YAML-*
+	rm -fr build/ pegex-pm/ test-base-pm/ testml-pm/ yaml* YAML*
