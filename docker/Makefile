@@ -1,6 +1,6 @@
 PERL5_YAML_PM := build/lib/perl5/YAML.pm
 PERL5_YAML_XS := build/lib/perl5/x86_64-linux-gnu-thread-multi/YAML/LibYAML.pm
-PERL5_YAML_TINY := build/lib/perl5/YAML.pm
+PERL5_YAML_TINY := build/lib/perl5/YAML/Tiny.pm
 PERL5_YAML_SYCK := build/lib/perl5/YAML/Syck.pm
 PERL5_YAML_PEGEX := build/lib/perl5/YAML/Pegex.pm
 # PERL5_YAML_PP := build/lib/perl5/YAML/PP.pm
