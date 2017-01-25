@@ -16,7 +16,8 @@ PERL5_MODULES := \
 PERL6_RUNTIME := build/bin/perl6
 PERL6_YAMLISH := build/lib/YAMLish.pm6
 PERL6_MODULES := $(PERL6_YAMLISH)
-NIM_EVENT := build/bin/nimyaml-event
+NIM_BINARIES := build/bin/nimyaml-event
+LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
 
 # xxx: build/bin nim-binaries
 # 	docker build -t yamlio/yaml-editor .
@@ -27,7 +28,8 @@ all: \
     perl5-modules \
     perl6-runtime \
     perl6-modules \
-    nim-binaries
+    nim-binaries \
+    libyaml-binaries
 	docker build -t yamlio/yaml-editor .
 
 run:
@@ -39,7 +41,8 @@ build/bin:
 perl5-modules: builder-perl5 $(PERL5_MODULES)
 perl6-runtime: builder-perl6 $(PERL6_RUNTIME)
 perl6-modules: builder-perl6 $(PERL6_MODULES)
-nim-binaries: builder-nim $(NIM_EVENT)
+nim-binaries: builder-nim $(NIM_BINARIES)
+libyaml-binaries: builder $(LIBYAML_BINARIES)
 
 $(PERL5_YAML_PM): yaml-pm test-base-pm
 	docker run --rm -v $$PWD:/work builder-perl5 perl5-modules $<
@@ -73,8 +76,11 @@ $(PERL6_YAMLISH): yamlish
 	docker run --rm -v $$PWD:/work builder-perl6 perl6-modules $<
 	touch $@
 
-$(NIM_EVENT): src/nimyaml_event.nim
+$(NIM_BINARIES): src/nimyaml_event.nim
 	docker run --rm -it -v $$PWD:/work builder-nim nim-compile $< $@
+
+$(LIBYAML_BINARIES): libyaml
+	docker run --rm -it -v $$PWD:/work builder libyaml-compile $< $@
 
 builder:
 	docker build -t $@ -f $@.dockerfile .
@@ -86,6 +92,9 @@ builder-%: builder
 %: ../../%
 	cp -pr $< $@
 	touch $@
+
+../../libyaml:
+	git clone git@github.com:yaml/libyaml $@
 
 ../../yaml-pm ../../yaml-libyaml-pm ../../yaml-pegex-pm ../../pegex-pm ../../testml-pm ../../test-base-pm:
 	git clone git@github.com:ingydotnet/yaml-libyaml-pm $@
@@ -103,4 +112,4 @@ builder-%: builder
 	git clone git@github.com:leont/yamlish $@
 
 clean:
-	rm -fr build/ pegex-pm/ test-base-pm/ testml-pm/ yaml* YAML*
+	rm -fr build/ libyaml/ pegex-pm/ test-base-pm/ testml-pm/ yaml* YAML*
