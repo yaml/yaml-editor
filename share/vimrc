@@ -27,6 +27,12 @@ map \q :qa!<CR>
 map \Q :qa!<CR>
 map \h :vsp help<CR>:wincmd H<CR>
 
+map q :q<cr>
+map 8 <c-w>80<bar>
+map = <c-w>=
+map _ <c-w>_
+map <bar> <c-w><bar>
+
 " Handy window commands:
 nnoremap <c-j> <c-w>j<c-w><Esc>
 nnoremap <c-k> <c-w>k<c-w><Esc>

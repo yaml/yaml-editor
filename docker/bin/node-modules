@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -ex
+
+cd /work/js-yaml/
+npm install .
+mv node_modules /work/build/
+
+set-perms

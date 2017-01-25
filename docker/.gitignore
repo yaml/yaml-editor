@@ -1,5 +1,6 @@
 /build/
 /libyaml/
+/js-yaml/
 /pegex-pm/
 /test-base-pm/
 /testml-pm/
