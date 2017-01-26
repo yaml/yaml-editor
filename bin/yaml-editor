@@ -94,7 +94,7 @@ list-all() {
 
 docker-run() {
   root=$(cd "$(dirname "$0")/.."; pwd)
-  work=$(mktemp -d)
+  work=$(mktemp -d /tmp/XXXXXXXXXXXXXXXX)
 
   if [[ -n $option_file ]]; then
     [[ -f $option_file ]] ||

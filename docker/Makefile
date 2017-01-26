@@ -117,7 +117,7 @@ builder-%: builder
 	git clone git@github.com:nodeca/js-yaml $@
 
 ../../yaml-pm ../../yaml-libyaml-pm ../../yaml-pegex-pm ../../pegex-pm ../../testml-pm ../../test-base-pm:
-	git clone git@github.com:ingydotnet//usr/local/lib $@
+	git clone git@github.com:ingydotnet/$(@:../../%=%) $@
 
 ../../YAML-Tiny:
 	git clone git@github.com:Perl-Toolchain-Gang/YAML-Tiny $@
