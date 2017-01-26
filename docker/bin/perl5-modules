@@ -5,13 +5,6 @@ set -ex
 repo=$1
 
 cd /work/$repo
-ok=0
-(git diff --quiet && git diff --quiet --cached) || ok=1
-echo $ok
-if [[ $ok -ne 0 ]]; then
-  echo "Repo not in clean state: '$repo'"
-  exit 1
-fi
 
 if [[ -f Meta ]]; then
   zild dist
@@ -25,6 +18,7 @@ else
 fi
 
 cpanm -n -L /work/build *.tar.gz
+
 git clean -dxf
 
 set-perms

@@ -11,4 +11,4 @@ RUN apt-get update \
     gist git vim \
  && true
 
-ENV PATH=/work/bin:$PATH
+ENV PATH=/work/yaml-editor/docker/bin:$PATH

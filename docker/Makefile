@@ -1,4 +1,6 @@
 #------------------------------------------------------------------------------
+BASE := $(shell cd ../..; pwd)
+#------------------------------------------------------------------------------
 GHC_BINARIES := build/bin/yaml2yeast
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
 NIM_BINARIES := build/bin/nimyaml-event
@@ -27,7 +29,7 @@ PYTHON_MODULES := build/lib/python2.7/site-packages/yaml/__init__.py
 # 	yaml-editor nimyaml.event
 
 all: \
-    build/bin \
+    setup \
     ghc-binaries \
     libyaml-binaries \
     nim-binaries \
@@ -36,16 +38,21 @@ all: \
     perl6-runtime \
     perl6-modules \
     python-modules
+	rm -fr build
+	cp -r ../../build .
 	docker build -t yamlio/yaml-editor .
 
 run:
 	yaml-editor '/-(pegex|pm|syck|tiny|xs)\.|nim/'
 
-build/bin:
-	mkdir -p $@
+setup:
+	mkdir -p ../../build/bin
+	rm -fr build
+	ln -s ../../build
 
 clean:
-	rm -fr build/ pegex-pm/ test-base-pm/ testml-pm/ *yaml* YAML*
+	rm -f pegex-pm test-base-pm testml-pm *yaml* YAML*
+	rm -fr build
 
 #------------------------------------------------------------------------------
 ghc-binaries: builder-ghc $(GHC_BINARIES)
@@ -59,55 +66,55 @@ python-modules: builder-python $(PYTHON_MODULES)
 
 #------------------------------------------------------------------------------
 $(GHC_BINARIES): yamlreference
-	docker run --rm -it -v $$PWD:/work builder-ghc ghc-compile $< $@
+	docker run --rm -it -v $(BASE):/work builder-ghc ghc-compile $< $@
 	touch $@
 
 $(LIBYAML_BINARIES): libyaml
-	docker run --rm -it -v $$PWD:/work builder libyaml-compile $< $@
+	docker run --rm -it -v $(BASE):/work builder libyaml-compile $<
 	touch $@
 
 $(NIM_BINARIES): src/nimyaml_event.nim
-	docker run --rm -it -v $$PWD:/work builder-nim nim-compile $< $@
+	docker run --rm -it -v $(BASE):/work builder-nim nim-compile $< $@
 	touch $@
 
 $(NODE_MODULES): js-yaml
-	docker run --rm -it -v $$PWD:/work builder-node node-modules $<
+	docker run --rm -it -v $(BASE):/work builder-node node-modules $<
 	touch $@
 
 $(PERL5_YAML_PM): yaml-pm test-base-pm
-	docker run --rm -v $$PWD:/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL5_YAML_XS): yaml-libyaml-pm test-base-pm
-	docker run --rm -v $$PWD:/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL5_YAML_TINY): YAML-Tiny
-	docker run --rm -v $$PWD:/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL5_YAML_SYCK): YAML-Syck
-	docker run --rm -v $$PWD:/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL5_YAML_PEGEX): yaml-pegex-pm pegex-pm testml-pm
-	docker run --rm -v $$PWD:/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL5_YAML_PP): YAML-PP-p5
-	docker run --rm -v $$PWD:/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL6_RUNTIME):
-	docker run --rm -v $$PWD:/work builder-perl6 perl6-runtime
+	docker run --rm -v $(BASE):/work builder-perl6 perl6-runtime $<
 	touch $@
 
 $(PERL6_YAMLISH): yamlish
-	docker run --rm -v $$PWD:/work builder-perl6 perl6-modules $<
+	docker run --rm -v $(BASE):/work builder-perl6 perl6-modules $<
 	touch $@
 
 $(PYTHON_MODULES): pyyaml
-	docker run --rm -it -v $$PWD:/work builder-python python-modules $<
+	docker run --rm -it -v $(BASE):/work builder-python python-modules $<
 	touch $@
 
 builder:
@@ -119,8 +126,8 @@ builder-%: builder
 #------------------------------------------------------------------------------
 # Copy repos from local dev sources:
 %: ../../%
-	cp -pr $< $@
-	touch $@
+	ln -s $< $@
+	touch $@/
 
 #------------------------------------------------------------------------------
 ../../yamlreference:
