@@ -47,7 +47,7 @@ if numlines == 1 and files[0] == '/':
     files = files[:-1] # remove the last /
     numlines = len(oldfiles)
 
-args = ['vim'] #,'-c','set splitright']
+args = []
 
 # split top-down first
 # each split goes up and opens that file there
@@ -110,7 +110,18 @@ for i, arg in enumerate(args):
 
 args = newargs
 
+vims = open('.vims', 'w')
+while True:
+    if args[0] != '-c':
+        break
+    args.pop(0)
+    vims.write(args.pop(0) + "\n")
+vims.close()
+args.insert(0, 'source .vims')
+args.insert(0, '-c')
 
 import subprocess
 args.extend(cli)
+args.insert(0, 'vim')
+
 subprocess.call(args)
