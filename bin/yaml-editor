@@ -17,6 +17,7 @@ help        Browse the complete '$(basename "$0")' documentation
 l,list      List the available views
 f,file=     Use a YAML file as starting input
 t,testml=   Use a \$YAML_TEST_SUITE case as YAML input
+c,compile   Compile yaml-editor before starting it
  
 x,debug     Debug - Turn on Bash trace (set -x) output
 "
@@ -89,6 +90,13 @@ list-all() {
 }
 
 docker-run() {
+  if $option_compile; then
+    (
+      cd $YAML_EDITOR_ROOT
+      make
+    )
+  fi
+
   root=$(cd "$(dirname "$0")/.."; pwd)
   work=$(mktemp -d /tmp/XXXXXXXXXXXXXXXX)
 
