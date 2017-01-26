@@ -32,6 +32,8 @@ getopt() {
     eval "$parsed"
   fi
 
+  [[ $1 != -h ]] || exit 0
+
   while IFS= read line; do
     if [[ $line =~ ^([a-z]+)(,([a-z]+))?(=?)\  ]]; then
       if [[ -z ${BASH_REMATCH[4]} ]]; then

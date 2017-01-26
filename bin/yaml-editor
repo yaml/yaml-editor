@@ -7,7 +7,7 @@ GETOPT_SPEC="\
 
 See '$(basename "$0") help' for more help.
 
-views: Specify the views to use. /regex/ or comma,separated,list
+views: List the views to use. /regex/ or list-name. See '-l'.
 
 Options:
 --
