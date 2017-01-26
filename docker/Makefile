@@ -8,12 +8,14 @@ PERL5_YAML_XS := build/lib/perl5/x86_64-linux-gnu-thread-multi/YAML/LibYAML.pm
 PERL5_YAML_TINY := build/lib/perl5/YAML/Tiny.pm
 PERL5_YAML_SYCK := build/lib/perl5/YAML/Syck.pm
 PERL5_YAML_PEGEX := build/lib/perl5/YAML/Pegex.pm
+PERL5_YAML_PP := build/lib/perl5/YAML/PP.pm
 PERL5_MODULES := \
     $(PERL5_YAML_PM) \
     $(PERL5_YAML_XS) \
     $(PERL5_YAML_TINY) \
     $(PERL5_YAML_SYCK) \
-    $(PERL5_YAML_PEGEX)
+    $(PERL5_YAML_PEGEX) \
+    $(PERL5_YAML_PP)
 PERL6_RUNTIME := build/bin/perl6
 PERL6_YAMLISH := build/lib/YAMLish.pm6
 PERL6_MODULES := $(PERL6_YAMLISH)
@@ -22,7 +24,7 @@ PYTHON_MODULES := build/lib/python2.7/site-packages/yaml/__init__.py
 #------------------------------------------------------------------------------
 # xxx: build/bin nim-binaries
 # 	docker build -t yamlio/yaml-editor .
-# 	yaml-editor -v nimyaml.event
+# 	yaml-editor nimyaml.event
 
 all: \
     build/bin \
@@ -37,7 +39,7 @@ all: \
 	docker build -t yamlio/yaml-editor .
 
 run:
-	yaml-editor -v '/-(pegex|pm|syck|tiny|xs)\.|nim/'
+	yaml-editor '/-(pegex|pm|syck|tiny|xs)\.|nim/'
 
 build/bin:
 	mkdir -p $@
@@ -92,6 +94,10 @@ $(PERL5_YAML_PEGEX): yaml-pegex-pm pegex-pm testml-pm
 	docker run --rm -v $$PWD:/work builder-perl5 perl5-modules $<
 	touch $@
 
+$(PERL5_YAML_PP): YAML-PP-p5
+	docker run --rm -v $$PWD:/work builder-perl5 perl5-modules $<
+	touch $@
+
 $(PERL6_RUNTIME):
 	docker run --rm -v $$PWD:/work builder-perl6 perl6-runtime
 	touch $@
@@ -124,19 +130,19 @@ builder-%: builder
 	git clone git@github.com:yaml/$(@:../../%=%) $@
 
 ../../js-yaml:
-	git clone git@github.com:nodeca/js-yaml $@
+	git clone git@github.com:nodeca/$(@:../../%=%) $@
 
 ../../yaml-pm ../../yaml-libyaml-pm ../../yaml-pegex-pm ../../pegex-pm ../../testml-pm ../../test-base-pm:
 	git clone git@github.com:ingydotnet/$(@:../../%=%) $@
 
+../../YAML-PP-p5:
+	git clone git@github.com:perlpunk/$(@:../../%=%) $@
+
 ../../YAML-Tiny:
-	git clone git@github.com:Perl-Toolchain-Gang/YAML-Tiny $@
+	git clone git@github.com:Perl-Toolchain-Gang/$(@:../../%=%) $@
 
 ../../YAML-Syck:
-	git clone git@github.com:toddr/YAML-Syck $@
-
-# ../../YAML-PP-p5:
-# 	git clone git@github.com:perlpunk/YAML-PP-p5 $@
+	git clone git@github.com:toddr/$(@:../../%=%) $@
 
 ../../yamlish:
-	git clone git@github.com:leont/yamlish $@
+	git clone git@github.com:leont/$(@:../../%=%) $@

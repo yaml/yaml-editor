@@ -1,0 +1,14 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use 5.010;
+
+use YAML::PP::Parser;
+my $parser = YAML::PP::Parser->new(
+  receiver => sub {
+    my ($self, $event, $content) = @_;
+    say defined $content ? "$event $content" : $event;
+  },
+);
+
+$parser->parse(do { local $/; <> });

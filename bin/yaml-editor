@@ -3,9 +3,11 @@
 set -e
 
 GETOPT_SPEC="\
-  $(basename "$0") <options>
+  $(basename "$0") <options> <views>
 
 See '$(basename "$0") help' for more help.
+
+views: Specify the views to use. /regex/ or comma,separated,list
 
 Options:
 --
@@ -13,7 +15,6 @@ h           Show the command summary
 help        Browse the complete '$(basename "$0")' documentation
  
 l,list      List the available views
-v,view=     Specify the views to use. /regex/ or comma,separated,list
 f,file=     Use a YAML file as starting input
 t,testml=   Use a \$YAML_TEST_SUITE case as YAML input
  
@@ -30,6 +31,7 @@ perl5-syck.pl       Perl5 YAML::Syck  -> Perl Data
 perl5-tiny.pl       Perl5 YAML::Tiny  -> Perl Data
 perl5-xs.pl         Perl5 YAML::XS    -> Perl Data
 perl5-pegex.event   Perl5 YAML::Pegex -> Event Stream
+perl5-pp.event      Perl5 YAML::PP    -> Event Stream
 perl6.json          Perl6 YAMLish     -> JSON
 perl6.p6            Perl6 YAMLish     -> Perl6 Data
 pyyaml.event        Python pyyaml     -> Event Stream
@@ -136,11 +138,11 @@ editor-start() {
 
   chown -R "$uid.$gid" .
 
-  sleep .1
+  sleep .2
   if $default_views; then
     vim -c 'source .vimrc' -c "sbuffer ." $file . -O
   else
-    vim -c 'source .vimrc' -c 'sbuffer input.yaml' $file ${views[@]} -O
+    vims $file ${views[@]} -- -c 'source .vimrc' -c 'sbuffer input.yaml' -c 'wincmd H'
   fi
 }
 
@@ -236,40 +238,53 @@ $(tml libyaml.event)
 get-views() {
   views=()
   default_views=false
-  if [[ -z $option_view ]]; then
+  if [[ ${#view_spec[@]} -eq 0 ]]; then
     default_views=true
     views=("${all_views[@]}")
-  elif [[ $option_view =~ ^/ ]]; then
-    regex=${option_view#/}
-    regex=${regex%/}
-    for view in ${all_views[@]}; do
-      if [[ $view =~ $regex ]]; then
-        views+=($view)
-      fi
-    done
-    [[ ${#views[@]} -gt 0 ]] ||
-      die "No views match '$regex'"
-  else
-    views=(${option_view//,/ })
-    for view in ${views[@]}; do
-      ok=false
+    return
+  fi
+  for view in "${view_spec[@]}"; do
+    if [[ $view == / ]]; then
+      views+=("$view")
+    elif [[ $view =~ ^/ ]]; then
+      regex=${view#/}
+      regex=${regex%/}
       for v in ${all_views[@]}; do
-        if [[ $v == "$view" ]]; then
-          ok=true
-          break
+        if [[ $v =~ $regex ]]; then
+          views+=($v)
         fi
       done
-      if ! $ok; then
-        die "Invalid view '$view'. Try --list."
-      fi
-    done
+      [[ ${#views[@]} -gt 0 ]] ||
+        die "No views match '$regex'"
+    else
+      check-view "$view"
+      views+=("$view")
+    fi
+  done
+}
+
+check-view() {
+  ok=false
+  for v in ${all_views[@]}; do
+    if [[ $v == "$view" ]]; then
+      ok=true
+      break
+    fi
+  done
+  if ! $ok; then
+    die "Invalid view '$view'. Try --list."
   fi
 }
 
 get-options() {
-  GETOPT_ARGS='command' \
+  GETOPT_ARGS='@arguments' \
   GETOPT_DEFAULT_HELP=false \
     getopt "$@"
+  if [[ $arguments =~ ^RUN|SAVE|TESTML$ ]]; then
+    command="$arguments"
+  else
+    view_spec=("${arguments[@]}")
+  fi
   $option_debug && set -x
   $option_help && exit 0
   true

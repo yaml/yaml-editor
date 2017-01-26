@@ -4,6 +4,7 @@ set -ex
 
 cd /work/js-yaml/
 npm install .
+rm -fr /work/build/node_modules/
 mv node_modules /work/build/
 
 set-perms

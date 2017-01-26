@@ -20,7 +20,6 @@ map \O :rightbelow vsplit .<CR>
 map <SPACE> :call RunYAML()<CR><CR>
 map \g :call RunYAML()<CR>:wa<BAR>!gist-paste *<CR>
 nnoremap \t :call WriteTestml()<CR><CR>
-" nnoremap \s :call RunYAML()<CR>:rightbelow vsplit `yaml-editor SAVE`<CR>:wincmd L<CR><CR>
 nnoremap \s :call SaveTestml()<CR><CR>
 map \c :sb input.yaml<CR><BAR>ggVGd
 map \q :qa!<CR>

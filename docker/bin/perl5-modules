@@ -15,8 +15,6 @@ fi
 
 if [[ -f Meta ]]; then
   zild dist
-elif [[ -f lib/perl5/YAML/PP/Parser.pm ]]; then
-  true
 elif [[ -f dist.ini ]]; then
   dzil build
 elif [[ -f Makefile.PL ]]; then

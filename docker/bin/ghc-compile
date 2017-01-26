@@ -7,5 +7,6 @@ cd /work/$1
 cabal install
 
 mv dist/build/yaml2yeast/yaml2yeast /work/$2
+rm -fr dist
 
 set-perms
