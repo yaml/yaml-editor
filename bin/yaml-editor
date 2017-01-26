@@ -20,30 +20,26 @@ t,testml=   Use a \$YAML_TEST_SUITE case as YAML input
 x,debug     Debug - Turn on Bash trace (set -x) output
 "
 
-all_views=(
-  js-yaml.json
+ALL_VIEWS="\
+js-yaml.json        JS/Node js-yaml   -> JSON
+libyaml.event       libyaml           -> Event Stream
+libyaml.yaml        libyaml           -> YAML
+nimyaml.event       Nim NimYAML       -> Event Stream
+perl5-pm.pl         Perl5 YAML.pm     -> Perl Data
+perl5-syck.pl       Perl5 YAML::Syck  -> Perl Data
+perl5-tiny.pl       Perl5 YAML::Tiny  -> Perl Data
+perl5-xs.pl         Perl5 YAML::XS    -> Perl Data
+perl5-pegex.event   Perl5 YAML::Pegex -> Event Stream
+perl6.json          Perl6 YAMLish     -> JSON
+perl6.p6            Perl6 YAMLish     -> Perl6 Data
+pyyaml.event        Python pyyaml     -> Event Stream
+pyyaml.py           Python pyyaml     -> Python Data
+ref.yeast           Reference Parser  -> YEAST Events
+ruby.json           Ruby psych        -> JSON
+"
 
-  libyaml.event
-  libyaml.yaml
+all_views=($(echo "$ALL_VIEWS" | perl -pe 's/ .*//'))
 
-  nimyaml.event
-
-  perl-yaml-pegex.event
-  perl-yaml-pm.pl
-  perl-yaml-syck.pl
-  perl-yaml-tiny.pl
-  perl-yaml-xs.pl
-
-  perl6.json
-  perl6.p6
-
-  pyyaml.event
-  pyyaml.py
-
-  ref.yeast
-
-  ruby.json
-)
 
 : ${YAML_EDITOR_ROOT:=$(cd $(dirname $BASH_SOURCE)/..; pwd)}
 export PATH="${YAML_EDITOR_ROOT:?}/lib:$PATH"
@@ -87,9 +83,7 @@ main() {
 }
 
 list-all() {
-  for view in ${all_views[@]}; do
-    echo $view
-  done
+  echo "$ALL_VIEWS"
 }
 
 docker-run() {
@@ -142,6 +136,7 @@ editor-start() {
 
   chown -R "$uid.$gid" .
 
+  sleep .1
   if $default_views; then
     vim -c 'source .vimrc' -c "sbuffer ." $file . -O
   else
