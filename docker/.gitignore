@@ -1,14 +1,15 @@
 /build/
-/libyaml/
 /js-yaml/
+/libyaml/
 /pegex-pm/
 /pyyaml/
 /test-base-pm/
 /testml-pm/
-/yamlish/
 /yaml-libyaml-pm/
 /yaml-pegex-pm/
 /yaml-pm/
+/yamlish/
+/yamlreference/
 /YAML-PP-p5/
 /YAML-Syck/
 /YAML-Tiny/

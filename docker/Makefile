@@ -1,4 +1,5 @@
 #------------------------------------------------------------------------------
+GHC_BINARIES := build/bin/yaml2yeast
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
 NIM_BINARIES := build/bin/nimyaml-event
 NODE_MODULES := build/node_modules/js-yaml/lib/js-yaml.js
@@ -25,6 +26,7 @@ PYTHON_MODULES := build/lib/python2.7/site-packages/yaml/__init__.py
 
 all: \
     build/bin \
+    ghc-binaries \
     libyaml-binaries \
     nim-binaries \
     node-modules \
@@ -44,6 +46,7 @@ clean:
 	rm -fr build/ pegex-pm/ test-base-pm/ testml-pm/ *yaml* YAML*
 
 #------------------------------------------------------------------------------
+ghc-binaries: builder-ghc $(GHC_BINARIES)
 libyaml-binaries: builder $(LIBYAML_BINARIES)
 nim-binaries: builder-nim $(NIM_BINARIES)
 node-modules: builder-node $(NODE_MODULES)
@@ -53,6 +56,10 @@ perl6-modules: builder-perl6 $(PERL6_MODULES)
 python-modules: builder-python $(PYTHON_MODULES)
 
 #------------------------------------------------------------------------------
+$(GHC_BINARIES): yamlreference
+	docker run --rm -it -v $$PWD:/work builder-ghc ghc-compile $< $@
+	touch $@
+
 $(LIBYAML_BINARIES): libyaml
 	docker run --rm -it -v $$PWD:/work builder libyaml-compile $< $@
 	touch $@
@@ -110,6 +117,9 @@ builder-%: builder
 	touch $@
 
 #------------------------------------------------------------------------------
+../../yamlreference:
+	git clone git@github.com:orenbenkiki/$(@:../../%=%) $@
+
 ../../libyaml ../../pyyaml:
 	git clone git@github.com:yaml/$(@:../../%=%) $@
 
