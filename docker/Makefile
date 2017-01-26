@@ -16,6 +16,7 @@ PERL5_MODULES := \
 PERL6_RUNTIME := build/bin/perl6
 PERL6_YAMLISH := build/lib/YAMLish.pm6
 PERL6_MODULES := $(PERL6_YAMLISH)
+PYTHON_MODULES := build/lib/python2.7/site-packages/yaml/__init__.py
 
 #------------------------------------------------------------------------------
 # xxx: build/bin nim-binaries
@@ -29,7 +30,8 @@ all: \
     node-modules \
     perl5-modules \
     perl6-runtime \
-    perl6-modules
+    perl6-modules \
+    python-modules
 	docker build -t yamlio/yaml-editor .
 
 run:
@@ -43,11 +45,12 @@ clean:
 
 #------------------------------------------------------------------------------
 libyaml-binaries: builder $(LIBYAML_BINARIES)
+nim-binaries: builder-nim $(NIM_BINARIES)
+node-modules: builder-node $(NODE_MODULES)
 perl5-modules: builder-perl5 $(PERL5_MODULES)
 perl6-runtime: builder-perl6 $(PERL6_RUNTIME)
 perl6-modules: builder-perl6 $(PERL6_MODULES)
-nim-binaries: builder-nim $(NIM_BINARIES)
-node-modules: builder-node $(NODE_MODULES)
+python-modules: builder-python $(PYTHON_MODULES)
 
 #------------------------------------------------------------------------------
 $(LIBYAML_BINARIES): libyaml
@@ -82,16 +85,16 @@ $(PERL5_YAML_PEGEX): yaml-pegex-pm pegex-pm testml-pm
 	docker run --rm -v $$PWD:/work builder-perl5 perl5-modules $<
 	touch $@
 
-# $(PERL5_YAML_PP): YAML-PP-p5
-# 	docker run --rm -v $$PWD:/work builder-perl5 perl5-modules $<
-# 	touch $@
-
 $(PERL6_RUNTIME):
 	docker run --rm -v $$PWD:/work builder-perl6 perl6-runtime
 	touch $@
 
 $(PERL6_YAMLISH): yamlish
 	docker run --rm -v $$PWD:/work builder-perl6 perl6-modules $<
+	touch $@
+
+$(PYTHON_MODULES): pyyaml
+	docker run --rm -it -v $$PWD:/work builder-python python-modules $<
 	touch $@
 
 builder:
@@ -107,14 +110,14 @@ builder-%: builder
 	touch $@
 
 #------------------------------------------------------------------------------
-../../libyaml:
-	git clone git@github.com:yaml/libyaml $@
+../../libyaml ../../pyyaml:
+	git clone git@github.com:yaml/$(@:../../%=%) $@
 
 ../../js-yaml:
 	git clone git@github.com:nodeca/js-yaml $@
 
 ../../yaml-pm ../../yaml-libyaml-pm ../../yaml-pegex-pm ../../pegex-pm ../../testml-pm ../../test-base-pm:
-	git clone git@github.com:ingydotnet/yaml-libyaml-pm $@
+	git clone git@github.com:ingydotnet//usr/local/lib $@
 
 ../../YAML-Tiny:
 	git clone git@github.com:Perl-Toolchain-Gang/YAML-Tiny $@

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -ex
+
+cd /work/pyyaml/
+pip install --install-option="--prefix=/work/build" $PWD
+
+set-perms
