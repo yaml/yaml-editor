@@ -81,7 +81,7 @@ $(LIBYAML_BINARIES): libyaml
 	touch $@
 
 $(JAVA_BINARIES): $(JAVA_SOURCES)
-	docker run --rm -v $(BASE):/work builder java-compile $<
+	docker run --rm -v $(BASE):/work builder-java java-compile $<
 	touch $@
 
 $(NIM_BINARIES): src/nimyaml_event.nim

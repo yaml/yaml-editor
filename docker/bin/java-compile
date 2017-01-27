@@ -2,8 +2,9 @@
 
 set -e
 
-cd /work/yaml-editor/docker/snakeyaml
-mvn assemble:single
+cd /work/yaml-editor/docker/java
+mvn assembly:single
+mvn resources:resources
 mv target/snake2json-0.1.jar target/classes/java-json.sh ../build/bin
 
 # Leave this line here. Needed.
