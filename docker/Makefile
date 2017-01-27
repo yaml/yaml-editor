@@ -66,19 +66,19 @@ python-modules: builder-python $(PYTHON_MODULES)
 
 #------------------------------------------------------------------------------
 $(GHC_BINARIES): yamlreference
-	docker run --rm -it -v $(BASE):/work builder-ghc ghc-compile $< $@
+	docker run --rm -v $(BASE):/work builder-ghc ghc-compile $< $@
 	touch $@
 
 $(LIBYAML_BINARIES): libyaml
-	docker run --rm -it -v $(BASE):/work builder libyaml-compile $<
+	docker run --rm -v $(BASE):/work builder libyaml-compile $<
 	touch $@
 
 $(NIM_BINARIES): src/nimyaml_event.nim
-	docker run --rm -it -v $(BASE):/work builder-nim nim-compile $< $@
+	docker run --rm -v $(BASE):/work builder-nim nim-compile $< $@
 	touch $@
 
 $(NODE_MODULES): js-yaml
-	docker run --rm -it -v $(BASE):/work builder-node node-modules $<
+	docker run --rm -v $(BASE):/work builder-node node-modules $<
 	touch $@
 
 $(PERL5_YAML_PM): yaml-pm test-base-pm
@@ -114,7 +114,7 @@ $(PERL6_YAMLISH): yamlish
 	touch $@
 
 $(PYTHON_MODULES): pyyaml
-	docker run --rm -it -v $(BASE):/work builder-python python-modules $<
+	docker run --rm -v $(BASE):/work builder-python python-modules $<
 	touch $@
 
 builder:
