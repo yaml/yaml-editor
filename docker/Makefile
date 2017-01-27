@@ -4,10 +4,10 @@ BASE := $(shell cd ../..; pwd)
 GHC_BINARIES := build/bin/yaml2yeast
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
 JAVA_BINARIES := build/bin/java-json
-JAVA_SOURCES :=
-    snakeyaml/java-json.sh \
-    snakeyaml/pom.xml \
-    snakeyaml/src/main/java/org/yaml/editor/Snake2Json.java
+JAVA_SOURCES := \
+    java/src/main/resources/java-json.sh \
+    java/pom.xml \
+    java/src/main/java/org/yaml/editor/Snake2Json.java
 NIM_BINARIES := build/bin/nimyaml-event
 NODE_MODULES := build/node_modules/js-yaml/lib/js-yaml.js
 PERL5_YAML_PM := build/lib/perl5/YAML.pm
