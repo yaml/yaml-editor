@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 set -e
-java -jar snake2json-${project.version}.jar
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+java -jar $SCRIPTPATH/snake2json-${project.version}-jar-with-dependencies.jar
