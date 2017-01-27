@@ -4,7 +4,7 @@ set -e
 
 cd /work/yaml-editor/docker/snakeyaml
 SNAKEYAML_VERSION=$(xmlstarlet sel -t -v '/_:project/_:version' pom.xml)
-mvn clean install
+mvn clean install -DskipTests
 
 cd /work/yaml-editor/docker/java
 mvn clean compile -Dsnakeversion=$SNAKEYAML_VERSION
