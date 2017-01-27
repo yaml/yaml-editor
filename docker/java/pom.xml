@@ -18,6 +18,11 @@
         </contributor>
     </contributors>
 
+    <properties>
+        <!-- can be changed from command line -->
+        <snakeversion>1.17</snakeversion>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -33,7 +38,7 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.17</version>
+            <version>${snakeversion}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>

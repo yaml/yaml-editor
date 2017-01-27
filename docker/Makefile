@@ -80,7 +80,7 @@ $(LIBYAML_BINARIES): libyaml
 	docker run --rm -v $(BASE):/work builder libyaml-compile $<
 	touch $@
 
-$(JAVA_BINARIES): $(JAVA_SOURCES)
+$(JAVA_BINARIES): $(JAVA_SOURCES) snakeyaml
 	docker run --rm -v $(BASE):/work builder-java java-compile $<
 	touch $@
 

@@ -4,4 +4,6 @@ ENV PATH=/work/yaml-editor/docker/bin:$PATH
 
 COPY java /snake2json
 
-RUN true
+RUN apt-get update \
+  && apt-get install -y xmlstarlet \
+  && true

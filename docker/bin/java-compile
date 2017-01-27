@@ -2,10 +2,14 @@
 
 set -e
 
+cd /work/yaml-editor/docker/snakeyaml
+SNAKEYAML_VERSION=$(xmlstarlet sel -t -v '/_:project/_:version' pom.xml)
+mvn clean install
+
 cd /work/yaml-editor/docker/java
-mvn clean compile
+mvn clean compile -Dsnakeversion=$SNAKEYAML_VERSION
 mv target/classes/java-json.sh ../build/bin/java-json
-mvn assembly:single
+mvn assembly:single -Dsnakeversion=$SNAKEYAML_VERSION
 mv target/snake2json-*-jar-with-dependencies.jar ../build/bin/
 
 # Leave this line here. Needed.
