@@ -3,11 +3,10 @@
 set -e
 
 cd /work/yaml-editor/docker/java
-mvn clean
-mvn assembly:single
-mvn resources:resources
-mv target/snake2json-*-jar-with-dependencies.jar ../build/bin/
+mvn clean compile
 mv target/classes/java-json.sh ../build/bin/java-json
+mvn assembly:single
+mv target/snake2json-*-jar-with-dependencies.jar ../build/bin/
 
 # Leave this line here. Needed.
 set-perms

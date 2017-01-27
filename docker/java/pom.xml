@@ -5,7 +5,7 @@
     <groupId>org.yaml.editor.builder</groupId>
     <artifactId>snake2json</artifactId>
     <version>0.1</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <url>https://github.com/yaml/yaml-editor</url>
     <organization>
