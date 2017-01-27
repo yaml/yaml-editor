@@ -3,6 +3,7 @@ BASE := $(shell cd ../..; pwd)
 #------------------------------------------------------------------------------
 GHC_BINARIES := build/bin/yaml2yeast
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
+JAVA_BINARIES := build/bin/java-json
 NIM_BINARIES := build/bin/nimyaml-event
 NODE_MODULES := build/node_modules/js-yaml/lib/js-yaml.js
 PERL5_YAML_PM := build/lib/perl5/YAML.pm
@@ -32,6 +33,7 @@ all: \
     setup \
     ghc-binaries \
     libyaml-binaries \
+    java-binaries \
     nim-binaries \
     node-modules \
     perl5-modules \
@@ -57,6 +59,7 @@ clean:
 #------------------------------------------------------------------------------
 ghc-binaries: builder-ghc $(GHC_BINARIES)
 libyaml-binaries: builder $(LIBYAML_BINARIES)
+java-binaries: builder-java $(JAVA_BINARIES)
 nim-binaries: builder-nim $(NIM_BINARIES)
 node-modules: builder-node $(NODE_MODULES)
 perl5-modules: builder-perl5 $(PERL5_MODULES)
@@ -71,6 +74,10 @@ $(GHC_BINARIES): yamlreference
 
 $(LIBYAML_BINARIES): libyaml
 	docker run --rm -v $(BASE):/work builder libyaml-compile $<
+	touch $@
+
+$(JAVA_BINARIES): src/java/ snakeyaml
+	docker run --rm -v $(BASE):/work builder java-compile $< $@
 	touch $@
 
 $(NIM_BINARIES): src/nimyaml_event.nim
@@ -138,6 +145,9 @@ builder-%: builder
 
 ../../js-yaml:
 	git clone git@github.com:nodeca/$(@:../../%=%) $@
+
+../../snakeyaml:
+	hg clone https://bitbucket.org/asomov/$(@:../../%=%) $@
 
 ../../yaml-pm ../../yaml-libyaml-pm ../../yaml-pegex-pm ../../pegex-pm ../../testml-pm ../../test-base-pm:
 	git clone git@github.com:ingydotnet/$(@:../../%=%) $@

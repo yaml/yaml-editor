@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd /work/yaml-editor/docker/$1
+
+echo;echo;echo;echo;echo;echo;echo;echo
+echo 'You are in your java code area:'
+(set -x; ls -l $PWD)
+
+echo
+echo 'The snakeyaml sources to use are in `/work/snakeyaml`:'
+(set -x; ls -l /work/snakeyaml)
+
+echo
+echo "Edit this script '$0' to compile your java to binary called java-json."
+echo "Then: mv java-json $2"
+
+# Compile java code to program calland move result:
+(set -x; mv java-json $2)
+
+# Leave this line here. Needed.
+set-perms

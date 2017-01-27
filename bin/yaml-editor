@@ -23,25 +23,28 @@ x,debug     Debug - Turn on Bash trace (set -x) output
 "
 
 ALL_VIEWS="\
-js-yaml.json        JS/Node js-yaml   -> JSON
-libyaml.event       libyaml           -> Event Stream
-libyaml.yaml        libyaml           -> YAML
-nimyaml.event       Nim NimYAML       -> Event Stream
-perl5-pm.pl         Perl5 YAML.pm     -> Perl Data
-perl5-syck.pl       Perl5 YAML::Syck  -> Perl Data
-perl5-tiny.pl       Perl5 YAML::Tiny  -> Perl Data
-perl5-xs.pl         Perl5 YAML::XS    -> Perl Data
-perl5-pegex.event   Perl5 YAML::Pegex -> Event Stream
-perl5-pp.event      Perl5 YAML::PP    -> Event Stream
-perl6.json          Perl6 YAMLish     -> JSON
-perl6.p6            Perl6 YAMLish     -> Perl6 Data
-pyyaml.event        Python pyyaml     -> Event Stream
-pyyaml.py           Python pyyaml     -> Python Data
-ref.yeast           Reference Parser  -> YEAST Events
-ruby.json           Ruby psych        -> JSON
+View Name         | YAML Framework       Output Format
+------------------+-----------------------------------
+js-yaml.json      | JS/Node js-yaml   -> JSON
+libyaml.event     | libyaml           -> Event Stream
+libyaml.yaml      | libyaml           -> YAML
+java.json         | Java SnakeYAML    -> JSON
+nimyaml.event     | Nim NimYAML       -> Event Stream
+perl5-pm.pl       | Perl5 YAML.pm     -> Perl Data
+perl5-syck.pl     | Perl5 YAML::Syck  -> Perl Data
+perl5-tiny.pl     | Perl5 YAML::Tiny  -> Perl Data
+perl5-xs.pl       | Perl5 YAML::XS    -> Perl Data
+perl5-pegex.event | Perl5 YAML::Pegex -> Event Stream
+perl5-pp.event    | Perl5 YAML::PP    -> Event Stream
+perl6.json        | Perl6 YAMLish     -> JSON
+perl6.p6          | Perl6 YAMLish     -> Perl6 Data
+pyyaml.event      | Python pyyaml     -> Event Stream
+pyyaml.py         | Python pyyaml     -> Python Data
+ref.yeast         | Reference Parser  -> YEAST Events
+ruby.json         | Ruby psych        -> JSON
 "
 
-all_views=($(echo "$ALL_VIEWS" | perl -pe 's/ .*//'))
+all_views=($(echo "$ALL_VIEWS" | perl -ne 's/ .*//; print if /\./'))
 
 
 : ${YAML_EDITOR_ROOT:=$(cd $(dirname $BASH_SOURCE)/..; pwd)}
