@@ -4,6 +4,8 @@ set -ex
 
 repo=$1
 
+cd /work/$repo
+
 panda install --prefix=/work/build .
 
 git clean -dxf
