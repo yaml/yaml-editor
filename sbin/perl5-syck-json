@@ -1,0 +1,14 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use 5.010;
+
+use Data::Dumper;
+use YAML::Syck;
+use Mojo::JSON;
+
+$Data::Dumper::Sortkeys = 1;
+$Data::Dumper::Indent=2;
+$Data::Dumper::Terse=1;
+
+print Mojo::JSON::encode_json( Load do { local $/; <> } );
