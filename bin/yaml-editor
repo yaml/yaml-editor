@@ -138,7 +138,6 @@ foo: bar
 editor-start() {
   get-views
   get-yaml
-  export YAML_EDITOR_VIEWS="${views[*]}"
 
   cp /yaml-editor/share/vimrc .vimrc
   cp /yaml-editor/share/help help
@@ -184,8 +183,10 @@ get-yaml() {
 }
 
 run-all() {
-  for view in $YAML_EDITOR_VIEWS; do
-    [[ $view != / ]] || continue
+  for view in *.*; do
+    if [[ $view =~ ^input\.yaml$ ]]; then
+      continue
+    fi
     filter="${view/\./-}"
     cat $file | $filter &> $view || true
   done
@@ -220,6 +221,8 @@ show-tml() {
 }
 
 make-tml() {
+  touch libyaml.yaml js-yaml.json libyaml.event
+  run-all
   tml="\
 === <label goes here>
 from: <Source URL or description>
