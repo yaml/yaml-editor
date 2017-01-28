@@ -2,15 +2,16 @@
 
 set -e
 
-cd /work/yaml-editor/docker/snakeyaml
-SNAKEYAML_VERSION=$(xmlstarlet sel -t -v '/_:project/_:version' pom.xml)
-mvn clean install -DskipTests
+cd /work/snakeyaml
+export SNAKEYAML_VERSION=$(xmlstarlet sel -t -v '/_:project/_:version' pom.xml)
+mvn clean install
 
 cd /work/yaml-editor/docker/java
 mvn clean compile -Dsnakeversion=$SNAKEYAML_VERSION
-mv target/classes/java-json.sh ../build/bin/java-json
+cp src/main/resources/java-json.sh /work/build/bin/java-json
+chmod +x /work/build/bin/java-json
 mvn assembly:single -Dsnakeversion=$SNAKEYAML_VERSION
-mv target/snake2json-*-jar-with-dependencies.jar ../build/bin/
+mv target/snake2json-*-jar-with-dependencies.jar /work/build/
+rm -fr target/
 
-# Leave this line here. Needed.
 set-perms
