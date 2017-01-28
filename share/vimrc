@@ -45,13 +45,11 @@ function RunYAML()
 endfunction
 
 function WriteTestml()
-  call RunYAML()
   rightbelow vsplit `yaml-editor TESTML`
   wincmd L
 endfunction
 
 function SaveTestml()
-  call RunYAML()
   let file = system("yaml-editor SAVE")
   execute "rightbelow vsplit" file
   wincmd L

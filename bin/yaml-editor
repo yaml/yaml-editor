@@ -62,7 +62,7 @@ if [[ -z $YAML_TEST_SUITE ]]; then
 fi
 
 main() {
-  file=input.yaml
+  input_file=input.yaml
   if [[ $(uname) == Darwin ]]; then
     uid=$(stat -f%u $0)
     gid=$(stat -f%g $0)
@@ -106,9 +106,9 @@ docker-run() {
   if [[ -n $option_file ]]; then
     [[ -f $option_file ]] ||
       die "Input file does not exist '$option_file'"
-    cp $option_file $work/$file
+    cp $option_file $work/$input_file
   else
-    cat <<'...' > $work/$file
+    cat <<'...' > $work/$input_file
 foo: bar
 
 # Press enter to render.
@@ -150,9 +150,9 @@ editor-start() {
 
   sleep .2
   if $default_views; then
-    vim -c 'source .vimrc' -c "sbuffer ." $file . -O
+    vim -c 'source .vimrc' -c "sbuffer ." $input_file . -O
   else
-    vims $file ${views[@]} -- -c 'source .vimrc' -c 'sbuffer input.yaml' -c 'wincmd H'
+    vims $input_file ${views[@]} -- -c 'source .vimrc' -c 'sbuffer input.yaml' -c 'wincmd H'
   fi
 }
 
@@ -179,16 +179,16 @@ get-yaml() {
       -e 's/^\+\+\+.*//ms;' \
       -e 's/^\\//mg;'
   )
-  echo "$yaml" > $file
+  echo "$yaml" > $input_file
 }
 
 run-all() {
   for view in *.*; do
-    if [[ $view =~ ^input\.yaml$ ]]; then
+    if [[ $view =~ ^input\.yaml$ || $view =~ \.tml$ ]]; then
       continue
     fi
     filter="${view/\./-}"
-    cat $file | $filter &> $view || true
+    cat $input_file | $filter &> $view || true
   done
 }
 
