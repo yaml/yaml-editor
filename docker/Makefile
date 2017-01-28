@@ -53,6 +53,7 @@ run:
 
 setup:
 	mkdir -p ../../build/bin
+	cp ../sbin/* ../../build/bin/
 	rm -fr build
 	ln -s ../../build
 

@@ -19,7 +19,7 @@ RUN apt-get update \
 
 COPY build/ /
 
-ENV PATH="/yaml-editor/bin:/yaml-editor/sbin:/perl6/bin:${PATH}" \
+ENV PATH="/yaml-editor/bin:/perl6/bin:${PATH}" \
     NODE_PATH=/node_modules \
     PERL5LIB=/lib/perl5 \
     PYTHONPATH=/lib/python2.7/site-packages
