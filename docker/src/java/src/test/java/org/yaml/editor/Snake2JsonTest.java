@@ -19,26 +19,26 @@ public class Snake2JsonTest {
 
     @Test
     public void simpleIntArray() throws IOException {
-        checkConversion("- 1\n- 2\n- 3", "[1,2,3]\n");
+        checkConversion("- 1\n- 2\n- 3", "[\n  1,\n  2,\n  3\n]\n");
     }
 
     @Test
     public void simpleStringArray() throws IOException {
-        checkConversion("- a\n- bc\n- def", "[\"a\",\"bc\",\"def\"]\n");
+        checkConversion("- a\n- bc\n- def", "[\n  \"a\",\n  \"bc\",\n  \"def\"\n]\n");
     }
 
     @Test
     public void simpleStringToBoolMap() throws IOException {
-        checkConversion("first: true\nsecond: false", "{\"first\":true,\"second\":false}\n");
+        checkConversion("first: true\nsecond: false", "{\n  \"first\": true,\n  \"second\": false\n}\n");
     }
 
     @Test
     public void complexStructure() throws IOException {
-        checkConversion("- [1, null, ]\n- {a: b}", "[[1,null],{\"a\":\"b\"}]\n");
+        checkConversion("- [1, null, ]\n- {a: b}", "[\n  [\n    1,\n    null\n  ],\n  {\n    \"a\": \"b\"\n  }\n]\n");
     }
 
     @Test
     public void multipleDocuments() throws IOException {
-        checkConversion("- a\n---\n- b", "[\"a\"]\n[\"b\"]\n");
+        checkConversion("- a\n---\n- b", "[\n  \"a\"\n]\n[\n  \"b\"\n]\n");
     }
 }

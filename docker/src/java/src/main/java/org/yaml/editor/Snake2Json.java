@@ -1,6 +1,7 @@
 package org.yaml.editor;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -13,9 +14,9 @@ public class Snake2Json {
      * @param out Stream to write JSON to
      */
     public void yamlToJson(final InputStream in, final Appendable out) throws IOException {
+        final Gson gson = new GsonBuilder().setPrettyPrinting().create();
         for (final Object node : new Yaml().loadAll(in)) {
-            new Gson().toJson(node, out);
-            /* XXX Need to add newline after each JSON object. */
+            gson.toJson(node, out);
             out.append('\n');
         }
     }
