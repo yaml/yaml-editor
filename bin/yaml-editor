@@ -32,17 +32,21 @@ ALL_VIEWS="\
  4 | java.json         | Java SnakeYAML    | JSON
  5 | nimyaml.event     | Nim NimYAML       | Event Stream
  6 | perl5-pm.pl       | Perl5 YAML.pm     | Perl Data
- 7 | perl5-syck.pl     | Perl5 YAML::Syck  | Perl Data
- 8 | perl5-tiny.pl     | Perl5 YAML::Tiny  | Perl Data
- 9 | perl5-xs.pl       | Perl5 YAML::XS    | Perl Data
-10 | perl5-pegex.event | Perl5 YAML::Pegex | Event Stream
-11 | perl5-pp.event    | Perl5 YAML::PP    | Event Stream
-12 | perl6.json        | Perl6 YAMLish     | JSON
-13 | perl6.p6          | Perl6 YAMLish     | Perl6 Data
-14 | pyyaml.event      | Python pyyaml     | Event Stream
-15 | pyyaml.py         | Python pyyaml     | Python Data
-16 | ref.yeast         | Reference Parser  | YEAST Events
-17 | ruby.json         | Ruby psych        | JSON
+ 7 | perl5-pm.json     | Perl5 YAML.pm     | Perl Data
+ 8 | perl5-syck.pl     | Perl5 YAML::Syck  | Perl Data
+ 9 | perl5-syck.json   | Perl5 YAML::Syck  | Perl Data
+10 | perl5-tiny.pl     | Perl5 YAML::Tiny  | Perl Data
+11 | perl5-tiny.json   | Perl5 YAML::Tiny  | Perl Data
+12 | perl5-xs.pl       | Perl5 YAML::XS    | Perl Data
+13 | perl5-xs.json     | Perl5 YAML::XS    | Perl Data
+14 | perl5-pegex.event | Perl5 YAML::Pegex | Event Stream
+15 | perl5-pp.event    | Perl5 YAML::PP    | Event Stream
+16 | perl6.p6          | Perl6 YAMLish     | Perl6 Data
+17 | perl6.json        | Perl6 YAMLish     | JSON
+18 | pyyaml.event      | Python pyyaml     | Event Stream
+19 | pyyaml.py         | Python pyyaml     | Python Data
+20 | ref.yeast         | Reference Parser  | YEAST Events
+21 | ruby.json         | Ruby psych        | JSON
 "
 
 all_views=($(echo "$ALL_VIEWS" | perl -nle 'print $1 if /([-\w]+\.\w+)/'))
@@ -294,7 +298,7 @@ get-views() {
 
   $option_grid || return 0
 
-  cols=(- 1 2 3 2 3 3 3 3 3 4 4 4 5 5 5 5 5 5 5 5)
+  cols=(- 1 2 3 2 3 3 3 3 3 4 4 4 5 5 5 5 5 5 5 5 5)
   col=${cols[$total]}
   n=0
   views=()
