@@ -3,10 +3,7 @@ package org.yaml.editor;
 import com.google.gson.Gson;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.BufferedWriter;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class Snake2Json {
     /**
@@ -15,15 +12,15 @@ public class Snake2Json {
      * @param in Stream to read YAML from
      * @param out Stream to write JSON to
      */
-    public void yamlToJson(final InputStream in, final Appendable out) {
+    public void yamlToJson(final InputStream in, final Appendable out) throws IOException {
         for (final Object node : new Yaml().loadAll(in)) {
             new Gson().toJson(node, out);
             /* XXX Need to add newline after each JSON object. */
-            /* out.append('\n'); */
+            out.append('\n');
         }
     }
 
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws IOException {
         new Snake2Json().yamlToJson(System.in, System.out);
     }
 }
