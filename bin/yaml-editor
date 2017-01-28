@@ -15,6 +15,7 @@ h           Show the command summary
 help        Browse the complete '$(basename "$0")' documentation
  
 l,list      List the available views
+g,grid      Attempt to display views in a grid layout
 f,file=     Use a YAML file as starting input
 t,testml=   Use a \$YAML_TEST_SUITE case as YAML input
 c,compile   Compile yaml-editor before starting it
@@ -23,29 +24,28 @@ x,debug     Debug - Turn on Bash trace (set -x) output
 "
 
 ALL_VIEWS="\
-View Name         | YAML Framework       Output Format
-------------------+-----------------------------------
-js-yaml.json      | JS/Node js-yaml   -> JSON
-libyaml.event     | libyaml           -> Event Stream
-libyaml.yaml      | libyaml           -> YAML
-java.json         | Java SnakeYAML    -> JSON
-nimyaml.event     | Nim NimYAML       -> Event Stream
-perl5-pm.pl       | Perl5 YAML.pm     -> Perl Data
-perl5-syck.pl     | Perl5 YAML::Syck  -> Perl Data
-perl5-tiny.pl     | Perl5 YAML::Tiny  -> Perl Data
-perl5-xs.pl       | Perl5 YAML::XS    -> Perl Data
-perl5-pegex.event | Perl5 YAML::Pegex -> Event Stream
-perl5-pp.event    | Perl5 YAML::PP    -> Event Stream
-perl6.json        | Perl6 YAMLish     -> JSON
-perl6.p6          | Perl6 YAMLish     -> Perl6 Data
-pyyaml.event      | Python pyyaml     -> Event Stream
-pyyaml.py         | Python pyyaml     -> Python Data
-ref.yeast         | Reference Parser  -> YEAST Events
-ruby.json         | Ruby psych        -> JSON
+ # | View Name         | YAML Framework    | Output Format
+---+-------------------+-------------------+--------------
+ 1 | js-yaml.json      | JS/Node js-yaml   | JSON
+ 2 | libyaml.event     | libyaml           | Event Stream
+ 3 | libyaml.yaml      | libyaml           | YAML
+ 4 | java.json         | Java SnakeYAML    | JSON
+ 5 | nimyaml.event     | Nim NimYAML       | Event Stream
+ 6 | perl5-pm.pl       | Perl5 YAML.pm     | Perl Data
+ 7 | perl5-syck.pl     | Perl5 YAML::Syck  | Perl Data
+ 8 | perl5-tiny.pl     | Perl5 YAML::Tiny  | Perl Data
+ 9 | perl5-xs.pl       | Perl5 YAML::XS    | Perl Data
+10 | perl5-pegex.event | Perl5 YAML::Pegex | Event Stream
+11 | perl5-pp.event    | Perl5 YAML::PP    | Event Stream
+12 | perl6.json        | Perl6 YAMLish     | JSON
+13 | perl6.p6          | Perl6 YAMLish     | Perl6 Data
+14 | pyyaml.event      | Python pyyaml     | Event Stream
+15 | pyyaml.py         | Python pyyaml     | Python Data
+16 | ref.yeast         | Reference Parser  | YEAST Events
+17 | ruby.json         | Ruby psych        | JSON
 "
 
-all_views=($(echo "$ALL_VIEWS" | perl -ne 's/ .*//; print if /\./'))
-
+all_views=($(echo "$ALL_VIEWS" | perl -nle 'print $1 if /([-\w]+\.\w+)/'))
 
 : ${YAML_EDITOR_ROOT:=$(cd $(dirname $BASH_SOURCE)/..; pwd)}
 export PATH="${YAML_EDITOR_ROOT:?}/lib:$PATH"
@@ -185,6 +185,7 @@ get-yaml() {
 
 run-all() {
   for view in $YAML_EDITOR_VIEWS; do
+    [[ $view != / ]] || continue
     filter="${view/\./-}"
     cat $file | $filter &> $view || true
   done
@@ -250,13 +251,21 @@ get-views() {
   views=()
   default_views=false
   if [[ ${#view_spec[@]} -eq 0 ]]; then
-    default_views=true
     views=("${all_views[@]}")
-    return
+    if ! $option_grid; then
+      default_views=true
+      return
+    fi
   fi
+
   for view in "${view_spec[@]}"; do
     if [[ $view == / ]]; then
       views+=("$view")
+    elif [[ $view =~ ^[0-9]+$ ]]; then
+      if [[ $view -lt 1 || $view -gt ${#all_views[@]} ]]; then
+        die "Invalid view number '$view'"
+      fi
+      views+=(${all_views[$((view - 1))]})
     elif [[ $view =~ ^/ ]]; then
       regex=${view#/}
       regex=${regex%/}
@@ -271,6 +280,28 @@ get-views() {
       check-view "$view"
       views+=("$view")
     fi
+  done
+
+  views2=()
+  for view in "${views[@]}"; do
+    [[ $view == / ]] || views2+=("$view")
+  done
+  total=${#views2[@]}
+  [[ $total -gt 0 ]] || die "Invalid usage\n"
+
+  $option_grid || return 0
+
+  cols=(- 1 2 3 2 3 3 3 3 3 4 4 4 5 5 5 5 5 5 5 5)
+  col=${cols[$total]}
+  n=0
+  views=()
+  for view in "${views2[@]}"; do
+    if [[ $n -ge $col ]]; then
+      views+=(/)
+      n=0
+    fi
+    views+=("$view")
+    : $((n++))
   done
 }
 

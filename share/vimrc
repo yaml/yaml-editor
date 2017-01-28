@@ -18,7 +18,7 @@ set autoread exrc
 map \o :rightbelow split .<CR>
 map \O :rightbelow vsplit .<CR>
 map <SPACE> :call RunYAML()<CR><CR>
-map \g :call RunYAML()<CR>:wa<BAR>!gist-paste *.*<CR>
+map \g :call RunYAML()<CR>:wa<BAR>!eval 'gist-paste *.*'<CR>
 nnoremap \t :call WriteTestml()<CR><CR>
 nnoremap \s :call SaveTestml()<CR><CR>
 map \c :sb input.yaml<CR><BAR>ggVGd
