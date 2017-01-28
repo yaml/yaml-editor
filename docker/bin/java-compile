@@ -6,7 +6,7 @@ cd /work/snakeyaml
 export SNAKEYAML_VERSION=$(xmlstarlet sel -t -v '/_:project/_:version' pom.xml)
 mvn clean install
 
-cd /work/yaml-editor/docker/java
+cd /work/yaml-editor/docker/src/java
 mvn clean compile -Dsnakeversion=$SNAKEYAML_VERSION
 cp src/main/resources/java-json.sh /work/build/bin/java-json
 chmod +x /work/build/bin/java-json
