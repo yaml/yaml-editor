@@ -16,8 +16,11 @@ public class Snake2Json {
      * @param out Stream to write JSON to
      */
     public void yamlToJson(final InputStream in, final Appendable out) {
-        final Object input = new Yaml().load(in);
-        new Gson().toJson(input, out);
+        for (final Object node : new Yaml().loadAll(in)) {
+            new Gson().toJson(node, out);
+            /* XXX Need to add newline after each JSON object. */
+            /* out.append('\n'); */
+        }
     }
 
     public static void main(final String[] args) {
