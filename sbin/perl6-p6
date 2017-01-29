@@ -5,5 +5,9 @@ use YAMLish;
 use Data::Dump;
 
 for load-yamls(slurp) -> $doc {
+    if ($doc ~~ Failure) {
+        note $doc;
+        exit 1;
+    }
     say Dump $doc, :color(False);
 }
