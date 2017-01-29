@@ -23,6 +23,7 @@ PERL5_MODULES := \
     $(PERL5_YAML_SYCK) \
     $(PERL5_YAML_PEGEX) \
     $(PERL5_YAML_PP)
+CPAN_MODULES := Mojo\:\:JSON
 PERL6_RUNTIME := build/bin/perl6
 PERL6_YAMLISH := build/lib/YAMLish.pm6
 PERL6_MODULES := $(PERL6_YAMLISH)
@@ -41,6 +42,7 @@ all: \
     nim-binaries \
     node-modules \
     perl5-modules \
+    perl5-runtime \
     perl6-runtime \
     perl6-modules \
     python-modules
@@ -68,6 +70,7 @@ java-binaries: builder-java $(JAVA_BINARIES)
 nim-binaries: builder-nim $(NIM_BINARIES)
 node-modules: builder-node $(NODE_MODULES)
 perl5-modules: builder-perl5 $(PERL5_MODULES)
+perl5-runtime: builder-perl5 $(CPAN_MODULES)
 perl6-runtime: builder-perl6 $(PERL6_RUNTIME)
 perl6-modules: builder-perl6 $(PERL6_MODULES)
 python-modules: builder-python $(PYTHON_MODULES)
@@ -92,6 +95,9 @@ $(NIM_BINARIES): src/nimyaml_event.nim
 $(NODE_MODULES): js-yaml
 	docker run --rm -v $(BASE):/work builder-node node-modules $<
 	touch $@
+
+$(CPAN_MODULES):
+	docker run --rm -v $(BASE):/work builder-perl5 cpan-modules $@
 
 $(PERL5_YAML_PM): yaml-pm test-base-pm
 	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<

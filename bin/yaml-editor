@@ -192,7 +192,12 @@ run-all() {
       continue
     fi
     filter="${view/\./-}"
-    cat $input_file | $filter &> $view || true
+    output=$(cat $input_file | $filter 2>&1 || true)
+    re='^[\{\[]'
+    if [[ $view =~ \.json$ && $output =~ $re ]]; then
+      output=$(echo "$output" | jq .)
+    fi
+    echo "$output" > $view
   done
 }
 

@@ -5,6 +5,7 @@ RUN apt-get update \
     default-jre-headless \
     gist \
     git \
+    jq \
     nodejs \
     npm \
     perl \

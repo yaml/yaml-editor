@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -ex
+
+module=$1
+
+cpanm -n -L /work/build "$module"
+
+set-perms
