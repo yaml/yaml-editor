@@ -345,7 +345,10 @@ get-options() {
 }
 
 tml() {
-  cat $1 | perl -pe 's/^(\s+$|%|#)/\\$1/'
+  cat $1 |
+    perl -pe 's/^(\s+$|%|#)/\\$1/' |
+    perl -pe 's/( +)$/"·" x length($1)/gem' |
+    perl -pe 's/\t/→/g'
 }
 
 [[ $0 != "$BASH_SOURCE" ]] || main "$@"

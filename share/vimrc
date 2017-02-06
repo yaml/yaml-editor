@@ -67,6 +67,12 @@ setlocal autoindent sw=2 et
 setlocal indentexpr=GetYamlIndent()
 setlocal indentkeys=o,O,*<Return>,!^F
 
+highlight TabsWhitespace ctermbg=blue guibg=blue
+autocmd VimEnter,WinEnter,BufNewFile,BufRead * match TabsWhitespace /\t/
+highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd VimEnter,WinEnter,BufNewFile,BufRead * call matchadd('ExtraWhitespace', '\ \+$')
+" autocmd BufNewFile,BufRead * call matchadd('ExtraWhitespace', '\s\+$')
+
 function! GetYamlIndent()
   let lnum = v:lnum - 1
   if lnum == 0
