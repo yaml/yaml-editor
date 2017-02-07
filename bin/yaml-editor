@@ -19,6 +19,7 @@ g,grid      Attempt to display views in a grid layout
 f,file=     Use a YAML file as starting input
 t,testml=   Use a \$YAML_TEST_SUITE case as YAML input
 c,compile   Compile yaml-editor before starting it
+L,local     Use local sources for dynamic languages
  
 x,debug     Debug - Turn on Bash trace (set -x) output
 "

@@ -1,0 +1,87 @@
+- ActionScript
+  - https://github.com/lucasdupin/Simple-AS3-YAML
+- Bash
+- C
+  - https://www.wpsoftware.net/andrew/pages/libyaml.html
+- C++
+  - https://github.com/jbeder/yaml-cpp
+- C#
+  - https://github.com/aaubry/YamlDotNet
+  - https://www.codeproject.com/articles/28720/yaml-parser-in-c
+- Clojure
+  - https://github.com/owainlewis/yaml
+- Common Lisp
+  - https://github.com/eudoxia0/cl-yaml
+- Crystal
+  - https://crystal-lang.org/api/0.19.4/YAML.html
+- D
+  - https://github.com/kiith-sa/D-YAML
+- Dart
+  - https://pub.dartlang.org/packages/yaml
+- Elixir
+  - https://github.com/KamilLelonek/yaml-elixir
+- Erlang
+  - https://github.com/yakaz/yamerl
+- F#
+  - https://github.com/vasily-kirichenko/FSharp.Data.Experimental.YamlTypeProvider
+- Go
+  - https://github.com/go-yaml/yaml
+  - https://gopkg.in/yaml.v2
+- Groovy
+  - http://stackoverflow.com/questions/41731059/how-do-i-parse-a-yaml-file-in-groovy
+- Hack
+- Haskell
+  - https://hackage.haskell.org/package/yaml
+- Java
+  - https://bitbucket.org/asomov/snakeyaml
+- JavaScript
+  - https://nodeca.github.io/js-yaml/
+- Julia
+  - http://pkg.julialang.org/detail/YAML.html
+  - https://github.com/dcjones/YAML.jl
+- Lua
+  - https://luarocks.org/modules/gaspard/yaml
+  - https://tarantool.org/doc/reference/reference_lua/yaml.html
+- MATLAB
+  - https://code.google.com/archive/p/yamlmatlab/
+- Nim
+  - https://github.com/flyx/NimYAML
+- Objective-C
+  - https://github.com/mirek/YAML.framework
+- OCaml
+  - http://ocaml-syck.sourceforge.net/
+- Perl
+  - http://search.cpan.org/dist/YAML/
+  - http://search.cpan.org/dist/YAML-LibYAML/
+  - http://search.cpan.org/dist/YAML-Syck/
+  - http://search.cpan.org/dist/YAML-Tiny/
+- Perl6
+  - https://github.com/Leont/yamlish
+- PHP
+  - https://symfony.com/doc/current/components/yaml/yaml_format.html
+    - https://packagist.org/packages/symfony/yaml
+  - http://php.net/manual/en/book.yaml.php
+- Python
+  - https://pypi.python.org/pypi/ruamel.yaml
+- R
+  - https://cran.r-project.org/web/packages/yaml/index.html
+- Racket
+  - http://docs.racket-lang.org/yaml/
+- Ruby
+  - https://ruby-doc.org/stdlib-2.2.3/libdoc/yaml/rdoc/YAML.html
+- Rust
+  - https://crates.io/crates/yaml-rust/
+  - https://github.com/esilkensen/yaml
+- Scala
+  - http://stackoverflow.com/questions/19441400/working-with-yaml-for-scala
+- Scheme
+  - https://github.com/tenderlove/chicken-yaml
+- Swift
+  - https://github.com/behrang/YamlSwift
+- Tcl
+  - https://core.tcl.tk/tcllib/doc/tcllib-1-16/embedded/www/tcllib/files/modules/yaml/yaml.html
+- TypeScript
+- Visual Basic
+  - See C#
+- VimScript
+  - http://www.vim.org/scripts/script.php?script_id=3190

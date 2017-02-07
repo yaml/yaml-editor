@@ -1,22 +1,10 @@
-== Next
-- Use user's vim settings
-- Try parallel or make -J
-- \t should not open multiple TEST.tml windows
-- \n to toggle numbers
-- SPACE should update TEST.tml
-- Update existing test file
-- Add diff mode to editor
-- Fix -h
-
-== yaml-editor
-
-- Write documentation for yaml-editor
-
-- Add support for:
-  - Python
-  - Ruby
-  - SnakeYAML
-
+- Write documentation
 - Add output options:
   - JSON
   - YAML
+- Use user's vim settings
+- Try parallel or make -J
+- \t should not open multiple TEST.tml windows
+- SPACE should update TEST.tml
+- Update existing test file
+- Add diff mode to editor

@@ -24,6 +24,7 @@ nnoremap \s :call SaveTestml()<CR><CR>
 map \c :sb input.yaml<CR><BAR>ggVGd
 map \Q :qa!<CR>
 map \h :vsp help<CR>:wincmd H<CR>
+map \n :windo set number!<cr>
 
 map \q :q<cr>
 map \8 <c-w>80<bar>

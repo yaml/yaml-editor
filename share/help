@@ -18,6 +18,7 @@ Editor commands (press these keys in vim NORMAL mode):
 \8        Make current pane 80 wide
 \|        Make current pane max wide
 \_        Make current pane max height
+\n        Toggle line numbering in all windows
 \g        Gist all the current files
 \t        Create TestML from YAML
 \s        Save TestML to $YAML_TEST_SUITE new test file
