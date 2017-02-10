@@ -15,22 +15,22 @@ set switchbuf=useopen
 set autoread exrc
 
 " YAML Editor hotkeys:
-map \o :rightbelow split .<CR>
-map \O :rightbelow vsplit .<CR>
-map <SPACE> :call RunYAML()<CR><CR>
-map \g :call RunYAML()<CR>:wa<BAR>!eval 'gist-paste *.*'<CR>
-nnoremap \t :call WriteTestml()<CR><CR>
-nnoremap \s :call SaveTestml()<CR><CR>
-map \c :sb input.yaml<CR><BAR>ggVGd
-map \Q :qa!<CR>
-map \h :vsp help<CR>:wincmd H<CR>
-map \n :windo set number!<cr>
-
+map \o :rightbelow split .<cr>
+map \O :rightbelow vsplit .<cr>
+map <SPACE> :call RunYAML()<cr><cr>
+map \g :call RunYAML()<cr>:wa<bar>!eval 'gist-paste *.*'<cr>
+nnoremap \t :call WriteTestml()<cr><cr>
+nnoremap \s :call SaveTestml()<cr><cr>
+map \c :sb input.yaml<cr><bar>ggVGd
+map \Q :qa!<cr>
 map \q :q<cr>
 map \8 <c-w>80<bar>
 map \= <c-w>=
 map \_ <c-w>_
 map \<bar> <c-w><bar>
+map \n :windo set number!<cr>
+map \h :!(clear; less -FRX help)<cr>
+map \l :!(clear; yaml-editor -l <bar> less -FRX)<cr>
 
 " Handy window commands:
 nnoremap <c-j> <c-w>j<c-w><Esc>
