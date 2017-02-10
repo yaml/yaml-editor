@@ -180,9 +180,9 @@ set-local-sources() {
   )
   for perl in "${perls[@]}"; do
     if [[ -e /local_source/$perl ]]; then
-      export PERL5LIB="$(
+      export PERL5LIB=$(
         IFS=:; set -- /local_source/$perl/lib $PERL5LIB; echo "$*"
-      )"
+      )
     fi
   done
 }
@@ -228,13 +228,6 @@ run-all() {
   done
 }
 
-reformat() {
-  perl -p0 \
-    -e 's/<TAB>/\t/g;' \
-    -e 's/([^\n])\\\n\z/$1/;' \
-    -e ''
-}
-
 save-tml() {
   local dir=
   [[ -e /suite ]] && dir=/suite || dir=.
@@ -266,13 +259,14 @@ show-tml() {
 make-tml() {
   touch libyaml.yaml js-yaml.json libyaml.event
   run-all
+  # TODO Populate tag words with heuristics.
   tml="\
 === <label goes here>
 from: <Source URL or description>
-tags: <tag,words,separated,by,commas>
+tags: tag words
 
 +++ in-yaml
-$(tml input.yaml)
+$(cat input.yaml | reformat | tml)
 "
   libyaml=$(tml libyaml.event)
   if [[ $libyaml =~ (^|$'\n')[^\+\-\=] ]]; then
@@ -282,13 +276,13 @@ $(tml input.yaml)
   else
     tml+="
 +++ out-yaml
-$(tml libyaml.yaml)
+$(cat libyaml.yaml | tml)
 
 +++ in-json
-$(tml js-yaml.json)
+$(cat js-yaml.json | tml)
 
 +++ test-event
-$(tml libyaml.event)
+$(cat libyaml.event | tml)
 "
   fi
 }
@@ -378,11 +372,20 @@ get-options() {
   true
 }
 
+reformat() {
+  perl -p0 \
+    -e 's/<TAB>/\t/g;' \
+    -e 's/([^\n])(\\|<NEL>)\n\z/$1/;' \
+    -e ''
+}
+
 tml() {
-  cat $1 |
-    perl -pe 's/( +)$/"<SPC>" x length($1)/gem' |
-    perl -pe 's/\t/<TAB>/g' |
-    perl -pe 's/^([\ \t]+$|%|#)/\\$1/'
+  perl -p0 \
+    -e 's/( +)$/"<SPC>" x length($1)/gem;' \
+    -e 's/\t/<TAB>/g;' \
+    -e 's/^([\ \t]+$|%|#)/\\$1/;' \
+    -e 's/([^\n])\z/$1<NEL>\n/;' \
+    -e ''
 }
 
 [[ $0 != "$BASH_SOURCE" ]] || main "$@"
