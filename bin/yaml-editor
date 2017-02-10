@@ -19,7 +19,7 @@ g,grid      Attempt to display views in a grid layout
 f,file=     Use a YAML file as starting input
 t,testml=   Use a \$YAML_TEST_SUITE case as YAML input
 c,compile   Compile yaml-editor before starting it
-L,local     Use local sources for dynamic languages
+local       Use local sources for dynamic languages
  
 x,debug     Debug - Turn on Bash trace (set -x) output
 "
@@ -105,8 +105,10 @@ docker-run() {
     )
   fi
 
-  root=$(cd "$(dirname "$0")/.."; pwd)
   work=$(mktemp -d /tmp/XXXXXXXXXXXXXXXX)
+  root=$(cd "$(dirname "$0")/.."; pwd)
+  local_source="-v $(cd "$root/.."; pwd):/local_source"
+  $option_local || local_source=''
 
   if [[ -n $option_file ]]; then
     [[ -f $option_file ]] ||
@@ -134,6 +136,7 @@ foo: bar
     -v "$work":/yaml \
     -v "$root":/yaml-editor \
     $mount_suite \
+    $local_source \
     yamlio/yaml-editor \
     yaml-editor "$@"
 
@@ -153,12 +156,35 @@ editor-start() {
 
   chown -R "$uid.$gid" .
 
+  if [[ -e /local_source ]]; then
+    set-local-sources
+  fi
+
   sleep .2
   if $default_views; then
     vim -c 'source .vimrc' -c "sbuffer ." $input_file . -O
   else
-    vims $input_file ${views[@]} -- -c 'source .vimrc' -c 'sbuffer input.yaml' -c 'wincmd H'
+    vims $input_file ${views[@]} -- \
+      -c 'source .vimrc' -c 'sbuffer input.yaml' -c 'wincmd H'
   fi
+}
+
+set-local-sources() {
+  perls=(
+    yaml-pm
+    yaml-libyaml-pm
+    yaml-pegex-pm
+    YAML-Syck
+    YAML-Tiny
+    YAML-PP-p5
+  )
+  for perl in "${perls[@]}"; do
+    if [[ -e /local_source/$perl ]]; then
+      export PERL5LIB="$(
+        IFS=:; set -- /local_source/$perl/lib $PERL5LIB; echo "$*"
+      )"
+    fi
+  done
 }
 
 get-yaml() {
