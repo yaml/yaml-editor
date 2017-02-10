@@ -373,9 +373,9 @@ get-options() {
 
 tml() {
   cat $1 |
-    perl -pe 's/^(\s+$|%|#)/\\$1/' |
-    perl -pe 's/( +)$/"·" x length($1)/gem' |
-    perl -pe 's/\t/→/g'
+    perl -pe 's/( +)$/"<SPC>" x length($1)/gem' |
+    perl -pe 's/\t/<TAB>/g' |
+    perl -pe 's/^([\ \t]+$|%|#)/\\$1/'
 }
 
 [[ $0 != "$BASH_SOURCE" ]] || main "$@"
