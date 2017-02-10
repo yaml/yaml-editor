@@ -219,13 +219,20 @@ run-all() {
       continue
     fi
     filter="${view/\./-}"
-    output=$(cat $input_file | $filter 2>&1 || true)
+    output=$(cat $input_file | reformat | $filter 2>&1 || true)
     re='^[\{\[]'
     if [[ $view =~ \.json$ && $output =~ $re ]]; then
       output=$(echo "$output" | jq .)
     fi
     echo "$output" > $view
   done
+}
+
+reformat() {
+  perl -p0 \
+    -e 's/<TAB>/\t/g;' \
+    -e 's/([^\n])\\\n\z/$1/;' \
+    -e ''
 }
 
 save-tml() {
