@@ -1,15 +1,22 @@
 - ActionScript
   - https://github.com/lucasdupin/Simple-AS3-YAML
+  - https://github.com/gillesv/as3YAML
+- Ada
+  - https://github.com/ytomino/yaml-ada
 - Bash
 - C
   - https://www.wpsoftware.net/andrew/pages/libyaml.html
 - C++
   - https://github.com/jbeder/yaml-cpp
+  - https://github.com/IngisKahn/Nyaml
 - C#
   - https://github.com/aaubry/YamlDotNet
   - https://www.codeproject.com/articles/28720/yaml-parser-in-c
+  - https://github.com/janno-p/YamlSharp
+  - https://github.com/harryw/NetYaml
 - Clojure
   - https://github.com/owainlewis/yaml
+  - https://github.com/lancepantz/clj-yaml
 - Common Lisp
   - https://github.com/eudoxia0/cl-yaml
 - Crystal
@@ -32,10 +39,15 @@
 - Hack
 - Haskell
   - https://hackage.haskell.org/package/yaml
+  - https://github.com/snoyberg/yaml
 - Java
   - https://bitbucket.org/asomov/snakeyaml
 - JavaScript
   - https://nodeca.github.io/js-yaml/
+  - https://github.com/connec/yaml-js
+  - https://github.com/stephank/yaml.node
+  - https://github.com/jiem/node-pyyaml
+  - https://github.com/mckoss/yaml
 - Julia
   - http://pkg.julialang.org/detail/YAML.html
   - https://github.com/dcjones/YAML.jl
@@ -48,6 +60,7 @@
   - https://github.com/flyx/NimYAML
 - Objective-C
   - https://github.com/mirek/YAML.framework
+  - https://github.com/cybergarage/YAML4ObjC
 - OCaml
   - http://ocaml-syck.sourceforge.net/
 - Perl
@@ -61,10 +74,15 @@
   - https://symfony.com/doc/current/components/yaml/yaml_format.html
     - https://packagist.org/packages/symfony/yaml
   - http://php.net/manual/en/book.yaml.php
+  - https://github.com/symfony/yaml
+  - https://github.com/protaskin/YAML
 - Python
   - https://pypi.python.org/pypi/ruamel.yaml
+  - http://svn.pyyaml.org/pysyck/
+  - https://github.com/yaybu/yay
 - R
   - https://cran.r-project.org/web/packages/yaml/index.html
+  - https://github.com/viking/r-yaml
 - Racket
   - http://docs.racket-lang.org/yaml/
 - Ruby
