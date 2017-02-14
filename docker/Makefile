@@ -88,7 +88,7 @@ $(JAVA_BINARIES): $(JAVA_SOURCES) snakeyaml
 	docker run --rm -v $(BASE):/work builder-java java-compile $<
 	touch $@
 
-$(NIM_BINARIES): src/nimyaml_event.nim
+$(NIM_BINARIES): src/nimyaml_event.nim NimYAML
 	docker run --rm -v $(BASE):/work builder-nim nim-compile $< $@
 	touch $@
 
@@ -156,6 +156,9 @@ builder-%: builder
 
 ../../js-yaml:
 	git clone git@github.com:nodeca/$(@:../../%=%) $@
+
+../../NimYAML:
+	git clone git@github.com:flyx/$(@:../../%=%) $@
 
 ../../snakeyaml:
 	hg clone https://bitbucket.org/asomov/$(@:../../%=%) $@
