@@ -1,12 +1,9 @@
-import yaml/stream, yaml/parser, yaml/taglib, streams
+import yaml/stream, yaml/parser, streams
 
 var
-  tags = initExtendedTagLibrary()
-  p = newYamlParser(tags)
-  yaml = newFileStream(stdin)
-  events = p.parse(yaml)
-  output = ""
+  p = newYamlParser()
+  events = p.parse(newFileStream(stdin))
 
-for event in events: output.add($event & "\n")
-
-stdout.write(output)
+echo "+STR"
+for event in events: echo event
+echo "-STR"
