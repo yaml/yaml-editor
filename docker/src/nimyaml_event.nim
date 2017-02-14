@@ -5,5 +5,5 @@ var
   events = p.parse(newFileStream(stdin))
 
 echo "+STR"
-for event in events: echo event
+for event in events: echo p.display(event)
 echo "-STR"
