@@ -9,7 +9,7 @@ yes | nimble install nimyaml
 mkdir -p /work/build/root
 cp -r /root/.nimble /work/build/root/.nimble
 
-nim c /work/yaml-editor/docker/$source
+nim c -d:yamlScalarRepInd /work/yaml-editor/docker/$source
 mv /work/yaml-editor/docker/${source%.nim} /work/$target
 rm -fr /work/yaml-editor/docker/src/nimcache
 
