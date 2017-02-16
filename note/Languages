@@ -85,11 +85,12 @@
   - https://github.com/viking/r-yaml
 - Racket
   - http://docs.racket-lang.org/yaml/
+  - https://github.com/esilkensen/yaml
 - Ruby
   - https://ruby-doc.org/stdlib-2.2.3/libdoc/yaml/rdoc/YAML.html
 - Rust
   - https://crates.io/crates/yaml-rust/
-  - https://github.com/esilkensen/yaml
+  - https://github.com/chyh1990/yaml-rust
 - Scala
   - http://stackoverflow.com/questions/19441400/working-with-yaml-for-scala
 - Scheme
