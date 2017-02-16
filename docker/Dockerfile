@@ -10,12 +10,14 @@ RUN apt-get update \
     npm \
     perl \
     python \
+    python-pip \
     ruby \
     vim \
  && ( \
         ln /usr/bin/nodejs /usr/bin/node \
         && npm install -g coffee-script \
     ) \
+ && pip install ruamel.yaml \
  && locale-gen en_US.UTF-8 \
  && true
 

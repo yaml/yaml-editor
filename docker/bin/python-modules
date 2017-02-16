@@ -2,7 +2,12 @@
 
 set -ex
 
-cd /work/pyyaml/
-pip install --install-option="--prefix=/work/build" $PWD
+if [[ $1 =~ ruamel ]]; then
+  cd /work/ruamel/
+  pip install --install-option="--prefix=/work/build" $PWD
+else
+  cd /work/pyyaml/
+  pip install --install-option="--prefix=/work/build" $PWD
+fi
 
 set-perms

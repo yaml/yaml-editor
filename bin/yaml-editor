@@ -47,7 +47,9 @@ ALL_VIEWS="\
 18 | pyyaml.event      | Python pyyaml     | Event Stream
 19 | pyyaml.py         | Python pyyaml     | Python Data
 20 | ref.yeast         | Reference Parser  | YEAST Events
-21 | ruby.json         | Ruby psych        | JSON
+21 | ruamel.event      | Python ruamel     | Event Stream
+22 | ruamel.py         | Python ruamel     | Python Data
+23 | ruby.json         | Ruby psych        | JSON
 "
 
 all_views=($(echo "$ALL_VIEWS" | perl -nle 'print $1 if /([-\w]+\.\w+)/'))

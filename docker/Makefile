@@ -27,7 +27,9 @@ CPAN_MODULES := Mojo\:\:JSON
 PERL6_RUNTIME := build/bin/perl6
 PERL6_YAMLISH := build/lib/YAMLish.pm6
 PERL6_MODULES := $(PERL6_YAMLISH)
-PYTHON_MODULES := build/lib/python2.7/site-packages/yaml/__init__.py
+PYTHON_MODULES := \
+    build/lib/python2.7/site-packages/yaml/__init__.py \
+    build/lib/python2.7/site-packages/ruamel/yaml/__init__.py
 
 #------------------------------------------------------------------------------
 # xxx: build/bin nim-binaries
@@ -131,8 +133,8 @@ $(PERL6_YAMLISH): yamlish
 	docker run --rm -v $(BASE):/work builder-perl6 perl6-modules $<
 	touch $@
 
-$(PYTHON_MODULES): pyyaml
-	docker run --rm -v $(BASE):/work builder-python python-modules $<
+$(PYTHON_MODULES): pyyaml ruamel
+	docker run --rm -v $(BASE):/work builder-python python-modules $@
 	touch $@
 
 builder:
@@ -159,6 +161,9 @@ builder-%: builder
 
 ../../NimYAML:
 	git clone git@github.com:flyx/$(@:../../%=%) $@
+
+../../ruamel:
+	hg clone https://bitbucket.org/ruamel/yaml $@
 
 ../../snakeyaml:
 	hg clone https://bitbucket.org/asomov/$(@:../../%=%) $@
