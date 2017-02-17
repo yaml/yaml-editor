@@ -8,6 +8,7 @@
 /snakeyaml
 /test-base-pm
 /testml-pm
+/yaml-cpp
 /yaml-libyaml-pm
 /yaml-pegex-pm
 /yaml-pm

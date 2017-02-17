@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -ex
+
+cd /work/yaml-cpp
+rm -fr build
+mkdir build
+cd build
+
+cmake -DBUILD_SHARED_LIBS=OFF ..
+make yaml-cpp
+cp -r ../include/yaml-cpp .
+
+g++ -Wall -I. -L. -std=gnu++11  \
+	-lyaml-cpp -o /work/build/bin/cpp-event \
+	/work/yaml-editor/docker/src/yaml-cpp-event.cpp libyaml-cpp.a
+
+rm -fr build
+
+set-perms

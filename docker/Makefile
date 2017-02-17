@@ -1,9 +1,9 @@
 #------------------------------------------------------------------------------
 BASE := $(shell cd ../..; pwd)
 #------------------------------------------------------------------------------
+CPP_BINARIES := build/bin/cpp-event
 GHC_BINARIES := build/bin/yaml2yeast
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
-YAMLCPP_BINARIES := build/bin/cpp-event
 JAVA_BINARIES := build/bin/java-json
 JAVA_SOURCES := \
     src/java/src/main/resources/java-json.sh \
@@ -39,9 +39,9 @@ PYTHON_MODULES := \
 
 all: \
     setup \
+    cpp-binaries \
     ghc-binaries \
     libyaml-binaries \
-    yamlcpp-binaries \
     java-binaries \
     nim-binaries \
     node-modules \
@@ -68,9 +68,9 @@ clean:
 	rm -fr build
 
 #------------------------------------------------------------------------------
+cpp-binaries: builder-cmake $(CPP_BINARIES)
 ghc-binaries: builder-ghc $(GHC_BINARIES)
 libyaml-binaries: builder $(LIBYAML_BINARIES)
-yamlcpp-binaries: builder-cmake $(YAMLCPP_BINARIES)
 java-binaries: builder-java $(JAVA_BINARIES)
 nim-binaries: builder-nim $(NIM_BINARIES)
 node-modules: builder-node $(NODE_MODULES)
@@ -81,16 +81,16 @@ perl6-modules: builder-perl6 $(PERL6_MODULES)
 python-modules: builder-python $(PYTHON_MODULES)
 
 #------------------------------------------------------------------------------
+$(CPP_BINARIES): yaml-cpp
+	docker run -it --rm -v $(BASE):/work builder-cmake cpp-compile $<
+	touch $@
+
 $(GHC_BINARIES): yamlreference
 	docker run --rm -v $(BASE):/work builder-ghc ghc-compile $< $@
 	touch $@
 
 $(LIBYAML_BINARIES): libyaml
 	docker run --rm -v $(BASE):/work builder libyaml-compile $<
-	touch $@
-
-$(YAMLCPP_BINARIES):
-	docker run --rm -v $(BASE):/work builder-cmake yaml-cpp-compile $<
 	touch $@
 
 $(JAVA_BINARIES): $(JAVA_SOURCES) snakeyaml
@@ -186,6 +186,9 @@ builder-%: builder
 
 ../../YAML-Syck:
 	git clone git@github.com:toddr/$(@:../../%=%) $@
+
+../../yaml-cpp:
+	git clone https://github.com/jbeder/$(@:../../%=%) $@
 
 ../../yamlish:
 	git clone git@github.com:leont/$(@:../../%=%) $@
