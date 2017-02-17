@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -ex
+
+cd /work/yaml-editor/docker/src
+
+rm -rf yaml-cpp
+git clone https://github.com/jbeder/yaml-cpp
+cd yaml-cpp
+mkdir build
+cd build
+cmake -DBUILD_SHARED_LIBS=OFF ..
+make yaml-cpp
+cp -r ../include/yaml-cpp .
+cp ../../yaml-cpp-event.cpp .
+
+g++ -Wall -I. -L. -std=gnu++11  -lyaml-cpp -o cpp-event \
+    yaml-cpp-event.cpp libyaml-cpp.a
+
+mv cpp-event /work/build/bin/
+
+cd ../..
+rm -rf yaml-cpp
+
+set-perms

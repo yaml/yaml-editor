@@ -3,6 +3,7 @@ BASE := $(shell cd ../..; pwd)
 #------------------------------------------------------------------------------
 GHC_BINARIES := build/bin/yaml2yeast
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
+YAMLCPP_BINARIES := build/bin/cpp-event
 JAVA_BINARIES := build/bin/java-json
 JAVA_SOURCES := \
     src/java/src/main/resources/java-json.sh \
@@ -40,6 +41,7 @@ all: \
     setup \
     ghc-binaries \
     libyaml-binaries \
+    yamlcpp-binaries \
     java-binaries \
     nim-binaries \
     node-modules \
@@ -68,6 +70,7 @@ clean:
 #------------------------------------------------------------------------------
 ghc-binaries: builder-ghc $(GHC_BINARIES)
 libyaml-binaries: builder $(LIBYAML_BINARIES)
+yamlcpp-binaries: builder-cmake $(YAMLCPP_BINARIES)
 java-binaries: builder-java $(JAVA_BINARIES)
 nim-binaries: builder-nim $(NIM_BINARIES)
 node-modules: builder-node $(NODE_MODULES)
@@ -84,6 +87,10 @@ $(GHC_BINARIES): yamlreference
 
 $(LIBYAML_BINARIES): libyaml
 	docker run --rm -v $(BASE):/work builder libyaml-compile $<
+	touch $@
+
+$(YAMLCPP_BINARIES):
+	docker run --rm -v $(BASE):/work builder-cmake yaml-cpp-compile $<
 	touch $@
 
 $(JAVA_BINARIES): $(JAVA_SOURCES) snakeyaml

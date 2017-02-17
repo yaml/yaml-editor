@@ -50,6 +50,7 @@ ALL_VIEWS="\
 21 | ruamel.event      | Python ruamel     | Event Stream
 22 | ruamel.py         | Python ruamel     | Python Data
 23 | ruby.json         | Ruby psych        | JSON
+24 | cpp.event         | C++               | Event Stream
 "
 
 all_views=($(echo "$ALL_VIEWS" | perl -nle 'print $1 if /([-\w]+\.\w+)/'))
