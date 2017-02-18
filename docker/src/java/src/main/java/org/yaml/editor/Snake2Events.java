@@ -56,8 +56,20 @@ public class Snake2Events {
         }
 
         private String value(final Event e) {
+            final StringBuilder builder = new StringBuilder(" ");
             final ScalarEvent ev = (ScalarEvent) e;
-            return " " + (ev.getStyle() == '\0' ? ':' : ev.getStyle()) + ev.getValue();
+            builder.append(ev.getStyle() == '\0' ? ':' : ev.getStyle());
+            for (char c: ev.getValue().toCharArray()) {
+                switch (c) {
+                    case '\b': builder.append("\\b"); break;
+                    case '\t': builder.append("\\t"); break;
+                    case '\n': builder.append("\\n"); break;
+                    case '\r': builder.append("\\r"); break;
+                    case '\\': builder.append("\\\\"); break;
+                    default: builder.append(c); break;
+                }
+            }
+            return builder.toString();
         }
 
         private String flowInd(final Event e, final String ind) {

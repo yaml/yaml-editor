@@ -28,7 +28,7 @@ public class Snake2EventsTest {
 
     @Test
     public void testSequence() throws IOException {
-        checkConversion("- a\n- [b, 'c']", "+STR\n+DOC\n+SEQ\n=VAL :a\n+SEQ\n=VAL :b\n=VAL 'c\n-SEQ\n-SEQ\n-DOC\n-STR\n");
+        checkConversion("- a\n- [b, 'c']", "+STR\n+DOC\n+SEQ\n=VAL :a\n+SEQ []\n=VAL :b\n=VAL 'c\n-SEQ\n-SEQ\n-DOC\n-STR\n");
     }
 
     @Test
