@@ -10,7 +10,7 @@ cd /work/yaml-editor/docker/src/java
 mvn clean compile -Dsnakeversion=$SNAKEYAML_VERSION
 cp src/main/resources/java-json.sh /work/build/bin/java-json
 cp src/main/resources/java-events.sh /work/build/bin/java-events
-chmod +x /work/build/bin/java-json
+chmod +x /work/build/bin/java-json /work/build/bin/java-events
 mvn assembly:single -Dsnakeversion=$SNAKEYAML_VERSION
 mv target/snake2json-*-jar-with-dependencies.jar /work/build/
 rm -fr target/
