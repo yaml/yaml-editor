@@ -60,6 +60,11 @@ public class Snake2Events {
             return " " + (ev.getStyle() == '\0' ? ':' : ev.getStyle()) + ev.getValue();
         }
 
+        private String flowInd(final Event e, final String ind) {
+            final CollectionStartEvent ev = (CollectionStartEvent) e;
+            return ev.getFlowStyle() ? ' ' + ind : "";
+        }
+
         {
             doPut(AliasEvent.class,
                     (final Event e) -> "=ALI *" + ((AliasEvent)e).getAnchor());
@@ -70,7 +75,7 @@ public class Snake2Events {
             doPut(MappingEndEvent.class,
                     (final Event e) -> "-MAP");
             doPut(MappingStartEvent.class,
-                    (final Event e) -> "+MAP" + tagAndAnchor(e));
+                    (final Event e) -> "+MAP" + tagAndAnchor(e) + flowInd(e, "{}"));
             doPut(MappingEndEvent.class,
                     (final Event e) -> "-MAP");
             doPut(ScalarEvent.class,
@@ -78,7 +83,7 @@ public class Snake2Events {
             doPut(SequenceEndEvent.class,
                     (final Event e) -> "-SEQ");
             doPut(SequenceStartEvent.class,
-                    (final Event e) -> "+SEQ" + tagAndAnchor(e));
+                    (final Event e) -> "+SEQ" + tagAndAnchor(e) + flowInd(e, "[]"));
             doPut(StreamEndEvent.class,
                     (final Event e) -> "-STR");
             doPut(StreamStartEvent.class,
