@@ -1,4 +1,4 @@
-FROM maven:3-jdk-7
+FROM maven:3-jdk-8
 
 ENV PATH=/work/yaml-editor/docker/bin:$PATH
 
