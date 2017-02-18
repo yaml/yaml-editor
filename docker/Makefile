@@ -6,10 +6,10 @@ GHC_BINARIES := build/bin/yaml2yeast
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
 JAVA_BINARIES := \
     build/bin/java-json \
-    build/bin/java-events
+    build/bin/java-event
 JAVA_SOURCES := \
     src/java/src/main/resources/java-json.sh \
-    src/java/src/main/resources/java-events.sh \
+    src/java/src/main/resources/java-event.sh \
     src/java/pom.xml \
     src/java/src/main/java/org/yaml/editor/Snake2Json.java \
     src/java/src/main/java/org/yaml/editor/Snake2Events.java
