@@ -13,7 +13,7 @@ public class Snake2Json {
      * @param in Stream to read YAML from
      * @param out Stream to write JSON to
      */
-    public void yamlToJson(final InputStream in, final Appendable out) throws IOException {
+    void yamlToJson(final InputStream in, final Appendable out) throws IOException {
         final Gson gson = new GsonBuilder().setPrettyPrinting().create();
         for (final Object node : new Yaml().loadAll(in)) {
             gson.toJson(node, out);

@@ -4,11 +4,15 @@ BASE := $(shell cd ../..; pwd)
 CPP_BINARIES := build/bin/cpp-event
 GHC_BINARIES := build/bin/yaml2yeast
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
-JAVA_BINARIES := build/bin/java-json
+JAVA_BINARIES := \
+    build/bin/java-json \
+    build/bin/java-events
 JAVA_SOURCES := \
     src/java/src/main/resources/java-json.sh \
+    src/java/src/main/resources/java-events.sh \
     src/java/pom.xml \
-    src/java/src/main/java/org/yaml/editor/Snake2Json.java
+    src/java/src/main/java/org/yaml/editor/Snake2Json.java \
+    src/java/src/main/java/org/yaml/editor/Snake2Events.java
 NIM_BINARIES := build/bin/nimyaml-event
 NODE_MODULES := build/node_modules/js-yaml/lib/js-yaml.js
 PERL5_YAML_PM := build/lib/perl5/YAML.pm
