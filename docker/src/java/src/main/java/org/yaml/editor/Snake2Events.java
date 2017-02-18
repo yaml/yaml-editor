@@ -75,7 +75,7 @@ public class Snake2Events {
             doPut(MappingEndEvent.class,
                     (final Event e) -> "-MAP");
             doPut(MappingStartEvent.class,
-                    (final Event e) -> "+MAP" + tagAndAnchor(e) + flowInd(e, "{}"));
+                    (final Event e) -> "+MAP" + flowInd(e, "{}") + tagAndAnchor(e));
             doPut(MappingEndEvent.class,
                     (final Event e) -> "-MAP");
             doPut(ScalarEvent.class,
@@ -83,7 +83,7 @@ public class Snake2Events {
             doPut(SequenceEndEvent.class,
                     (final Event e) -> "-SEQ");
             doPut(SequenceStartEvent.class,
-                    (final Event e) -> "+SEQ" + tagAndAnchor(e) + flowInd(e, "[]"));
+                    (final Event e) -> "+SEQ" +  flowInd(e, "[]") + tagAndAnchor(e));
             doPut(StreamEndEvent.class,
                     (final Event e) -> "-STR");
             doPut(StreamStartEvent.class,
