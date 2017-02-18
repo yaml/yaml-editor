@@ -7,4 +7,8 @@ LIBYAML_DIR=/libyaml make build
 mv libyaml-parser /work/build/bin/
 mv libyaml-emitter /work/build/bin/
 
+cd /work/libyaml
+
+vcs-info $1
+
 set-perms

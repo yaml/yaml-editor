@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+repo=$1
+
+set -ex
+
+versiondir=/work/build/versions
+[[ -d $versiondir ]] || mkdir $versiondir
+
+if [[ -d .git ]]; then
+  tags="$(git tag -l | wc -l)"
+  if [[ $tags -eq 0 ]]; then
+    echo 0                                        >  $versiondir/$repo
+  else
+    git describe --tags --dirty                   >  $versiondir/$repo
+  fi
+  git log -1 --pretty="tformat:%H"                >> $versiondir/$repo
+  git log -1 --pretty="tformat:%ad" --date=short  >> $versiondir/$repo
+
+elif [[ -d .hg ]]; then
+  hg log -r . --template '{latesttag}-{latesttagdistance}-m{node|short}\n' \
+                                              >  $versiondir/$repo
+  hg log -r . --template '{node}\n'           >> $versiondir/$repo
+  hg log -r . --template '{date|shortdate}\n' >> $versiondir/$repo
+fi

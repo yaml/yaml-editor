@@ -10,4 +10,6 @@ panda install --prefix=/work/build .
 
 git clean -dxf
 
+vcs-info $repo
+
 set-perms

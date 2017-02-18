@@ -7,4 +7,6 @@ npm install .
 rm -fr /work/build/node_modules/
 mv node_modules /work/build/
 
+vcs-info $1
+
 set-perms

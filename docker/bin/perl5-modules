@@ -21,4 +21,6 @@ cpanm -n -L /work/build *.tar.gz
 
 git clean -dxf
 
+vcs-info $repo
+
 set-perms

@@ -9,4 +9,8 @@ nim c -p:/work/NimYAML -d:yamlScalarRepInd /work/yaml-editor/docker/$source
 mv /work/yaml-editor/docker/${source%.nim} /work/$target
 rm -fr /work/yaml-editor/docker/src/nimcache
 
+cd /work/NimYAML
+
+vcs-info NimYAML
+
 set-perms

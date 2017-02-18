@@ -2,7 +2,9 @@
 
 set -ex
 
-cd /work/yaml-cpp
+repo=$1
+
+cd /work/$repo
 rm -fr build
 mkdir build
 cd build
@@ -16,5 +18,8 @@ g++ -Wall -I. -L. -std=gnu++11  \
 	/work/yaml-editor/docker/src/yaml-cpp-event.cpp libyaml-cpp.a
 
 rm -fr build
+
+cd /work/$repo
+vcs-info $repo
 
 set-perms

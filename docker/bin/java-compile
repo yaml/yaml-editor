@@ -15,4 +15,7 @@ mvn assembly:single -Dsnakeversion=$SNAKEYAML_VERSION
 mv target/snake2json-*-jar-with-dependencies.jar /work/build/
 rm -fr target/
 
+cd /work/snakeyaml
+vcs-info snakeyaml
+
 set-perms
