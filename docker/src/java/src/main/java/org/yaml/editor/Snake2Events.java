@@ -96,6 +96,8 @@ public class Snake2Events {
     }
 
     public static void main(final String[] args) throws IOException {
-        new Snake2Events().yamlToEvents(System.in, new OutputStreamWriter(System.out));
+        final Writer writer = new OutputStreamWriter(System.out);
+        new Snake2Events().yamlToEvents(System.in, writer);
+        writer.close();
     }
 }
