@@ -1,3 +1,5 @@
+DOCKER_USER ?= yamlio
+
 build:
 	make -C docker
 
@@ -7,7 +9,7 @@ shell: build
 	    yamlio/yaml-editor bash
 
 push:
-	docker push yamlio/yaml-editor
+	docker push $(DOCKER_USER)/yaml-editor
 
 clean:
 	make -C docker clean
