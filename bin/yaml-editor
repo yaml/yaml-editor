@@ -61,6 +61,7 @@ export PATH="${YAML_EDITOR_ROOT:?}/lib:$PATH"
 source "$YAML_EDITOR_ROOT/lib/bash+.bash"
 bash+:import :std can
 use GetOpt
+DOCKER_REPO="${DOCKER_REPO:-yamlio}"
 
 if [[ -z $YAML_TEST_SUITE ]]; then
   if [[ -d ../yaml-test-suite ]]; then
@@ -141,7 +142,7 @@ foo: bar
     -v "$root":/yaml-editor \
     $mount_suite \
     $local_source \
-    yamlio/yaml-editor \
+    $DOCKER_REPO/yaml-editor \
     yaml-editor "$@"
 
   echo "Files saved in '$work'"
