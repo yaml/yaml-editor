@@ -1,6 +1,7 @@
 #------------------------------------------------------------------------------
 BASE := $(shell cd ../..; pwd)
 #------------------------------------------------------------------------------
+DOCKER_REPO ?= yamlio
 CPP_BINARIES := build/bin/cpp-event
 GHC_BINARIES := build/bin/yaml2yeast
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
@@ -56,7 +57,7 @@ all: \
     python-modules
 	rm -fr build
 	cp -r ../../build .
-	docker build -t yamlio/yaml-editor .
+	docker build -t $(DOCKER_REPO)/yaml-editor .
 
 run:
 	yaml-editor '/-(pegex|pm|syck|tiny|xs)\.|nim/'
@@ -86,11 +87,11 @@ python-modules: builder-python $(PYTHON_MODULES)
 
 #------------------------------------------------------------------------------
 $(CPP_BINARIES): yaml-cpp
-	docker run -it --rm -v $(BASE):/work builder-cmake cpp-compile $<
+	docker run -it --rm -v $(BASE):/work $(DOCKER_REPO)/builder-cmake cpp-compile $<
 	touch $@
 
 $(GHC_BINARIES): yamlreference
-	docker run --rm -v $(BASE):/work builder-ghc ghc-compile $< $@
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-ghc ghc-compile $< $@
 	touch $@
 
 $(LIBYAML_BINARIES): libyaml
@@ -98,61 +99,61 @@ $(LIBYAML_BINARIES): libyaml
 	touch $@
 
 $(JAVA_BINARIES): $(JAVA_SOURCES) snakeyaml
-	docker run --rm -v $(BASE):/work builder-java java-compile $<
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-java java-compile $<
 	touch $@
 
 $(NIM_BINARIES): src/nimyaml_event.nim NimYAML
-	docker run --rm -v $(BASE):/work builder-nim nim-compile $< $@
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-nim nim-compile $< $@
 	touch $@
 
 $(NODE_MODULES): js-yaml
-	docker run --rm -v $(BASE):/work builder-node node-modules $<
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-node node-modules $<
 	touch $@
 
 $(CPAN_MODULES):
-	docker run --rm -v $(BASE):/work builder-perl5 cpan-modules $@
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-perl5 cpan-modules $@
 
 $(PERL5_YAML_PM): yaml-pm test-base-pm
-	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL5_YAML_XS): yaml-libyaml-pm test-base-pm
-	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL5_YAML_TINY): YAML-Tiny
-	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL5_YAML_SYCK): YAML-Syck
-	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL5_YAML_PEGEX): yaml-pegex-pm pegex-pm testml-pm
-	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL5_YAML_PP): YAML-PP-p5
-	docker run --rm -v $(BASE):/work builder-perl5 perl5-modules $<
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-perl5 perl5-modules $<
 	touch $@
 
 $(PERL6_RUNTIME):
-	docker run --rm -v $(BASE):/work builder-perl6 perl6-runtime $<
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-perl6 perl6-runtime $<
 	touch $@
 
 $(PERL6_YAMLISH): yamlish
-	docker run --rm -v $(BASE):/work builder-perl6 perl6-modules $<
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-perl6 perl6-modules $<
 	touch $@
 
 $(PYTHON_MODULES): pyyaml ruamel
-	docker run --rm -v $(BASE):/work builder-python python-modules $@
+	docker run --rm -v $(BASE):/work $(DOCKER_REPO)/builder-python python-modules $@
 	touch $@
 
 builder:
-	docker build -t $@ -f $@.dockerfile .
+	docker build -t $(DOCKER_REPO)/$@ -f $@.dockerfile .
 
 builder-%: builder
-	docker build -t $@ -f $@.dockerfile .
+	docker build -t $(DOCKER_REPO)/$@ -f $@.dockerfile .
 
 #------------------------------------------------------------------------------
 # Copy repos from local dev sources:
