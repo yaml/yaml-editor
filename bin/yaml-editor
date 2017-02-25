@@ -123,10 +123,10 @@ docker-run() {
     cat <<'...' > $work/$input_file
 foo: bar
 
-# Press enter to render.
+# Press space to render.
 # Press \h for help (more commands).
 # Press \c to clear the input.
-# Press \q to quit.
+# Press \Q to quit.
 ...
   fi
 
