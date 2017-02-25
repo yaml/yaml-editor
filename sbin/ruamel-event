@@ -5,4 +5,55 @@ import pprint
 import ruamel.yaml
 
 for event in ruamel.yaml.parse(sys.stdin.read()):
-    print event
+    name = event.__class__.__name__
+    if (name == 'StreamStartEvent'):
+        print '+STR'
+    elif (name == 'StreamEndEvent'):
+        print '-STR'
+    elif (name == 'DocumentStartEvent'):
+        print '+DOC'
+    elif (name == 'DocumentEndEvent'):
+        print '-DOC'
+
+    elif (name == 'MappingStartEvent'):
+        sys.stdout.write('+MAP')
+        if (event.anchor):
+            sys.stdout.write(' &' + event.anchor)
+        if (event.tag):
+            sys.stdout.write(' <' + event.tag + '>')
+        print
+
+    elif (name == 'SequenceStartEvent'):
+        sys.stdout.write('+SEQ')
+        if (event.anchor):
+            sys.stdout.write(' &' + event.anchor)
+        if (event.tag):
+            sys.stdout.write(' <' + event.tag + '>')
+        print
+
+    elif (name == 'ScalarEvent'):
+        sys.stdout.write('=VAL')
+        if (event.anchor):
+            sys.stdout.write(' &' + event.anchor)
+        if (event.tag):
+            sys.stdout.write(' <' + event.tag + '>')
+        value = event.value
+        value = value.replace('\\', '\\\\')
+        value = value.replace('\n', '\\n')
+        value = value.replace('\r', '\\r')
+        value = value.replace('\t', '\\t')
+        value = value.replace('\b', '\\b')
+        sys.stdout.write(' :' + value)
+        print
+
+    elif (name == 'AliasEvent'):
+        sys.stdout.write('=ALI')
+        sys.stdout.write(' *' + event.anchor)
+        print
+
+    elif (name == 'SequenceEndEvent'):
+        print '-SEQ'
+    elif (name == 'MappingEndEvent'):
+        print '-MAP'
+    else:
+        print event
