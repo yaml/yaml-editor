@@ -58,10 +58,15 @@ all: \
     perl5-runtime \
     perl6-runtime \
     perl6-modules \
-    python-modules
+    python-modules \
+    vcs-info
 	rm -fr build
 	cp -r ../../build .
 	docker build -t $(DOCKER_USER)/yaml-editor .
+
+vcs-info:
+	../bin/vcs-info-to-framework > ../../build/yaml-frameworks.csv
+	cp ../share/emitters.csv ../../build/yaml-emitters.csv
 
 run:
 	yaml-editor '/-(pegex|pm|syck|tiny|xs)\.|nim/'

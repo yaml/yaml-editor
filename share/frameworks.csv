@@ -1,0 +1,16 @@
+repo,language,name,provider
+jbeder/yaml-cpp,cpp,yaml-cpp,github
+nodeca/js-yaml,js,js-yaml,github
+yaml/libyaml,c,libyaml,github
+asomov/snakeyaml,java,SnakeYAML,bitbucket
+flyx/NimYAML,nim,NimYAML,github
+ingydotnet/yaml-pm,perl5,YAML.pm,github
+toddr/YAML-Syck,perl5,YAML::Syck,github
+Perl-Toolchain-Gang/YAML-Tiny,perl5,YAML::Tiny,github
+ingydotnet/yaml-libyaml-pm,perl5,YAML::XS,github
+ingydotnet/yaml-pegex-pm,perl5,YAML::Pegex,github
+perlpunk/YAML-PP-p5,perl5,YAML::PP,github
+leont/yamlish,perl6,YAMLish,github
+yaml/pyyaml,python,pyyaml,github
+orenbenkiki/yamlreference,haskell,Reference Parser,github
+ruamel/yaml,python,ruamel,bitbucket
