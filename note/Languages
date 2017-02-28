@@ -53,7 +53,6 @@
   - https://github.com/dcjones/YAML.jl
 - Lua
   - https://luarocks.org/modules/gaspard/yaml
-  - https://tarantool.org/doc/reference/reference_lua/yaml.html
 - MATLAB
   - https://code.google.com/archive/p/yamlmatlab/
 - Nim
