@@ -1,4 +1,4 @@
-FROM builder
+FROM yamlio/builder
 
 ENV PATH=/nim-0.16.0/bin:$PATH
 

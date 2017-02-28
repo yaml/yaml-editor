@@ -1,4 +1,4 @@
-FROM builder
+FROM yamlio/builder
 
 RUN wget http://rakudo.org/downloads/star/rakudo-star-2016.11.tar.gz \
  && tar xfz rakudo-star-2016.11.tar.gz \
