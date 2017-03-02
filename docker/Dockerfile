@@ -21,6 +21,8 @@ RUN apt-get update \
  && locale-gen en_US.UTF-8 \
  && true
 
+RUN apt-get install -y luajit
+
 COPY build/ /
 
 ENV PATH="/yaml-editor/bin:/perl6/bin:${PATH}" \

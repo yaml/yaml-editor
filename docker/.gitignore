@@ -1,6 +1,8 @@
 /build
+/cjson
 /js-yaml
 /libyaml
+/lua-yaml
 /NimYAML
 /pegex-pm
 /pyyaml

@@ -1,0 +1,6 @@
+#!/usr/bin/env luajit
+
+yaml = require "yaml"
+json = require "cjson"
+
+print(json.encode(yaml.load(io.read("*all"))))

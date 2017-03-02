@@ -14,6 +14,9 @@ JAVA_SOURCES := \
     src/java/pom.xml \
     src/java/src/main/java/org/yaml/editor/Snake2Json.java \
     src/java/src/main/java/org/yaml/editor/Snake2Events.java
+LUA_MODULES := \
+    build/lua/yaml/init.lua \
+    build/lua/cjson/util.lua
 NIM_BINARIES := build/bin/nimyaml-event
 NODE_MODULES := build/node_modules/js-yaml/lib/js-yaml.js
 PERL5_YAML_PM := build/lib/perl5/YAML.pm
@@ -48,6 +51,7 @@ all: \
     ghc-binaries \
     libyaml-binaries \
     java-binaries \
+    lua-modules \
     nim-binaries \
     node-modules \
     perl5-modules \
@@ -77,6 +81,7 @@ cpp-binaries: builder-cmake $(CPP_BINARIES)
 ghc-binaries: builder-ghc $(GHC_BINARIES)
 libyaml-binaries: builder $(LIBYAML_BINARIES)
 java-binaries: builder-java $(JAVA_BINARIES)
+lua-modules: builder-lua $(LUA_MODULES)
 nim-binaries: builder-nim $(NIM_BINARIES)
 node-modules: builder-node $(NODE_MODULES)
 perl5-modules: builder-perl5 $(PERL5_MODULES)
@@ -87,7 +92,7 @@ python-modules: builder-python $(PYTHON_MODULES)
 
 #------------------------------------------------------------------------------
 $(CPP_BINARIES): yaml-cpp
-	docker run -it --rm -v $(BASE):/work $(DOCKER_USER)/builder-cmake cpp-compile $<
+	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-cmake cpp-compile $<
 	touch $@
 
 $(GHC_BINARIES): yamlreference
@@ -100,6 +105,10 @@ $(LIBYAML_BINARIES): libyaml
 
 $(JAVA_BINARIES): $(JAVA_SOURCES) snakeyaml
 	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-java java-compile $<
+	touch $@
+
+$(LUA_MODULES): lua-yaml
+	docker run -it --rm -v $(BASE):/work $(DOCKER_USER)/builder-lua lua-modules $<
 	touch $@
 
 $(NIM_BINARIES): src/nimyaml_event.nim NimYAML
@@ -170,6 +179,9 @@ builder-%: builder
 
 ../../js-yaml:
 	git clone git@github.com:nodeca/$(@:../../%=%) $@
+
+../../lua-yaml:
+	git clone git@github.com:lubyk/yaml $@
 
 ../../NimYAML:
 	git clone git@github.com:flyx/$(@:../../%=%) $@
