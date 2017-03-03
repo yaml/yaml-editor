@@ -97,6 +97,7 @@ sub map_language {
         haskell => "Haskell",
         java    => "Java",
         js      => "Javascript",
+        lua     => "Lua",
         nim     => "Nim",
         perl5   => "Perl 5",
         perl6   => "Perl 6",

@@ -5,6 +5,7 @@ libyaml-event,yaml/libyaml,event
 libyaml-yaml,yaml/libyaml,yaml
 java-event,asomov/snakeyaml,event
 java-json,asomov/snakeyaml,json
+luajit-json,lubyk/yaml,json
 nimyaml-event,flyx/NimYAML,event
 perl5-pm-pl,ingydotnet/yaml-pm,native
 perl5-pm-json,ingydotnet/yaml-pm,json

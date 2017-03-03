@@ -19,4 +19,7 @@ luarocks make
 cp -r /usr/local/share/lua /work/build/usr/local/share/lua
 cp -r /usr/local/lib/lua /work/build/usr/local/lib/lua
 
+cd /work/lua-yaml/
+vcs-info lua-yaml
+
 set-perms
