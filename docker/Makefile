@@ -15,8 +15,8 @@ JAVA_SOURCES := \
     src/java/src/main/java/org/yaml/editor/Snake2Json.java \
     src/java/src/main/java/org/yaml/editor/Snake2Events.java
 LUA_MODULES := \
-    build/lua/yaml/init.lua \
-    build/lua/cjson/util.lua
+    build/usr/local/share/lua/5.1/yaml/init.lua \
+    build/usr/local/share/lua/5.1/cjson/util.lua
 NIM_BINARIES := build/bin/nimyaml-event
 NODE_MODULES := build/node_modules/js-yaml/lib/js-yaml.js
 PERL5_YAML_PM := build/lib/perl5/YAML.pm
