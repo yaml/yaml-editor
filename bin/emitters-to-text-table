@@ -1,0 +1,105 @@
+#!/usr/bin/env perl
+# This script combines the emitters.csv and frameworks.csv and generates
+# a nice Text Table that can be used by yaml-editor --list
+
+use strict;
+use warnings;
+use 5.010;
+
+use FindBin '$Bin';
+use Text::Table;
+use Data::Dumper;
+
+my $separator = ",";
+my $emitter_csv     = "$Bin/../share/emitters.csv";
+my $framework_csv   = "$Bin/../share/frameworks.csv";
+
+my $emitters    = load_csv("id", $emitter_csv);
+my $frameworks  = load_csv("repo", $framework_csv);
+
+my @head = ("#", "View Name", "YAML Framework", "Output Format");
+my @rows;
+my $c = 0;
+for my $id (sort keys %$emitters) {
+    $c++;
+    my $repo = $emitters->{ $id }->{reponame};
+    my $fw = $frameworks->{ $repo };
+    my $language = map_language($fw->{language});
+    my $output = map_output($emitters->{ $id }->{output});
+    my $fwname = $fw->{name} // '-';
+    $id =~ s/-(\w+)$/.$1/;
+    push @rows, [ $c, $id, "$language $fwname", $output ];
+}
+
+my @table = make_table(\@head, \@rows);
+print @table;
+
+exit;
+
+# CSV to List of Hashes
+sub load_csv {
+    my ($id_field, $file) = @_;
+    my %result;
+    open my $fh, "<", $file or die $!;
+    chomp(my $header = <$fh>);
+    my @headers = split m/$separator/, $header;
+    chomp(my @lines = <$fh>);
+    for my $line (@lines) {
+        my @fields = split m/$separator/, $line;
+        my %row;
+        @row{ @headers } = @fields;
+        my $id = $row{ $id_field };
+        $result{ $id } = \%row;
+    }
+    return \%result;
+}
+
+# Ovid++
+# http://use.perl.org/use.perl.org/_Ovid/journal/36762.html
+sub make_table {
+    my ( $headers, $rows ) = @_;
+
+    my @rule      = qw(- +);
+    my @headers   = \'| ';
+    push @headers => map { $_ => \' | ' } @$headers;
+    pop  @headers;
+    push @headers => \' |';
+
+    my $table = Text::Table->new(@headers);
+    $table->rule(@rule);
+    $table->body_rule(@rule);
+    $table->load(@$rows);
+
+    return $table->rule(@rule),
+           $table->title,
+           $table->rule(@rule),
+           map({ $table->body($_) } 0 .. @$rows),
+           $table->rule(@rule);
+}
+
+sub map_output {
+    my ($output) = @_;
+    return {
+        event   => "Event Stream",
+        json    => "JSON",
+        native  => "Native Data",
+        yaml    => "YAML",
+        yeast   => "YEAST Events",
+    }->{ $output } // $output;
+}
+
+sub map_language {
+    my ($lang) = @_;
+    return {
+        '-'     => '-',
+        c       => "C",
+        cpp     => "C++",
+        haskell => "Haskell",
+        java    => "Java",
+        js      => "Javascript",
+        nim     => "Nim",
+        perl5   => "Perl 5",
+        perl6   => "Perl 6",
+        python  => "Python",
+    }->{ $lang // '-' } // $lang;
+}
