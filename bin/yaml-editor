@@ -24,40 +24,11 @@ local       Use local sources for dynamic languages
 x,debug     Debug - Turn on Bash trace (set -x) output
 "
 
-ALL_VIEWS="\
- # | View Name         | YAML Framework    | Output Format
----+-------------------+-------------------+--------------
- 1 | cpp.event         | C++               | Event Stream
- 2 | js-yaml.json      | JS/Node js-yaml   | JSON
- 3 | java.event        | Java SnakeYAML    | Event Stream
- 4 | java.json         | Java SnakeYAML    | JSON
- 5 | libyaml.event     | libyaml           | Event Stream
- 6 | libyaml.yaml      | libyaml           | YAML
- 7 | luajit.json       | Lua yaml          | JSON
- 8 | nimyaml.event     | Nim NimYAML       | Event Stream
- 9 | perl5-pm.pl       | Perl5 YAML.pm     | Perl Data
-10 | perl5-pm.json     | Perl5 YAML.pm     | Perl Data
-11 | perl5-syck.pl     | Perl5 YAML::Syck  | Perl Data
-12 | perl5-syck.json   | Perl5 YAML::Syck  | Perl Data
-13 | perl5-tiny.pl     | Perl5 YAML::Tiny  | Perl Data
-14 | perl5-tiny.json   | Perl5 YAML::Tiny  | Perl Data
-15 | perl5-xs.pl       | Perl5 YAML::XS    | Perl Data
-16 | perl5-xs.json     | Perl5 YAML::XS    | Perl Data
-17 | perl5-pegex.event | Perl5 YAML::Pegex | Event Stream
-18 | perl5-pp.event    | Perl5 YAML::PP    | Event Stream
-19 | perl6.p6          | Perl6 YAMLish     | Perl6 Data
-20 | perl6.json        | Perl6 YAMLish     | JSON
-21 | pyyaml.event      | Python pyyaml     | Event Stream
-22 | pyyaml.py         | Python pyyaml     | Python Data
-23 | ref.yeast         | Reference Parser  | YEAST Events
-24 | ruamel.event      | Python ruamel     | Event Stream
-25 | ruamel.py         | Python ruamel     | Python Data
-26 | ruby.json         | Ruby psych        | JSON
-"
-
-all_views=($(echo "$ALL_VIEWS" | perl -nle 'print $1 if /([-\w]+\.\w+)/'))
-
 : ${YAML_EDITOR_ROOT:=$(cd $(dirname $BASH_SOURCE)/..; pwd)}
+
+all_views=($(cut -d, -f1 $YAML_EDITOR_ROOT/share/emitters.csv \
+    | grep -v ^id | perl -ple's/\-(\w+)$/.$1/'))
+
 export PATH="${YAML_EDITOR_ROOT:?}/lib:$PATH"
 source "$YAML_EDITOR_ROOT/lib/bash+.bash"
 bash+:import :std can
@@ -100,7 +71,7 @@ main() {
 }
 
 list-all() {
-  echo "$ALL_VIEWS"
+  cat "$YAML_EDITOR_ROOT/share/emitters.table"
 }
 
 docker-run() {
