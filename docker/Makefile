@@ -78,7 +78,7 @@ setup:
 	ln -s ../../build
 
 clean:
-	rm -f pegex-pm test-base-pm testml-pm *yaml* YAML*
+	rm -f cjson pegex-pm ruamel test-base-pm testml-pm *yaml* *YAML*
 	rm -fr build
 
 #------------------------------------------------------------------------------
