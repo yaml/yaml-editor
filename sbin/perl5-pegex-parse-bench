@@ -1,0 +1,47 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use 5.010;
+
+use lib '/yaml-pegex-pm/lib';
+
+use Pegex;
+use YAML::Pegex;
+use Pegex::Parser;
+use YAML::Pegex::Grammar;
+use YAML::Pegex::Receiver::Test;
+use Time::HiRes ();
+
+my ($count) = @ARGV;
+$count //= 1;
+
+chomp(my @files = <STDIN>);
+my @yaml = map {
+    open my $fh, "<", $_ or die $!;
+    my $yaml = do { local $/; <$fh> };
+    close $fh;
+    [ $_, $yaml ];
+} @files;
+
+my $start = Time::HiRes::time;
+for (1 .. $count) {
+
+    for my $item (@yaml) {
+
+        my $parser = Pegex::Parser->new(
+            grammar => YAML::Pegex::Grammar->new,
+            receiver => YAML::Pegex::Receiver::Test->new,
+            #maxparse => 10000,
+        );
+
+        my ($file, $yaml) = @$item;
+
+        my @events = eval { @{$parser->parse($yaml)} };
+        if ($@) {
+            warn "ERROR ($file): $@";
+        }
+    }
+
+}
+my $elapsed = Time::HiRes::time - $start;
+say $elapsed * 1000;

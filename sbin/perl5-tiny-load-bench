@@ -1,0 +1,31 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use 5.010;
+
+use Data::Dumper;
+use YAML::Tiny;
+use Time::HiRes ();
+
+my ($count) = @ARGV;
+$count //= 1;
+
+chomp(my @files = <STDIN>);
+my @yaml = map {
+    open my $fh, "<", $_ or die $!;
+    my $yaml = do { local $/; <$fh> };
+    close $fh;
+    [ $_, $yaml ];
+} @files;
+
+my $start = Time::HiRes::time;
+for (1 .. $count) {
+
+    for my $item (@yaml) {
+        my ($file, $yaml) = @$item;
+        my $data = eval { Load $yaml };
+    }
+
+}
+my $elapsed = Time::HiRes::time - $start;
+say $elapsed * 1000;
