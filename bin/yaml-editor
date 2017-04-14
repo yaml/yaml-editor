@@ -27,7 +27,7 @@ x,debug     Debug - Turn on Bash trace (set -x) output
 : ${YAML_EDITOR_ROOT:=$(cd $(dirname $BASH_SOURCE)/..; pwd)}
 
 all_views=($(cut -d, -f1 $YAML_EDITOR_ROOT/share/emitters.csv \
-    | grep -v ^id | perl -ple's/\-(\w+)$/.$1/'))
+    | grep -v ^id | perl -ple's/\-(\w+)$/.$1/' | sort))
 
 export PATH="${YAML_EDITOR_ROOT:?}/lib:$PATH"
 source "$YAML_EDITOR_ROOT/lib/bash+.bash"
