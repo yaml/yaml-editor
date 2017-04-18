@@ -8,9 +8,10 @@ use Encode;
 use YAML::PP::Parser;
 my $parser = YAML::PP::Parser->new(
   receiver => sub {
-    my ($self, $event, $content) = @_;
-    $content = encode_utf8($content) if defined $content;
-    say defined $content ? "$event $content" : $event;
+    my ($self, @args) = @_;
+    my $event = YAML::PP::Parser->event_to_test_suite(@args);
+    $event = encode_utf8($event);
+    say $event;
   },
 );
 
