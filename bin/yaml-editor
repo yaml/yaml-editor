@@ -308,7 +308,7 @@ get-views() {
 
   $option_grid || return 0
 
-  cols=(- 1 2 3 2 3 3 3 3 3 4 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5)
+  cols=(- 1 2 3 2 3 3 3 3 3 4 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 6 6)
   col=${cols[$total]}
   n=0
   views=()
