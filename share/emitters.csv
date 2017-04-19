@@ -17,6 +17,8 @@ perl5-xs-pl,ingydotnet/yaml-libyaml-pm,native
 perl5-xs-json,ingydotnet/yaml-libyaml-pm,json
 perl5-pegex-event,ingydotnet/yaml-pegex-pm,event
 perl5-pp-event,perlpunk/YAML-PP-p5,event
+perl5-pp-json,perlpunk/YAML-PP-p5,json
+perl5-pp-pl,perlpunk/YAML-PP-p5,native
 perl6-p6,leont/yamlish,native
 perl6-json,leont/yamlish,json
 pyyaml-event,yaml/pyyaml,event
