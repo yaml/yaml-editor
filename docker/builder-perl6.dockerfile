@@ -1,9 +1,9 @@
 FROM builder
 
-RUN wget http://rakudo.org/downloads/star/rakudo-star-2016.11.tar.gz \
- && tar xfz rakudo-star-2016.11.tar.gz \
+RUN wget http://rakudo.org/downloads/star/rakudo-star-2017-04.tar.gz \
+ && tar xfz rakudo-star-2017-04.tar.gz \
  && ( \
-        cd rakudo-star-2016.11 \
+        cd rakudo-star-2017-04 \
         && perl Configure.pl --gen-moar --prefix=/perl6 \
         && make install \
     ) \
