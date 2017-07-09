@@ -5,7 +5,7 @@ set -e
 GETOPT_SPEC="\
   $(basename "$0") <options> <views>
 
-See '$(basename "$0") help' for more help.
+See '$(basename "$0") --help' for more help.
 
 views: List the views to use. /regex/ or list-name. See '-l'.
 
