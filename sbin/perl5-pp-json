@@ -8,5 +8,5 @@ use JSON::XS;
 
 my $coder = JSON::XS->new->ascii->pretty->allow_nonref->canonical;
 my $yaml = do { local $/; <> };
-my @docs = YAML::PP::Loader->new(boolean => 'JSON::PP')->Load($yaml);
+my @docs = YAML::PP::Loader->new(boolean => 'JSON::PP')->load($yaml);
 print $coder->encode($_) for @docs;

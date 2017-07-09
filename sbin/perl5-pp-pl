@@ -11,5 +11,5 @@ $Data::Dumper::Indent=2;
 $Data::Dumper::Terse=1;
 
 my $yaml = do { local $/; <> };
-my @docs = YAML::PP::Loader->new(boolean => 'perl')->Load($yaml);
+my @docs = YAML::PP::Loader->new(boolean => 'perl')->load($yaml);
 print Dumper @docs;

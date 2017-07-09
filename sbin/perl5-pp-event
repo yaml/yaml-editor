@@ -9,7 +9,7 @@ use YAML::PP::Parser;
 my $parser = YAML::PP::Parser->new(
   receiver => sub {
     my ($self, @args) = @_;
-    my $event = YAML::PP::Parser->event_to_test_suite(@args);
+    my $event = YAML::PP::Parser->event_to_test_suite(\@args);
     $event = encode_utf8($event);
     say $event;
   },
