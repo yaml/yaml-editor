@@ -193,7 +193,7 @@ builder-%: builder
 	git clone git@github.com:flyx/$(@:../../%=%) $@
 
 ../../ruamel:
-	hg clone https://bitbucket.org/ruamel/yaml $@
+	hg clone https://bitbucket.org/ruamel/yaml -u 0.14.4 $@
 
 ../../snakeyaml:
 	hg clone https://bitbucket.org/asomov/$(@:../../%=%) $@
