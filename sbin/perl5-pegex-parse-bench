@@ -23,16 +23,16 @@ my @yaml = map {
     [ $_, $yaml ];
 } @files;
 
+my $parser = Pegex::Parser->new(
+    grammar => YAML::Pegex::Grammar->new,
+    receiver => YAML::Pegex::Receiver::Test->new,
+    #maxparse => 10000,
+);
+
 my $start = Time::HiRes::time;
 for (1 .. $count) {
 
     for my $item (@yaml) {
-
-        my $parser = Pegex::Parser->new(
-            grammar => YAML::Pegex::Grammar->new,
-            receiver => YAML::Pegex::Receiver::Test->new,
-            #maxparse => 10000,
-        );
 
         my ($file, $yaml) = @$item;
 
