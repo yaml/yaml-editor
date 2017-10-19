@@ -17,12 +17,14 @@ my @yaml = map {
     [ $_, $yaml ];
 } @files;
 
+my $loader = YAML::PP::Loader->new(boolean => 'perl');
+
 my $start = Time::HiRes::time;
 for (1 .. $count) {
 
     for my $item (@yaml) {
         my ($file, $yaml) = @$item;
-        my @docs = YAML::PP::Loader->new(boolean => 'perl')->load($yaml);
+        my @docs = $loader->load($yaml);
     }
 
 }

@@ -36,10 +36,7 @@ for (1 .. $count) {
 
         my ($file, $yaml) = @$item;
 
-        my @events = eval { @{$parser->parse($yaml)} };
-        if ($@) {
-            warn "ERROR ($file): $@";
-        }
+        $parser->parse($yaml);
     }
 
 }

@@ -24,7 +24,7 @@ for (1 .. $count) {
 
     for my $item (@yaml) {
         my ($file, $yaml) = @$item;
-        my $data = eval { Load $yaml };
+        my $data = Load $yaml;
     }
 
 }

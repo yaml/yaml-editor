@@ -28,7 +28,7 @@ for (1 .. $count) {
     for my $item (@yaml) {
         my ($file, $yaml) = @$item;
 
-        eval { $parser->parse($yaml) };
+        $parser->parse($yaml);
     }
 
 }
