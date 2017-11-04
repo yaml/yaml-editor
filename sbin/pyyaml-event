@@ -44,7 +44,10 @@ for event in yaml.parse(sys.stdin.read()):
         value = value.replace('\r', '\\r')
         value = value.replace('\t', '\\t')
         value = value.replace('\b', '\\b')
-        sys.stdout.write(' :' + value)
+        style = ':'
+        if (event.style):
+            style = event.style
+        sys.stdout.write(' ' + style + value)
         print
 
     elif (name == 'AliasEvent'):
