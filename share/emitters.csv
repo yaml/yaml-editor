@@ -22,8 +22,10 @@ perl5-pp-pl,perlpunk/YAML-PP-p5,native
 perl6-p6,leont/yamlish,native
 perl6-json,leont/yamlish,json
 pyyaml-event,yaml/pyyaml,event
+pyyaml-json,yaml/pyyaml,json
 pyyaml-py,yaml/pyyaml,native
 ref-yeast,orenbenkiki/yamlreference,yeast
 ruamel-event,ruamel/yaml,event
+ruamel-json,ruamel/yaml,json
 ruamel-py,ruamel/yaml,native
 ruby-json,-,json

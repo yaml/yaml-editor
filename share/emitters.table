@@ -24,9 +24,11 @@
 | 21 | perl6.json        | Perl 6 YAMLish           | JSON          |
 | 22 | perl6.p6          | Perl 6 YAMLish           | Native Data   |
 | 23 | pyyaml.event      | Python pyyaml            | Event Stream  |
-| 24 | pyyaml.py         | Python pyyaml            | Native Data   |
-| 25 | ref.yeast         | Haskell Reference Parser | YEAST Events  |
-| 26 | ruamel.event      | Python ruamel            | Event Stream  |
-| 27 | ruamel.py         | Python ruamel            | Native Data   |
-| 28 | ruby.json         | - -                      | JSON          |
+| 24 | pyyaml.json       | Python pyyaml            | JSON          |
+| 25 | pyyaml.py         | Python pyyaml            | Native Data   |
+| 26 | ref.yeast         | Haskell Reference Parser | YEAST Events  |
+| 27 | ruamel.event      | Python ruamel            | Event Stream  |
+| 28 | ruamel.json       | Python ruamel            | JSON          |
+| 29 | ruamel.py         | Python ruamel            | Native Data   |
+| 30 | ruby.json         | - -                      | JSON          |
 +----+-------------------+--------------------------+---------------+

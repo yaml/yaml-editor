@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+import sys
+import pprint
+import ruamel.yaml
+import json
+
+for doc in ruamel.yaml.load_all(sys.stdin.read(), Loader=ruamel.yaml.Loader):
+    try:
+        print json.dumps(doc, sort_keys=True, indent=2)
+    except:
+        print "Error json.dumps:", sys.exc_info()[0]
+        raise
