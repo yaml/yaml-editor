@@ -2,12 +2,15 @@
 
 set -ex
 
-cd /work/libyaml/tests/run-test-suite/src/
-LIBYAML_DIR=/libyaml make build
-mv libyaml-parser /work/build/bin/
-mv libyaml-emitter /work/build/bin/
-
 cd /work/libyaml
+./bootstrap
+./configure
+make
+mv tests/.libs/run-parser-test-suite /work/build/bin/libyaml-parser
+mv tests/.libs/run-emitter-test-suite /work/build/bin/libyaml-emitter
+
+make clean
+git clean -dxf
 
 vcs-info $1
 
