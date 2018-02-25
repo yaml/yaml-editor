@@ -3,6 +3,7 @@ package org.yaml.editor;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.events.*;
+import org.yaml.snakeyaml.reader.UnicodeReader;
 
 import java.io.*;
 import java.util.HashMap;
@@ -107,7 +108,7 @@ public class Snake2Events {
 
     void yamlToEvents(final InputStream in, final Writer out) throws IOException {
         final Yaml yaml = new Yaml();
-        for (final Event event: yaml.parse(new InputStreamReader(in))) {
+        for (final Event event: yaml.parse(new UnicodeReader(in))) {
             out.write(renderers.get(event.getClass()).write(event));
             out.write('\n');
         }
