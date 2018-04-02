@@ -3,11 +3,11 @@ use strict;
 use warnings;
 use 5.010;
 
-use YAML::PP::Loader;
+use YAML::PP;
 use JSON::XS;
 use Encode;
 
 my $coder = JSON::XS->new->ascii->pretty->allow_nonref->canonical;
 my $yaml = do { local $/; <> };
-my @docs = YAML::PP::Loader->new(boolean => 'JSON::PP')->load(decode_utf8 $yaml);
+my @docs = YAML::PP->new(boolean => 'JSON::PP')->load_string(decode_utf8 $yaml);
 print encode_utf8($coder->encode($_)) for @docs;

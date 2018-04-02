@@ -5,12 +5,12 @@ use 5.010;
 
 use Data::Dumper;
 use Encode;
-use YAML::PP::Loader;
+use YAML::PP;
 
 $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent=2;
 $Data::Dumper::Terse=1;
 
 my $yaml = decode_utf8 do { local $/; <> };
-my @docs = YAML::PP::Loader->new(boolean => 'perl')->load($yaml);
+my @docs = YAML::PP->new(boolean => 'perl')->load_string($yaml);
 print Dumper @docs;
