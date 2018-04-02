@@ -19,13 +19,16 @@ perl5-pegex-event,ingydotnet/yaml-pegex-pm,event
 perl5-pp-event,perlpunk/YAML-PP-p5,event
 perl5-pp-json,perlpunk/YAML-PP-p5,json
 perl5-pp-pl,perlpunk/YAML-PP-p5,native
+perl5-pp-yaml,perlpunk/YAML-PP-p5,yaml
 perl6-p6,leont/yamlish,native
 perl6-json,leont/yamlish,json
 pyyaml-event,yaml/pyyaml,event
 pyyaml-json,yaml/pyyaml,json
 pyyaml-py,yaml/pyyaml,native
+pyyaml-yaml,yaml/pyyaml,yaml
 ref-yeast,orenbenkiki/yamlreference,yeast
 ruamel-event,ruamel/yaml,event
 ruamel-json,ruamel/yaml,json
 ruamel-py,ruamel/yaml,native
+ruamel-yaml,ruamel/yaml,yaml
 ruby-json,-,json
