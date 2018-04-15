@@ -5,6 +5,17 @@ import pprint
 import yaml
 import json
 
+def generic_constructor(loader, tag, node):
+    classname = node.__class__.__name__
+    if (classname == 'SequenceNode'):
+        return loader.construct_sequence(node)
+    elif (classname == 'MappingNode'):
+        return loader.construct_mapping(node)
+    else:
+        return loader.construct_scalar(node)
+
+yaml.add_multi_constructor('', generic_constructor)
+
 for doc in yaml.load_all(sys.stdin.read()):
     try:
         print json.dumps(doc, sort_keys=True, indent=2)
