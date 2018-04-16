@@ -1,0 +1,159 @@
+#!/bin/bash
+
+set -e
+
+process-yaml-request() {
+  local yaml=$1
+  local tmp=
+
+  tmp=$(mktemp -d "$PWD/web/XXXXXXXX")
+
+  echo "$yaml" > "$tmp/input.yaml"
+  touch "$tmp/ref.yeast"
+
+  $timeout 2s \
+    docker run --rm -i \
+    -v "$tmp:/yaml" \
+    -v "$YAML_EDITOR_ROOT:/yaml-editor" \
+    yamlio/yaml-editor yaml-editor RUN
+
+  output=$(cat "$tmp/ref.yeast")
+
+  rm -fr "$tmp"
+}
+
+run-web-server() {
+  can socat ||
+    die "Please install 'socat' on your system"
+
+  port=${1:-8080}
+
+  log "yaml-editor-web-server started: http://localhost:$port"
+
+  socat \
+    "TCP-LISTEN:$port,crlf,reuseaddr,fork" \
+    "EXEC:${BASH_SOURCE[0]}"
+}
+
+handle-request() {
+  parse-http-headers
+  if [[ $request_method == POST ]]; then
+    read-post-content
+  fi
+
+  if [[ $request_uri == / ]]; then
+    write-http-response "$(cat share/editor.html)"
+
+  elif [[ $request_uri == /yaml ]]; then
+    process-yaml-request "$input"
+    write-http-response "$output"
+
+  else
+    write-error-response "Unknown URI '$request_uri'"
+  fi
+}
+
+parse-http-headers() {
+  request_line=
+  request_method=
+  request_uri=
+  request_headers=
+  content_length=
+
+  while read -r line; do
+    if [[ -z $request_line ]]; then
+      request_line=$line
+      [[ $line =~ (GET|POST)\ (/.*)\ HTTP/ ]] ||
+        write-error-response "Unknown request"
+      request_method=${BASH_REMATCH[1]}
+      request_uri=${BASH_REMATCH[2]}
+      continue
+    fi
+
+    [[ -n $line ]] || break
+
+    request_headers+="$line"$'\n'
+
+    if [[ $line =~ ^Content-Length:\ (.*)$ ]]; then
+      content_length=${BASH_REMATCH[1]}
+    fi
+  done
+}
+
+read-post-content() {
+  input=''
+
+  while read -r line; do
+    input+="$line"$'\n'
+    [[ ${#input} -lt $content_length ]] || break
+  done
+}
+
+write-http-response() {
+  local response=$1
+
+  cat <<...
+HTTP/1.1 200 OK
+
+$response
+...
+}
+
+write-error-response() {
+  local response=$1
+
+  cat <<...
+HTTP/1.1 500 Internal Server Error
+
+$response
+...
+}
+
+log() {
+  local msg="$1"
+
+  if [[ $msg =~ $'\n' || -n $2 ]]; then
+    echo "$(date): $2" >&2
+    echo "$msg" >&2
+  else
+    echo "$(date): $msg" >&2
+  fi
+
+  true
+}
+
+die() {
+  echo "Error: $*" >&2
+  exit 1
+}
+
+can() {
+  type "$1" &>/dev/null
+}
+
+#------------------------------------------------------------------------------
+[[ -n $YAML_EDITOR_ROOT ]] ||
+  die "Please run 'source yaml-editor/.rc'"
+
+if can timeout; then
+  timeout=timeout
+elif can gtimeout; then
+  timeout=gtimeout
+else
+  die "No 'timeout' command on your system"
+fi
+
+cd "$YAML_EDITOR_ROOT"
+mkdir -p web
+
+if [[ -z $YAML_EDITOR_WEB_SERVER_RUNNING ]]; then
+  export YAML_EDITOR_WEB_SERVER_RUNNING=true
+
+  run-web-server "$@"
+
+else
+  handle-request
+fi
+
+
+# vim: ft=sh sw=2 lisp:

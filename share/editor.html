@@ -1,0 +1,87 @@
+<head>
+<link rel="shortcut icon" href="#" />
+
+<style>
+html, body, #editor {
+  margin: 2px;
+  height: 100%;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+}
+
+textarea, #output {
+  display: inline-block;
+  width: 49%;
+  height: 100%;
+  vertical-align: top;
+  box-sizing: border-box;
+  padding: 0 5px;
+}
+
+textarea {
+  border: none;
+  border-right: 1px solid #ccc;
+  resize: none;
+  outline: none;
+  background-color: #f6f6f6;
+  font-size: 14px;
+  font-family: 'Monaco', courier, monospace;
+}
+
+#output {
+  font-family: 'Monaco', courier, monospace;
+  white-space: pre;
+  font-size: 14px;
+}
+</style>
+</head>
+
+
+<body>
+
+<div id="editor">
+  <textarea :value="input" @input="update"></textarea>
+  <div id="output">{{output}}</div>
+</div>
+
+
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+<script src="https://unpkg.com/lodash@4.16.0"></script>
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.js"></script>
+
+<script>
+new Vue({
+  el: '#editor',
+
+  data: {
+    input: '',
+    output: '',
+    lock: false,
+  },
+
+  methods: {
+    update: _.debounce(function (e) {
+      var v = this
+
+      v.input = e.target.value
+
+      if (! v.lock) {
+        v.lock = true
+
+        axios.post('/yaml', v.input + '\n')
+        .then(function(response) {
+          v.lock = false
+          v.output = response.data
+        })
+        .catch(function(error) {
+          v.lock = false
+        })
+
+        setTimeout(function() { v.lock = false }, 2000)
+      }
+    }, 333)
+  }
+})
+</script>
+
+</body>
