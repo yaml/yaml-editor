@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#------------------------------------------------------------------------------
+# A web server written in Bash, using socat for TCP/IP.
+#
+# GET /       - Serve the static Vue yaml-editor web page
+# POST /yaml  - Run docker ref.yeast from yamlio/yaml-editor docker container
+#------------------------------------------------------------------------------
+
 set -e
 
 process-yaml-request() {
@@ -11,11 +18,11 @@ process-yaml-request() {
   echo "$yaml" > "$tmp/input.yaml"
   touch "$tmp/ref.yeast"
 
-  $timeout 2s \
+  $timeout 2 \
     docker run --rm -i \
     -v "$tmp:/yaml" \
     -v "$YAML_EDITOR_ROOT:/yaml-editor" \
-    yamlio/yaml-editor yaml-editor RUN
+    yamlio/yaml-editor yaml-editor RUN || true
 
   output=$(cat "$tmp/ref.yeast")
 
@@ -23,6 +30,11 @@ process-yaml-request() {
 }
 
 run-web-server() {
+  export YAML_EDITOR_WEB_SERVER_RUNNING=true
+
+  rm -fr web
+  mkdir -p web
+
   can socat ||
     die "Please install 'socat' on your system"
 
@@ -39,6 +51,7 @@ handle-request() {
   parse-http-headers
   if [[ $request_method == POST ]]; then
     read-post-content
+    # log "in >>$input<<"
   fi
 
   if [[ $request_uri == / ]]; then
@@ -47,6 +60,7 @@ handle-request() {
   elif [[ $request_uri == /yaml ]]; then
     process-yaml-request "$input"
     write-http-response "$output"
+    # log "out >>$output<<"
 
   else
     write-error-response "Unknown URI '$request_uri'"
@@ -83,7 +97,7 @@ parse-http-headers() {
 read-post-content() {
   input=''
 
-  while read -r line; do
+  while IFS='' read -r line; do
     input+="$line"$'\n'
     [[ ${#input} -lt $content_length ]] || break
   done
@@ -133,7 +147,7 @@ can() {
 
 #------------------------------------------------------------------------------
 [[ -n $YAML_EDITOR_ROOT ]] ||
-  die "Please run 'source yaml-editor/.rc'"
+  die "Please run 'source path/to/yaml-editor/.rc'"
 
 if can timeout; then
   timeout=timeout
@@ -144,13 +158,9 @@ else
 fi
 
 cd "$YAML_EDITOR_ROOT"
-mkdir -p web
 
 if [[ -z $YAML_EDITOR_WEB_SERVER_RUNNING ]]; then
-  export YAML_EDITOR_WEB_SERVER_RUNNING=true
-
   run-web-server "$@"
-
 else
   handle-request
 fi

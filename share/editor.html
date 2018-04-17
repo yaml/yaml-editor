@@ -1,3 +1,4 @@
+<html>
 <head>
 <link rel="shortcut icon" href="#" />
 
@@ -40,7 +41,7 @@ textarea {
 <body>
 
 <div id="editor">
-  <textarea :value="input" @input="update"></textarea>
+  <textarea id="input" v-on:input="debouncedUpdater"></textarea>
   <div id="output">{{output}}</div>
 </div>
 
@@ -50,7 +51,31 @@ textarea {
 <script src="https://unpkg.com/axios@0.18.0/dist/axios.js"></script>
 
 <script>
-new Vue({
+window.say = console.log
+
+var updater = function (e) {
+  if (! v.lock) {
+    v.lock = true
+
+    var input = document.getElementById('input').value
+    input += '\n'
+
+    // say(`in >>${input}<<`)
+    axios.post('/yaml', input, {timeout: 2000})
+      .then(function(response) {
+        v.lock = false
+        v.output = response.data
+        // say(`out >>${v.output}<<`)
+      })
+      .catch(function(error) {
+        v.lock = false
+      })
+
+    setTimeout(function() { v.lock = false }, 2500)
+  }
+}
+
+var v = new Vue({
   el: '#editor',
 
   data: {
@@ -60,28 +85,10 @@ new Vue({
   },
 
   methods: {
-    update: _.debounce(function (e) {
-      var v = this
-
-      v.input = e.target.value
-
-      if (! v.lock) {
-        v.lock = true
-
-        axios.post('/yaml', v.input + '\n')
-        .then(function(response) {
-          v.lock = false
-          v.output = response.data
-        })
-        .catch(function(error) {
-          v.lock = false
-        })
-
-        setTimeout(function() { v.lock = false }, 2000)
-      }
-    }, 333)
+    debouncedUpdater: _.debounce(updater, 333),
   }
 })
 </script>
 
 </body>
+</html>
