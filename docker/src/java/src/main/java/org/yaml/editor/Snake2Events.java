@@ -1,6 +1,7 @@
 package org.yaml.editor;
 
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.events.*;
 
 import java.io.*;
@@ -58,7 +59,7 @@ public class Snake2Events {
         private String value(final Event e) {
             final StringBuilder builder = new StringBuilder(" ");
             final ScalarEvent ev = (ScalarEvent) e;
-            builder.append(ev.getStyle() == '\0' ? ':' : ev.getStyle());
+            builder.append(ev.getStyle().getChar() == null ? ':' : ev.getStyle().getChar());
             for (char c: ev.getValue().toCharArray()) {
                 switch (c) {
                     case '\b': builder.append("\\b"); break;
@@ -74,7 +75,7 @@ public class Snake2Events {
 
         private String flowInd(final Event e, final String ind) {
             final CollectionStartEvent ev = (CollectionStartEvent) e;
-            return ev.getFlowStyle() ? ' ' + ind : "";
+            return ev.getFlowStyle() == DumperOptions.FlowStyle.FLOW ? ' ' + ind : "";
         }
 
         {
