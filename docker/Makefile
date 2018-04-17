@@ -166,6 +166,7 @@ $(PYTHON_MODULES): pyyaml ruamel
 
 builder:
 	docker build -t $(DOCKER_USER)/$@ -f $@.dockerfile .
+	docker tag $(DOCKER_USER)/$@ $@
 
 builder-%: builder
 	docker build -t $(DOCKER_USER)/$@ -f $@.dockerfile .
