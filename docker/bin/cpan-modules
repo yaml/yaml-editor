@@ -2,7 +2,7 @@
 
 set -ex
 
-module=$1
+module=${1//+/:}
 
 cpanm -n -L /work/build "$module"
 

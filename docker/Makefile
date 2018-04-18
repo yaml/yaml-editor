@@ -32,8 +32,10 @@ PERL5_MODULES := \
     $(PERL5_YAML_SYCK) \
     $(PERL5_YAML_PEGEX) \
     $(PERL5_YAML_PP)
-CPAN_MODULES := Mojo\:\:JSON \
-    JSON\:\:XS
+# ':' confuses `make` so use + to mean : and adjust later
+CPAN_MODULES := \
+    Mojo++JSON \
+    JSON++XS
 PERL6_RUNTIME := build/bin/perl6
 PERL6_YAMLISH := build/lib/YAMLish.pm6
 PERL6_MODULES := $(PERL6_YAMLISH)
