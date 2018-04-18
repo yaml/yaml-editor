@@ -3,7 +3,7 @@ BASE := $(shell cd ../..; pwd)
 #------------------------------------------------------------------------------
 DOCKER_USER ?= yamlio
 CPP_BINARIES := build/bin/cpp-event
-GHC_BINARIES := build/bin/yaml2yeast
+GHC_BINARIES := build/bin/yaml2yeast build/bin/hsyaml-event
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
 JAVA_BINARIES := \
     build/bin/java-json \
@@ -103,9 +103,9 @@ $(CPP_BINARIES): yaml-cpp
 	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-cmake cpp-compile $<
 	touch $@
 
-$(GHC_BINARIES): yamlreference
-	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-ghc ghc-compile $< $@
-	touch $@
+$(GHC_BINARIES): yamlreference HsYAML
+	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-ghc ghc-compile $@
+	# touch $@
 
 $(LIBYAML_BINARIES): libyaml
 	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder libyaml-compile $<
@@ -182,6 +182,9 @@ builder-%: builder
 #------------------------------------------------------------------------------
 ../../yamlreference:
 	git clone git@github.com:orenbenkiki/$(@:../../%=%) $@
+
+../../HsYAML:
+	git clone git@github.com:hvr/$(@:../../%=%) $@
 
 ../../libyaml ../../pyyaml:
 	git clone git@github.com:yaml/$(@:../../%=%) $@

@@ -1,5 +1,6 @@
 /build
 /cjson
+/HsYAML
 /js-yaml
 /libyaml
 /lua-yaml

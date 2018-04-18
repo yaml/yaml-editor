@@ -1,0 +1,76 @@
+    1  git clone https://github.com/hvr/HsYAML
+    2  git clone git@github.com:yaml/yaml-editor
+    3  ssh git@github.com
+    4  cd yaml-editor/
+    5  . .rc
+    6  yaml-editor -l
+    7  yaml-editor 5
+    8  apt-get install -y docker.io ghc cabal-install socat build-essential hg
+    9  apt-get install -y docker.io ghc cabal-install socat build-essential mercurial
+   10  git br -a
+   11  git branch -a
+   12  git co web-server
+   13  git checkout web-server
+   14  yaml-editor-web-server 
+   15  docker pull yamlio/yaml-editor
+   16  yaml-editor-web-server 
+   17  yaml-editor 5
+   18  vim docker/Makefile 
+   19  make -C docker ghc-binaries
+   20  cabal --version
+   21  vim docker/
+   22  docker run -it haskell:8.0.1 bash
+   23  vim Makefile 
+   24  vim docker/Makefile 
+   25  make -C docker setup
+   26  make -C docker ghc-binaries
+   27  vim docker/Makefile 
+   28  ll docker/build/bin/
+   29  ll docker/build/bin/hsyaml-event 
+   30  vim docker/build/bin/hsyaml-event 
+   31  ./docker/build/bin/hsyaml-event 
+   32  echo foo | ./docker/build/bin/hsyaml-event 
+   33  vim docker/Makefile 
+   34  make -C docker clean ghc-binaries
+   35  kill %1
+   36  ps
+   37  ls ..
+   38  git clean -dxn
+   39  git status
+   40  git stash
+   41  git config --global user.email "you@example.com"
+   42  git config --global user.name "Your Name"
+   43  git stash
+   44  git branch
+   45  git co master
+   46  git stash pop
+   47  rm -fr ../build/ ../HsYAML/ ../yamlreference/
+   48  ls -l ..
+   49  make -C docker clean ghc-binaries
+   50  ls -l ..
+   51  vim docker/Makefile 
+   52  make -C docker clean ghc-binaries
+   53  kill %1
+   54  ls ..
+   55  vim docker/
+   56  make setup
+   57  make -C docker setup
+   58  fg
+   59  cd ../build/bin/
+   60  ls -l
+   61  vim .
+   62  cd -
+   63  fg
+   64  apt-get install shellchack
+   65  apt-get install shellcheck
+   66  fg
+   67  ls 
+   68  ls ../build/bin/hsyaml-event
+   69  .cabal-sandbox/bin/yaml-test ../build/bin/hsyaml-event
+   70  ../build/bin/hsyaml-event../build/bin/hsyaml-event
+   71  ../build/bin/hsyaml-event
+   72  printf "foo: 42\n"
+   73  printf "foo: 42\n" | ../build/bin/hsyaml-event
+   74  printf "foo: 42\n" | ../build/bin/hsyaml-event yaml2event
+   75  history 
+   76  history > hist1

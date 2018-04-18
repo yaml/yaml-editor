@@ -2,13 +2,30 @@
 
 set -e
 
-cd /work/$1
+target_binary=${1:?}
+
+case $target_binary in
+  build/bin/yaml2yeast)
+    source_repo=yamlreference
+    build_file=dist/build/yaml2yeast/yaml2yeast
+    ;;
+  build/bin/hsyaml-event)
+    source_repo=HsYAML
+    build_file=dist/build/yaml-test/yaml-test
+    ;;
+  *)
+    echo "Unexpected GHC target '$target_binary'"
+    exit 1
+    ;;
+esac
+
+cd "/work/$source_repo"
 
 cabal install
 
-mv dist/build/yaml2yeast/yaml2yeast /work/$2
+mv "$build_file" "/work/$target_binary"
 rm -fr dist
 
-vcs-info $1
+vcs-info "$source_repo"
 
 set-perms

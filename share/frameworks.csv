@@ -1,17 +1,18 @@
 repo,language,name,provider
-jbeder/yaml-cpp,cpp,yaml-cpp,github
-nodeca/js-yaml,js,js-yaml,github
-yaml/libyaml,c,libyaml,github
+Perl-Toolchain-Gang/YAML-Tiny,perl5,YAML::Tiny,github
 asomov/snakeyaml,java,SnakeYAML,bitbucket
 flyx/NimYAML,nim,NimYAML,github
-ingydotnet/yaml-pm,perl5,YAML.pm,github
-toddr/YAML-Syck,perl5,YAML::Syck,github
-Perl-Toolchain-Gang/YAML-Tiny,perl5,YAML::Tiny,github
+hvr/HsYAML,haskell,HsYAML,github
 ingydotnet/yaml-libyaml-pm,perl5,YAML::XS,github
 ingydotnet/yaml-pegex-pm,perl5,YAML::Pegex,github
-perlpunk/YAML-PP-p5,perl5,YAML::PP,github
+ingydotnet/yaml-pm,perl5,YAML.pm,github
+jbeder/yaml-cpp,cpp,yaml-cpp,github
 leont/yamlish,perl6,YAMLish,github
-yaml/pyyaml,python,pyyaml,github
-orenbenkiki/yamlreference,haskell,Reference Parser,github
-ruamel/yaml,python,ruamel,bitbucket
 lubyk/yaml,lua,yaml,github
+nodeca/js-yaml,js,js-yaml,github
+orenbenkiki/yamlreference,haskell,Reference Parser,github
+perlpunk/YAML-PP-p5,perl5,YAML::PP,github
+ruamel/yaml,python,ruamel,bitbucket
+toddr/YAML-Syck,perl5,YAML::Syck,github
+yaml/libyaml,c,libyaml,github
+yaml/pyyaml,python,pyyaml,github
