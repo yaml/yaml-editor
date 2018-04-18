@@ -105,7 +105,7 @@ $(CPP_BINARIES): yaml-cpp
 
 $(GHC_BINARIES): yamlreference HsYAML
 	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-ghc ghc-compile $@
-	# touch $@
+	touch $@
 
 $(LIBYAML_BINARIES): libyaml
 	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder libyaml-compile $<
