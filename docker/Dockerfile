@@ -6,6 +6,7 @@ RUN apt-get update \
     gist \
     git \
     jq \
+    locales \
     nodejs \
     npm \
     perl \
