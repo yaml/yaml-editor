@@ -82,7 +82,7 @@ docker-run() {
     )
   fi
 
-  work=$(mktemp -d /tmp/XXXXXXXXXXXXXXXX)
+  work=$(mktemp -d /tmp/yaml-editor-XXXXXXXXXXXXXXXX)
   root=$(cd "$(dirname "$0")/.."; pwd)
   local_source="-v $(cd "$root/.."; pwd):/local_source"
   $option_local || local_source=''
