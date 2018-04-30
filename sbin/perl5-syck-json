@@ -4,7 +4,11 @@ use warnings;
 use 5.010;
 
 use YAML::Syck;
-use Mojo::JSON;
+use JSON::PP;
+use Encode;
 $YAML::Syck::ImplicitTyping = 1;
 
-print Mojo::JSON::encode_json( Load do { local $/; <> } );
+my $coder = JSON::PP->new->ascii->pretty->allow_nonref->allow_blessed->canonical;
+my $yaml = do { local $/; <> };
+my @docs = YAML::Syck::Load($yaml);
+print encode_utf8($coder->encode($_)) for @docs;

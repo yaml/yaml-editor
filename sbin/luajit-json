@@ -3,4 +3,7 @@
 yaml = require "yaml"
 json = require "cjson"
 
-print(json.encode(yaml.load(io.read("*all"))))
+docs={ yaml.load(io.read("*all")) }
+for i = 1, #docs do
+    print(json.encode(docs[i]))
+end
