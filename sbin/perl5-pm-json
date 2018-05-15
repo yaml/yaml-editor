@@ -10,6 +10,6 @@ use Encode;
 $YAML::Numify = 1;
 
 my $coder = JSON::PP->new->ascii->pretty->allow_nonref->allow_blessed->canonical;
-my $yaml = do { local $/; <> };
+my $yaml = decode_utf8 do { local $/; <> };
 my @docs = YAML::Load($yaml);
 print encode_utf8($coder->encode($_)) for @docs;

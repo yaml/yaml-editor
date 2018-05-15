@@ -10,4 +10,5 @@ $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent=2;
 $Data::Dumper::Terse=1;
 
-print Dumper YAML::XS::Load do { local $/; <> };
+my $yaml = do { local $/; <> };
+print Dumper YAML::XS::Load $yaml;

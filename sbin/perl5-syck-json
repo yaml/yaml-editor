@@ -7,6 +7,7 @@ use YAML::Syck;
 use JSON::PP;
 use Encode;
 $YAML::Syck::ImplicitTyping = 1;
+$YAML::Syck::ImplicitUnicode = 1;
 
 my $coder = JSON::PP->new->ascii->pretty->allow_nonref->allow_blessed->canonical;
 my $yaml = do { local $/; <> };
