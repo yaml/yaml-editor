@@ -13,6 +13,10 @@ case $target_binary in
     source_repo=HsYAML
     build_file=dist/build/yaml-test/yaml-test
     ;;
+  build/bin/hsyaml-json)
+    source_repo=HsYAML
+    build_file=dist/build/yaml-test/yaml-test
+    ;;
   *)
     echo "Unexpected GHC target '$target_binary'"
     exit 1
@@ -21,7 +25,8 @@ esac
 
 cd "/work/$source_repo"
 
-cabal install
+cabal update
+cabal install -fexe -v
 
 mv "$build_file" "/work/$target_binary"
 rm -fr dist

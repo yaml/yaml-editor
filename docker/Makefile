@@ -3,7 +3,7 @@ BASE := $(shell cd ../..; pwd)
 #------------------------------------------------------------------------------
 DOCKER_USER ?= yamlio
 CPP_BINARIES := build/bin/cpp-event
-GHC_BINARIES := build/bin/yaml2yeast build/bin/hsyaml-event
+GHC_BINARIES := build/bin/yaml2yeast build/bin/hsyaml-event build/bin/hsyaml-json
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
 JAVA_BINARIES := \
     build/bin/java-json \

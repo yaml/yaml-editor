@@ -1,38 +1,39 @@
 +----+-------------------+--------------------------+---------------+
-|  # | View Name         | YAML Framework           | Output Format |
+| #  | View Name         | YAML Framework           | Output Format |
 +----+-------------------+--------------------------+---------------+
 |  1 | cpp.event         | C++ yaml-cpp             | Event Stream  |
 |  2 | hs-yaml.event     | Haskell HsYAML           | Event Stream  |
-|  3 | java.event        | Java SnakeYAML           | Event Stream  |
-|  4 | java.json         | Java SnakeYAML           | JSON          |
-|  5 | js-yaml.json      | Javascript js-yaml       | JSON          |
-|  6 | libyaml.event     | C libyaml                | Event Stream  |
-|  7 | libyaml.yaml      | C libyaml                | YAML          |
-|  8 | luajit.json       | Lua yaml                 | JSON          |
-|  9 | nimyaml.event     | Nim NimYAML              | Event Stream  |
-| 10 | perl5-pegex.event | Perl 5 YAML::Pegex       | Event Stream  |
-| 11 | perl5-pm.json     | Perl 5 YAML.pm           | JSON          |
-| 12 | perl5-pm.pl       | Perl 5 YAML.pm           | Native Data   |
-| 13 | perl5-pp.event    | Perl 5 YAML::PP          | Event Stream  |
-| 14 | perl5-pp.json     | Perl 5 YAML::PP          | JSON          |
-| 15 | perl5-pp.pl       | Perl 5 YAML::PP          | Native Data   |
-| 16 | perl5-pp.yaml     | Perl 5 YAML::PP          | YAML          |
-| 17 | perl5-syck.json   | Perl 5 YAML::Syck        | JSON          |
-| 18 | perl5-syck.pl     | Perl 5 YAML::Syck        | Native Data   |
-| 19 | perl5-tiny.json   | Perl 5 YAML::Tiny        | JSON          |
-| 20 | perl5-tiny.pl     | Perl 5 YAML::Tiny        | Native Data   |
-| 21 | perl5-xs.json     | Perl 5 YAML::XS          | JSON          |
-| 22 | perl5-xs.pl       | Perl 5 YAML::XS          | Native Data   |
-| 23 | perl6.json        | Perl 6 YAMLish           | JSON          |
-| 24 | perl6.p6          | Perl 6 YAMLish           | Native Data   |
-| 25 | pyyaml.event      | Python pyyaml            | Event Stream  |
-| 26 | pyyaml.json       | Python pyyaml            | JSON          |
-| 27 | pyyaml.py         | Python pyyaml            | Native Data   |
-| 28 | pyyaml.yaml       | Python pyyaml            | YAML          |
-| 29 | ref.yeast         | Haskell Reference Parser | YEAST Events  |
-| 30 | ruamel.event      | Python ruamel            | Event Stream  |
-| 31 | ruamel.json       | Python ruamel            | JSON          |
-| 32 | ruamel.py         | Python ruamel            | Native Data   |
-| 33 | ruamel.yaml       | Python ruamel            | YAML          |
-| 34 | ruby.json         | - -                      | JSON          |
+|  3 | hs-yaml.json      | Haskell HsYAML           | JSON          |
+|  4 | java.event        | Java SnakeYAML           | Event Stream  |
+|  5 | java.json         | Java SnakeYAML           | JSON          |
+|  6 | js-yaml.json      | Javascript js-yaml       | JSON          |
+|  7 | libyaml.event     | C libyaml                | Event Stream  |
+|  8 | libyaml.yaml      | C libyaml                | YAML          |
+|  9 | luajit.json       | Lua yaml                 | JSON          |
+| 10 | nimyaml.event     | Nim NimYAML              | Event Stream  |
+| 11 | perl5-pegex.event | Perl 5 YAML::Pegex       | Event Stream  |
+| 12 | perl5-pm.json     | Perl 5 YAML.pm           | JSON          |
+| 13 | perl5-pm.pl       | Perl 5 YAML.pm           | Native Data   |
+| 14 | perl5-pp.event    | Perl 5 YAML::PP          | Event Stream  |
+| 15 | perl5-pp.json     | Perl 5 YAML::PP          | JSON          |
+| 16 | perl5-pp.pl       | Perl 5 YAML::PP          | Native Data   |
+| 17 | perl5-pp.yaml     | Perl 5 YAML::PP          | YAML          |
+| 18 | perl5-syck.json   | Perl 5 YAML::Syck        | JSON          |
+| 19 | perl5-syck.pl     | Perl 5 YAML::Syck        | Native Data   |
+| 20 | perl5-tiny.json   | Perl 5 YAML::Tiny        | JSON          |
+| 21 | perl5-tiny.pl     | Perl 5 YAML::Tiny        | Native Data   |
+| 22 | perl5-xs.json     | Perl 5 YAML::XS          | JSON          |
+| 23 | perl5-xs.pl       | Perl 5 YAML::XS          | Native Data   |
+| 24 | perl6.json        | Perl 6 YAMLish           | JSON          |
+| 25 | perl6.p6          | Perl 6 YAMLish           | Native Data   |
+| 26 | pyyaml.event      | Python pyyaml            | Event Stream  |
+| 27 | pyyaml.json       | Python pyyaml            | JSON          |
+| 28 | pyyaml.py         | Python pyyaml            | Native Data   |
+| 29 | pyyaml.yaml       | Python pyyaml            | YAML          |
+| 30 | ref.yeast         | Haskell Reference Parser | YEAST Events  |
+| 31 | ruamel.event      | Python ruamel            | Event Stream  |
+| 32 | ruamel.json       | Python ruamel            | JSON          |
+| 33 | ruamel.py         | Python ruamel            | Native Data   |
+| 34 | ruamel.yaml       | Python ruamel            | YAML          |
+| 35 | ruby.json         | - -                      | JSON          |
 +----+-------------------+--------------------------+---------------+
