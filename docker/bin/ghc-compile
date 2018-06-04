@@ -1,21 +1,22 @@
 #!/usr/bin/env bash
 
 set -e
+set -x
 
 target_binary=${1:?}
 
 case $target_binary in
   build/bin/yaml2yeast)
     source_repo=yamlreference
-    build_file=dist/build/yaml2yeast/yaml2yeast
+    build_file=yaml2yeast
     ;;
   build/bin/hsyaml-event)
     source_repo=HsYAML
-    build_file=dist/build/yaml-test/yaml-test
+    build_file=yaml-test
     ;;
   build/bin/hsyaml-json)
     source_repo=HsYAML
-    build_file=dist/build/yaml-test/yaml-test
+    build_file=yaml-test
     ;;
   *)
     echo "Unexpected GHC target '$target_binary'"
@@ -25,11 +26,15 @@ esac
 
 cd "/work/$source_repo"
 
-cabal update
-cabal install -fexe -v
+rm -rf dist .cabal-sandbox cabal.sandbox.config dist-newstyle
 
-mv "$build_file" "/work/$target_binary"
-rm -fr dist
+cabal update
+cabal new-build "exe:${build_file}"
+
+build_file=$(find dist-newstyle -name "${build_file}" -type f -executable)
+
+mv -v "$build_file" "/work/$target_binary"
+rm -rf dist .cabal-sandbox cabal.sandbox.config dist-newstyle
 
 vcs-info "$source_repo"
 
