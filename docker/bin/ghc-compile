@@ -10,11 +10,7 @@ case $target_binary in
     source_repo=yamlreference
     build_file=yaml2yeast
     ;;
-  build/bin/hsyaml-event)
-    source_repo=HsYAML
-    build_file=yaml-test
-    ;;
-  build/bin/hsyaml-json)
+  build/bin/hsyaml-parser)
     source_repo=HsYAML
     build_file=yaml-test
     ;;
