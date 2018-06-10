@@ -196,12 +196,18 @@ run-all() {
       continue
     fi
     filter="${view/\./-}"
-    output=$(cat $input_file | reformat | $filter 2>&1 || true)
-    re='^[\{\[]'
-    if [[ $view =~ \.json$ && $output =~ $re ]]; then
-      output=$(echo "$output" | jq .)
+    if [[ $view =~ \.json$ ]]; then
+      output="$(cat $input_file | reformat | $filter 2>&1 || true)"
+      re='^[\{\[]'
+      if [[ $output =~ $re ]]; then
+        echo "$output" | jq . > $view 2>&1
+      else
+        # something went wrong (or it's just a scalar)
+        echo "$output" > $view
+      fi
+    else
+      cat $input_file | reformat | $filter > $view 2>&1 || true
     fi
-    echo "$output" > $view
   done
 }
 
