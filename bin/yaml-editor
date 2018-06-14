@@ -245,26 +245,26 @@ make-tml() {
   # TODO Populate tag words with heuristics.
   tml="\
 === <label goes here>
-from: <Source URL or description>
-tags: tag words
+--- from: <Source URL or description>
+--- tags: tag words
 
-+++ in-yaml
-$(cat input.yaml | reformat | tml)
+--- in-yaml(<)
+$(cat input.yaml | reformat | tml | sed -e 's/^\(.\)/    \1/')
 "
   libyaml=$(tml libyaml.event)
   if [[ $libyaml =~ (^|$'\n')[^\+\-\=] ]]; then
     tml+="
-+++ error
+--- error
 "
   else
     tml+="
-+++ out-yaml
-$(cat libyaml.yaml | tml)
+--- out-yaml(<)
+$(cat libyaml.yaml | tml | sed -e 's/^\(.\)/    \1/')
 
-+++ in-json
+--- in-json
 $(cat js-yaml.json | tml)
 
-+++ test-event
+--- test-event
 $(cat libyaml.event | tml)
 "
   fi
