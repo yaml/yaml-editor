@@ -4,6 +4,8 @@ use warnings;
 use 5.010;
 
 use YAML::XS;
+$YAML::XS::Boolean = 'JSON::PP';
+$YAML::XS::LoadBlessed = 0;
 use JSON::PP;
 use Encode;
 
