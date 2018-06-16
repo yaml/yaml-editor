@@ -21,8 +21,8 @@ case $target_binary in
 esac
 
 # avoid modifying the original dir because of make
-cp -r "/work/$source_repo" "/work/$source_repo-build"
-cd "/work/$source_repo-build"
+cp -r "/work/$source_repo" "/tmp/$source_repo-build"
+cd "/tmp/$source_repo-build"
 
 cabal new-build "exe:${build_file}"
 

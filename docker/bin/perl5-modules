@@ -5,8 +5,8 @@ set -ex
 repo=$1
 
 # avoid modifying the original dir because of make
-cp -r /work/$repo /work/$repo-build
-cd /work/$repo-build
+cp -r /work/$repo /tmp/$repo-build
+cd /tmp/$repo-build
 
 if [[ -f Meta ]]; then
   zild dist
