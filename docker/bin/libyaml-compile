@@ -2,16 +2,18 @@
 
 set -ex
 
-cd /work/libyaml
+# avoid modifying the original dir because of make
+cp -r /work/libyaml /tmp/libyaml-build
+cd /tmp/libyaml-build
+
 ./bootstrap
 ./configure
 make
-mv tests/.libs/run-parser-test-suite /work/build/bin/libyaml-parser
-mv tests/.libs/run-emitter-test-suite /work/build/bin/libyaml-emitter
+cp tests/.libs/run-parser-test-suite /work/build/bin/libyaml-parser
+cp tests/.libs/run-emitter-test-suite /work/build/bin/libyaml-emitter
 
-make clean
-git clean -dxf
-
+# go to original dir for vcs-info to get a clean status
+cd /work/libyaml
 vcs-info $1
 
 set-perms

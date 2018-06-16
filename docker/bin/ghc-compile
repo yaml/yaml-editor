@@ -20,18 +20,18 @@ case $target_binary in
     ;;
 esac
 
-cd "/work/$source_repo"
+# avoid modifying the original dir because of make
+cp -r "/work/$source_repo" "/work/$source_repo-build"
+cd "/work/$source_repo-build"
 
-rm -rf dist .cabal-sandbox cabal.sandbox.config dist-newstyle
-
-cabal update
 cabal new-build "exe:${build_file}"
 
 build_file=$(find dist-newstyle -name "${build_file}" -type f -executable)
 
 mv -v "$build_file" "/work/$target_binary"
-rm -rf dist .cabal-sandbox cabal.sandbox.config dist-newstyle
 
+# go to original dir for vcs-info to get a clean status
+cd "/work/$source_repo"
 vcs-info "$source_repo"
 
 set-perms

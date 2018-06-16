@@ -4,7 +4,9 @@ set -ex
 
 repo=$1
 
-cd /work/$repo
+# avoid modifying the original dir because of make
+cp -r /work/$repo /work/$repo-build
+cd /work/$repo-build
 
 if [[ -f Meta ]]; then
   zild dist
@@ -19,8 +21,9 @@ fi
 
 cpanm -n -L /work/build *.tar.gz
 
-git clean -dxf
 
+cd /work/$repo
+# go to original dir for vcs-info to get a clean status
 vcs-info $repo
 
 set-perms
