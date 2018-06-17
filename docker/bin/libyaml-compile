@@ -8,9 +8,9 @@ cd /tmp/libyaml-build
 
 ./bootstrap
 ./configure
-make
-cp tests/.libs/run-parser-test-suite /work/build/bin/libyaml-parser
-cp tests/.libs/run-emitter-test-suite /work/build/bin/libyaml-emitter
+make LDFLAGS="$LDFLAGS -static"
+cp tests/run-parser-test-suite /work/build/bin/libyaml-parser
+cp tests/run-emitter-test-suite /work/build/bin/libyaml-emitter
 
 # go to original dir for vcs-info to get a clean status
 cd /work/libyaml
