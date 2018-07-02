@@ -2,11 +2,20 @@
 
 set -ex
 
-cd /work/js-yaml/
-npm install .
-rm -fr /work/build/node_modules/
-mv node_modules /work/build/
-
-vcs-info $1
+if [[ $1 =~ js-yaml ]]; then
+  cd /work/js-yaml/
+  npm install .
+  rm -fr /work/build/node_modules/js-yaml
+  cd /work/build/
+  npm install --no-save /work/js-yaml/
+  vcs-info js-yaml
+else
+  cd /work/js/
+  npm install .
+  npm run build
+  cd /work/build/
+  npm install --no-save /work/js/
+  vcs-info js
+fi
 
 set-perms
