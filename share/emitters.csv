@@ -2,6 +2,8 @@ id,reponame,output
 cpp-event,jbeder/yaml-cpp,event
 hs-yaml-event,hvr/HsYAML,event
 hs-yaml-json,hvr/HsYAML,json
+js-json,eemeli/yaml,json
+js-yaml,eemeli/yaml,yaml
 js-yaml-json,nodeca/js-yaml,json
 libyaml-event,yaml/libyaml,event
 libyaml-yaml,yaml/libyaml,yaml

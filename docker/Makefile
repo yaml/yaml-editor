@@ -18,7 +18,11 @@ LUA_MODULES := \
     build/usr/local/share/lua/5.1/yaml/init.lua \
     build/usr/local/share/lua/5.1/cjson/util.lua
 NIM_BINARIES := build/bin/nimyaml-event
-NODE_MODULES := build/node_modules/js-yaml/lib/js-yaml.js
+NODE_JS_YAML := build/node_modules/js-yaml/lib/js-yaml.js
+NODE_YAML := build/node_modules/yaml/dist/index.js
+NODE_MODULES := \
+    $(NODE_JS_YAML) \
+    $(NODE_YAML)
 PERL5_YAML_PM := build/lib/perl5/YAML.pm
 PERL5_YAML_XS := build/lib/perl5/x86_64-linux-gnu-thread-multi/YAML/LibYAML.pm
 PERL5_YAML_TINY := build/lib/perl5/YAML/Tiny.pm
@@ -123,7 +127,11 @@ $(NIM_BINARIES): src/nimyaml_event.nim NimYAML
 	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-nim nim-compile $< $@
 	touch $@
 
-$(NODE_MODULES): js-yaml
+$(NODE_JS_YAML): js-yaml
+	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-node node-modules $<
+	touch $@
+
+$(NODE_YAML): js
 	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-node node-modules $<
 	touch $@
 
@@ -188,6 +196,9 @@ builder-%: builder
 
 ../../libyaml ../../pyyaml:
 	git clone git@github.com:yaml/$(@:../../%=%) $@
+
+../../js:
+	git clone git@github.com:eemeli/yaml $@
 
 ../../js-yaml:
 	git clone git@github.com:nodeca/$(@:../../%=%) $@
