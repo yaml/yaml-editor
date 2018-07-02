@@ -1,28 +1,28 @@
 FROM ubuntu:16.04
 
 RUN apt-get update \
+ && apt-get install -y curl \
+ && curl -sL https://deb.nodesource.com/setup_8.x | bash \
+ && apt-get install -y nodejs
+RUN apt-get update \
  && apt-get install -y \
+    curl \
     default-jre-headless \
     gist \
     git \
     jq \
     locales \
-    nodejs \
-    npm \
     perl \
     python \
     python-pip \
     ruby \
     vim \
- && ( \
-        ln /usr/bin/nodejs /usr/bin/node \
-        && npm install -g coffee-script \
-    ) \
  && pip install ruamel.yaml \
  && locale-gen en_US.UTF-8 \
+ && curl -sL https://deb.nodesource.com/setup_8.x | bash \
+ && apt-get install -y luajit nodejs \
+ && npm install -g coffee-script \
  && true
-
-RUN apt-get install -y luajit
 
 COPY build/ /
 
