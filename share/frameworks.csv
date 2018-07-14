@@ -3,7 +3,7 @@ Perl-Toolchain-Gang/YAML-Tiny,perl5,YAML::Tiny,github
 asomov/snakeyaml,java,SnakeYAML,bitbucket
 flyx/NimYAML,nim,NimYAML,github
 hvr/HsYAML,haskell,HsYAML,github
-ingydotnet/yaml-libyaml-pm,perl5,YAML::XS,github
+ingydotnet/yaml-libyaml-pm,perl5,YAML::XS (libyaml),github
 ingydotnet/yaml-pegex-pm,perl5,YAML::Pegex,github
 ingydotnet/yaml-pm,perl5,YAML.pm,github
 jbeder/yaml-cpp,cpp,yaml-cpp,github
