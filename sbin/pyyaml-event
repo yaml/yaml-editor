@@ -4,6 +4,9 @@ import sys
 import pprint
 import yaml
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 for event in yaml.parse(sys.stdin.read()):
 
     name = event.__class__.__name__
