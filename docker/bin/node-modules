@@ -5,16 +5,17 @@ set -ex
 if [[ $1 =~ js-yaml ]]; then
   cd /work/js-yaml/
   npm install .
-  rm -fr /work/build/node_modules/js-yaml
+  npm pack > pack.filename
   cd /work/build/
-  npm install --no-save /work/js-yaml/
+  npm install --no-save "/work/js-yaml/$(cat /work/js-yaml/pack.filename)"
   vcs-info js-yaml
 else
   cd /work/js/
   npm install .
   npm run build
+  npm pack > pack.filename
   cd /work/build/
-  npm install --no-save /work/js/
+  npm install --no-save "/work/js/$(cat /work/js/pack.filename)"
   vcs-info js
 fi
 
