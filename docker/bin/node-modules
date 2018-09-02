@@ -2,20 +2,23 @@
 
 set -ex
 
+tmp_builddir=/tmp/$1-build
+cp -r /work/$1 $tmp_builddir
+cd $tmp_builddir
+
+
 if [[ $1 =~ js-yaml ]]; then
-  cd /work/js-yaml/
   npm install .
   npm pack > pack.filename
   cd /work/build/
-  npm install --no-save "/work/js-yaml/$(cat /work/js-yaml/pack.filename)"
+  npm install --no-save "$tmp_builddir/$(cat $tmp_builddir/pack.filename)"
   vcs-info js-yaml
 else
-  cd /work/js/
   npm install .
   npm run build
   npm pack > pack.filename
   cd /work/build/
-  npm install --no-save "/work/js/$(cat /work/js/pack.filename)"
+  npm install --no-save "$tmp_builddir/$(cat $tmp_builddir/pack.filename)"
   vcs-info js
 fi
 
