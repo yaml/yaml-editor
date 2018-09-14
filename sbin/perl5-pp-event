@@ -16,4 +16,4 @@ my $parser = YAML::PP::Parser->new(
 );
 
 my $yaml = decode_utf8 do { local $/; <> };
-$parser->parse($yaml);
+$parser->parse_string($yaml);
