@@ -240,7 +240,7 @@ show-tml() {
 }
 
 make-tml() {
-  touch libyaml.yaml js-yaml.json libyaml.event
+  touch libyaml.yaml js.json libyaml.event
   run-all
   # TODO Populate tag words with heuristics.
   tml="\
@@ -262,7 +262,7 @@ $(cat input.yaml | reformat | tml | sed -e 's/^\(.\)/    \1/')
 $(cat libyaml.yaml | tml | sed -e 's/^\(.\)/    \1/')
 
 --- in-json
-$(cat js-yaml.json | tml)
+$(cat js.json | tml)
 
 --- test-event
 $(cat libyaml.event | tml)
