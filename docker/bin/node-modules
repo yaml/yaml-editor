@@ -12,14 +12,14 @@ if [[ $1 =~ js-yaml ]]; then
   npm pack > pack.filename
   cd /work/build/
   npm install --no-save "$tmp_builddir/$(cat $tmp_builddir/pack.filename)"
-  vcs-info js-yaml
 else
   npm install .
   npm run build
   npm pack > pack.filename
   cd /work/build/
   npm install --no-save "$tmp_builddir/$(cat $tmp_builddir/pack.filename)"
-  vcs-info js
 fi
 
+cd /work/$1
+vcs-info $1
 set-perms

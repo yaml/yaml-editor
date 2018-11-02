@@ -17,6 +17,8 @@ for line in ${frameworks[*]}; do
                     versionfile="$maindir/../build/versions/ruamel"
                 elif [[ "$repo" = "lubyk/yaml" ]]; then
                     versionfile="$maindir/../build/versions/lua-yaml"
+                elif [[ "$repo" = "eemeli/yaml" ]]; then
+                    versionfile="$maindir/../build/versions/js"
                 fi
                 if [[ -f "$versionfile" ]]; then
                     info=( $(cat $versionfile) )
