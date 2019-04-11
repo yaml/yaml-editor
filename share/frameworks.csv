@@ -1,6 +1,7 @@
 repo,language,name,provider
 Perl-Toolchain-Gang/YAML-Tiny,perl5,YAML::Tiny,github
 asomov/snakeyaml,java,SnakeYAML,bitbucket
+aaubry/YamlDotNet,csharp,YamlDotName,github
 eemeli/yaml,js,yaml,github
 flyx/NimYAML,nim,NimYAML,github
 hvr/HsYAML,haskell,HsYAML,github

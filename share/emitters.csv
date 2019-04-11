@@ -1,5 +1,7 @@
 id,reponame,output
 cpp-event,jbeder/yaml-cpp,event
+dotnet-event,aaubry/YamlDotNet,event
+dotnet-json,aaubry/YamlDotNet,json
 hs-yaml-event,hvr/HsYAML,event
 hs-yaml-json,hvr/HsYAML,json
 js-event,eemeli/yaml,event

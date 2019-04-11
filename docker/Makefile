@@ -3,6 +3,7 @@ BASE := $(shell cd ../..; pwd)
 #------------------------------------------------------------------------------
 DOCKER_USER ?= yamlio
 CPP_BINARIES := build/bin/cpp-event
+DOTNET_BINARIES := event json
 GHC_BINARIES := build/bin/yaml2yeast build/bin/hsyaml-parser
 LIBYAML_BINARIES := build/bin/libyaml-parser build/bin/libyaml-emitter
 JAVA_BINARIES := \
@@ -55,6 +56,7 @@ PYTHON_MODULES := \
 all: \
     setup \
     cpp-binaries \
+    dotnet-binaries \
     ghc-binaries \
     libyaml-binaries \
     java-binaries \
@@ -90,6 +92,7 @@ clean:
 
 #------------------------------------------------------------------------------
 cpp-binaries: builder-cmake $(CPP_BINARIES)
+dotnet-binaries: builder-dotnet $(DOTNET_BINARIES)
 ghc-binaries: builder-ghc $(GHC_BINARIES)
 libyaml-binaries: builder $(LIBYAML_BINARIES)
 java-binaries: builder-java $(JAVA_BINARIES)
@@ -106,6 +109,10 @@ python-modules: builder-python $(PYTHON_MODULES)
 $(CPP_BINARIES): yaml-cpp
 	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-cmake cpp-compile $<
 	touch $@
+
+.PHONY: $(DOTNET_BINARIES)
+$(DOTNET_BINARIES):
+	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-dotnet dotnet-compile $@
 
 $(GHC_BINARIES): yamlreference HsYAML
 	docker run --rm -v $(BASE):/work $(DOCKER_USER)/builder-ghc ghc-compile $@

@@ -94,6 +94,7 @@ sub map_language {
         '-'     => '-',
         c       => "C",
         cpp     => "C++",
+        csharp  => "C#",
         haskell => "Haskell",
         java    => "Java",
         js      => "Javascript",

@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+cd /work/yaml-editor/docker/src/dotnet/$1
+dotnet publish --configuration Release --output /work/build/bin
