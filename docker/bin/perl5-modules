@@ -9,7 +9,10 @@ cp -r /work/$repo /tmp/$repo-build
 cd /tmp/$repo-build
 
 if [[ -f Meta ]]; then
+  # YAML::LibYAML needs test-base-pm besides the build directory
+  cp -r /work/test-base-pm /tmp/test-base-pm
   zild dist
+  rm -rf /tmp/test-base-pm
 elif [[ -f dist.ini ]]; then
   dzil build
 elif [[ -f Makefile.PL ]]; then
