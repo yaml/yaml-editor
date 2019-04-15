@@ -31,7 +31,7 @@ def generic_constructor(loader, tag, node):
         object = GenericScalar(tag=tag, content=resolved)
     return object
 
-yaml.add_multi_constructor('', generic_constructor)
+yaml.add_multi_constructor('', generic_constructor, Loader=yaml.FullLoader)
 
-for doc in yaml.load_all(sys.stdin.read()):
+for doc in yaml.load_all(sys.stdin.read(), Loader=yaml.FullLoader):
     pprint.pprint(doc)

@@ -14,9 +14,9 @@ def generic_constructor(loader, tag, node):
     else:
         return loader.construct_scalar(node)
 
-yaml.add_multi_constructor('', generic_constructor)
+yaml.add_multi_constructor('', generic_constructor, Loader=yaml.FullLoader)
 
-for doc in yaml.load_all(sys.stdin.read()):
+for doc in yaml.load_all(sys.stdin.read(), Loader=yaml.FullLoader):
     try:
         print json.dumps(doc, sort_keys=True, skipkeys=True, indent=2)
     except:
