@@ -17,6 +17,7 @@ RUN apt-get update \
     python-pip \
     ruby \
     vim \
+    libicu-dev \
  && pip install ruamel.yaml \
  && locale-gen en_US.UTF-8 \
  && curl -sL https://deb.nodesource.com/setup_8.x | bash \
