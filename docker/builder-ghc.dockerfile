@@ -1,4 +1,4 @@
-FROM haskell:8.2.1
+FROM haskell:8.6.5
 
 RUN apt-get update && apt-get install -y pkg-config
 

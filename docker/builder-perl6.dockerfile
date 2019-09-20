@@ -1,6 +1,6 @@
 FROM builder
 
-RUN wget http://rakudo.org/downloads/star/rakudo-star-2017.04.tar.gz \
+RUN wget http://rakudo.org/dl/star/rakudo-star-2017.04.tar.gz \
  && tar xfz rakudo-star-2017.04.tar.gz \
  && ( \
         cd rakudo-star-2017.04 \
