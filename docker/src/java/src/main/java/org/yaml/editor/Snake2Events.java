@@ -60,7 +60,7 @@ public class Snake2Events {
         private String value(final Event e) {
             final StringBuilder builder = new StringBuilder(" ");
             final ScalarEvent ev = (ScalarEvent) e;
-            builder.append(ev.getStyle().getChar() == null ? ':' : ev.getStyle().getChar());
+            builder.append(ev.getScalarStyle().getChar() == null ? ':' : ev.getScalarStyle().getChar());
             for (char c: ev.getValue().toCharArray()) {
                 switch (c) {
                     case '\b': builder.append("\\b"); break;
