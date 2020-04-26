@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-set -ex
-
-cp -pr /perl6/ /work/build/perl6/
-
-set-perms
