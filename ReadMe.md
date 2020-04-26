@@ -6,18 +6,16 @@ Edit YAML and see it processed by various processors
 
 # Synopsis
 
-```
-source .rc
+    source .rc
 
-# help
-yaml-editor -h
+    # help
+    yaml-editor -h
 
-# list supported frameworks
-yaml-editor -l
+    # list supported frameworks
+    yaml-editor -l
 
-# Open editor with four output windows in a grid
-yaml-editor -g libyaml.event cpp.event pyyaml.event js-yaml.json
-```
+    # Open editor with four output windows in a grid
+    yaml-editor -g c-libyaml.event cpp-yamlcpp.event py-pyyaml.json js-yaml.json
 
 # Description
 
@@ -28,3 +26,7 @@ a Vim session in it.
 The Docker Image contains various YAML frameworks.
 
 This repository also contains the code to create the docker image.
+
+The base docker image code can be found in
+[yaml-runtimes](https://github.com/yaml/yaml-runtimes).
+

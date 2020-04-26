@@ -110,7 +110,7 @@ foo: bar
   fi
 
   docker run --rm -it \
-    -v "$work":/yaml \
+    -v "$work":/yaml/edit \
     -v "$root":/yaml-editor \
     $mount_suite \
     $local_source \
@@ -240,7 +240,7 @@ show-tml() {
 }
 
 make-tml() {
-  touch libyaml.yaml js.json libyaml.event
+  touch c-libyaml.yaml js-yaml.json c-libyaml.event
   run-all
   # TODO Populate tag words with heuristics.
   tml="\
@@ -251,7 +251,7 @@ make-tml() {
 --- in-yaml(<)
 $(cat input.yaml | reformat | tml | sed -e 's/^\(.\)/    \1/')
 "
-  libyaml=$(tml libyaml.event)
+  libyaml=$(tml c-libyaml.event)
   if [[ $libyaml =~ (^|$'\n')[^\+\-\=] ]]; then
     tml+="
 --- error
@@ -259,13 +259,13 @@ $(cat input.yaml | reformat | tml | sed -e 's/^\(.\)/    \1/')
   else
     tml+="
 --- out-yaml(<)
-$(cat libyaml.yaml | tml | sed -e 's/^\(.\)/    \1/')
+$(cat c-libyaml.yaml | tml | sed -e 's/^\(.\)/    \1/')
 
 --- in-json
-$(cat js.json | tml)
+$(cat js-yaml.json | tml)
 
 --- test-event
-$(cat libyaml.event | tml)
+$(cat c-libyaml.event | tml)
 "
   fi
 }

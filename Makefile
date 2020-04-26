@@ -4,7 +4,8 @@ build:
 	make -C docker
 
 emitter-table:
-	./bin/emitters-to-text-table > ./share/emitters.table
+	docker run -i --rm yamlio/alpine-runtime-all cat /yaml/info/views.table >./share/emitters.table
+	docker run -i --rm yamlio/alpine-runtime-all cat /yaml/info/views.csv >./share/emitters.csv
 
 shell: build
 	docker run -it \

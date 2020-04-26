@@ -4,6 +4,7 @@ set shiftwidth=2
 set tabstop=2
 set softtabstop=2
 set nosmartindent
+set mouse=
 
 " YAML Editor netrw custom settings:
 let g:netrw_list_hide= '.*\.swp$,^.vimrc$,^\.\./$,^\./$,^help$,^TEST.tml$'
@@ -31,6 +32,8 @@ map \<bar> <c-w><bar>
 map \n :windo set number!<cr>
 map \h :!(clear; less -FRX help)<cr>
 map \l :!(clear; yaml-editor -l <bar> less -FRX)<cr>
+map \M :set mouse=a<cr>
+map \m :set mouse=<cr>
 
 " Handy window commands:
 nnoremap <c-j> <c-w>j<c-w><Esc>

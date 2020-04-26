@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # From: https://gist.github.com/fahhem/1376956
 # Modified to take extra vim args
@@ -11,11 +11,11 @@ vimsp.py col1row1 col2row1 / col1row2 col2row2
 def neighborhood(iterable):
     iterator = iter(iterable)
     prev = None
-    item = iterator.next()  # throws StopIteration if empty.
-    for next in iterator:
-        yield (prev,item,next)
+    item = next(iterator)  # throws StopIteration if empty.
+    for next1 in iterator:
+        yield (prev,item,next1)
         prev = item
-        item = next
+        item = next1
     yield (prev,item,None)
 
 HSPLIT,VSPLIT = 'split','vsplit'
@@ -51,8 +51,8 @@ args = []
 
 # split top-down first
 # each split goes up and opens that file there
-for prev, file, next in neighborhood(files):
-    if next and next=='/': # last file of a line
+for prev, file, next1 in neighborhood(files):
+    if next and next1=='/': # last file of a line
         args.extend(['-c','split %s' % file])
 
 # then split left-right for each

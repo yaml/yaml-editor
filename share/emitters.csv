@@ -1,39 +1,47 @@
-id,reponame,output
-cpp-event,jbeder/yaml-cpp,event
-hs-yaml-event,hvr/HsYAML,event
-hs-yaml-json,hvr/HsYAML,json
-js-event,eemeli/yaml,event
-js-json,eemeli/yaml,json
-js-yaml,eemeli/yaml,yaml
-js-yaml-json,nodeca/js-yaml,json
-libyaml-event,yaml/libyaml,event
-libyaml-yaml,yaml/libyaml,yaml
-java-event,asomov/snakeyaml,event
-java-json,asomov/snakeyaml,json
-luajit-json,lubyk/yaml,json
-nimyaml-event,flyx/NimYAML,event
-perl5-pm-pl,ingydotnet/yaml-pm,native
-perl5-pm-json,ingydotnet/yaml-pm,json
-perl5-syck-pl,toddr/YAML-Syck,native
-perl5-syck-json,toddr/YAML-Syck,json
-perl5-tiny-pl,Perl-Toolchain-Gang/YAML-Tiny,native
-perl5-tiny-json,Perl-Toolchain-Gang/YAML-Tiny,json
-perl5-xs-pl,ingydotnet/yaml-libyaml-pm,native
-perl5-xs-json,ingydotnet/yaml-libyaml-pm,json
-perl5-pegex-event,ingydotnet/yaml-pegex-pm,event
-perl5-pp-event,perlpunk/YAML-PP-p5,event
-perl5-pp-json,perlpunk/YAML-PP-p5,json
-perl5-pp-pl,perlpunk/YAML-PP-p5,native
-perl5-pp-yaml,perlpunk/YAML-PP-p5,yaml
-perl6-p6,leont/yamlish,native
-perl6-json,leont/yamlish,json
-pyyaml-event,yaml/pyyaml,event
-pyyaml-json,yaml/pyyaml,json
-pyyaml-py,yaml/pyyaml,native
-pyyaml-yaml,yaml/pyyaml,yaml
-ref-yeast,orenbenkiki/yamlreference,yeast
-ruamel-event,ruamel/yaml,event
-ruamel-json,ruamel/yaml,json
-ruamel-py,ruamel/yaml,native
-ruamel-yaml,ruamel/yaml,yaml
-ruby-json,-,json
+view,format,lang,id,name,version,homepage,format-name
+c-libfyaml.event,event,C,c-libfyaml,libfyaml,0.5.4,https://github.com/pantoniou/libfyaml,Event Stream
+c-libfyaml.json,json,C,c-libfyaml,libfyaml,0.5.4,https://github.com/pantoniou/libfyaml,JSON
+c-libfyaml.yaml,yaml,C,c-libfyaml,libfyaml,0.5.4,https://github.com/pantoniou/libfyaml,YAML
+c-libyaml.event,event,C,c-libyaml,libyaml,0.2.4,https://github.com/yaml/libyaml,Event Stream
+c-libyaml.yaml,yaml,C,c-libyaml,libyaml,0.2.4,https://github.com/yaml/libyaml,YAML
+cpp-yamlcpp.event,event,C++,cpp-yamlcpp,yaml-cpp,0.6.3,https://github.com/jbeder/yaml-cpp,Event Stream
+dotnet-yamldotnet.event,event,C#,dotnet-yamldotnet,YamlDotNet,8.0.0,https://github.com/aaubry/YamlDotNet,Event Stream
+dotnet-yamldotnet.json,json,C#,dotnet-yamldotnet,YamlDotNet,8.0.0,https://github.com/aaubry/YamlDotNet,JSON
+hs-hsyaml.event,event,Haskell,hs-hsyaml,HsYAML,0.2.1.0,https://github.com/haskell-hvr/HsYAML,Event Stream
+hs-hsyaml.json,json,Haskell,hs-hsyaml,HsYAML,0.2.1.0,https://github.com/haskell-hvr/HsYAML,JSON
+hs-reference.yeast,yeast,Haskell,hs-reference,YAMLReference,master,https://github.com/orenbenkiki/yamlreference,YEAST Events
+java-snakeyaml.event,event,Java,java-snakeyaml,SnakeYAML,1.26,https://bitbucket.org/asomov/snakeyaml,Event Stream
+java-snakeyaml.json,json,Java,java-snakeyaml,SnakeYAML,1.26,https://bitbucket.org/asomov/snakeyaml,JSON
+js-jsyaml.json,json,Javascript,js-jsyaml,js-yaml,3.13.1,https://github.com/nodeca/js-yaml,JSON
+js-yaml.event,event,Javascript,js-yaml,yaml,1.9.2,https://github.com/eemeli/yaml,Event Stream
+js-yaml.json,json,Javascript,js-yaml,yaml,1.9.2,https://github.com/eemeli/yaml,JSON
+js-yaml.yaml,yaml,Javascript,js-yaml,yaml,1.9.2,https://github.com/eemeli/yaml,YAML
+lua-lyaml.json,json,Lua,lua-lyaml,lyaml,6.2.5,https://github.com/gvvaughan/lyaml,JSON
+nim-nimyaml.event,event,Nim,nim-nimyaml,NimYAML,0.13.1,https://github.com/flyx/NimYAML,Event Stream
+perl-pp.event,event,Perl,perl-pp,YAML::PP,0.021,https://metacpan.org/release/YAML-PP,Event Stream
+perl-pp.json,json,Perl,perl-pp,YAML::PP,0.021,https://metacpan.org/release/YAML-PP,JSON
+perl-pp.perl,perl,Perl,perl-pp,YAML::PP,0.021,https://metacpan.org/release/YAML-PP,Perl Native
+perl-pp.yaml,yaml,Perl,perl-pp,YAML::PP,0.021,https://metacpan.org/release/YAML-PP,YAML
+perl-pplibyaml.event,event,Perl,perl-pplibyaml,YAML::PP::LibYAML,0.003,https://metacpan.org/release/YAML-PP-LibYAML,Event Stream
+perl-pplibyaml.json,json,Perl,perl-pplibyaml,YAML::PP::LibYAML,0.003,https://metacpan.org/release/YAML-PP-LibYAML,JSON
+perl-pplibyaml.perl,perl,Perl,perl-pplibyaml,YAML::PP::LibYAML,0.003,https://metacpan.org/release/YAML-PP-LibYAML,Perl Native
+perl-pplibyaml.yaml,yaml,Perl,perl-pplibyaml,YAML::PP::LibYAML,0.003,https://metacpan.org/release/YAML-PP-LibYAML,YAML
+perl-syck.json,json,Perl,perl-syck,YAML::Syck,1.32,https://metacpan.org/release/YAML-Syck,JSON
+perl-syck.perl,perl,Perl,perl-syck,YAML::Syck,1.32,https://metacpan.org/release/YAML-Syck,Perl Native
+perl-tiny.json,json,Perl,perl-tiny,YAML::Tiny,1.73,https://metacpan.org/release/YAML-Tiny,JSON
+perl-tiny.perl,perl,Perl,perl-tiny,YAML::Tiny,1.73,https://metacpan.org/release/YAML-Tiny,Perl Native
+perl-xs.json,json,Perl,perl-xs,YAML::XS (libyaml),0.81,https://metacpan.org/release/YAML-LibYAML,JSON
+perl-xs.perl,perl,Perl,perl-xs,YAML::XS (libyaml),0.81,https://metacpan.org/release/YAML-LibYAML,Perl Native
+perl-yaml.json,json,Perl,perl-yaml,YAML.pm,1.3,https://metacpan.org/release/YAML,JSON
+perl-yaml.perl,perl,Perl,perl-yaml,YAML.pm,1.3,https://metacpan.org/release/YAML,Perl Native
+py-pyyaml.event,event,Python,py-pyyaml,PyYAML,5.3.1,https://github.com/yaml/pyyaml,Event Stream
+py-pyyaml.json,json,Python,py-pyyaml,PyYAML,5.3.1,https://github.com/yaml/pyyaml,JSON
+py-pyyaml.py,py,Python,py-pyyaml,PyYAML,5.3.1,https://github.com/yaml/pyyaml,Python Native
+py-pyyaml.yaml,yaml,Python,py-pyyaml,PyYAML,5.3.1,https://github.com/yaml/pyyaml,YAML
+py-ruamel.event,event,Python,py-ruamel,ruamel.yaml,0.16.10,https://bitbucket.org/ruamel/yaml,Event Stream
+py-ruamel.json,json,Python,py-ruamel,ruamel.yaml,0.16.10,https://bitbucket.org/ruamel/yaml,JSON
+py-ruamel.py,py,Python,py-ruamel,ruamel.yaml,0.16.10,https://bitbucket.org/ruamel/yaml,Python Native
+py-ruamel.yaml,yaml,Python,py-ruamel,ruamel.yaml,0.16.10,https://bitbucket.org/ruamel/yaml,YAML
+raku-yamlish.json,json,Raku,raku-yamlish,YAMLish,0.0.5,https://github.com/Leont/yamlish,JSON
+raku-yamlish.raku,raku,Raku,raku-yamlish,YAMLish,0.0.5,https://github.com/Leont/yamlish,Raku Native
+ruby-psych.json,json,Ruby,ruby-psych,psych,3.1.0,https://github.com/ruby/psych,JSON

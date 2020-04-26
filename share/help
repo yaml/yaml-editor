@@ -23,4 +23,6 @@ Editor commands (press these keys in vim NORMAL mode):
 \s        Save TestML to $YAML_TEST_SUITE new test file
 \q        Close current pane
 \Q        Quit the yaml-editor
+\M        Enable mouse
+\m        Disable mouse (default)
 \h        View this help
