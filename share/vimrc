@@ -11,9 +11,10 @@ let g:netrw_list_hide= '.*\.swp$,^.vimrc$,^\.\./$,^\./$,^help$,^TEST.tml$'
 let g:netrw_banner=0
 
 " YAML Editor vim settings:
-set number
 set switchbuf=useopen
 set autoread exrc
+sb input.yaml
+set number
 
 " YAML Editor hotkeys:
 map \o :rightbelow split .<cr>
