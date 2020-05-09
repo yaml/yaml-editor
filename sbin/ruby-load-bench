@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'yaml'
+
+count = ARGV[0].to_i
+
+filenames = $stdin.readlines.map { |f| f.chomp }
+contents = filenames.map {
+    |f|
+    file = File.new(f, "r")
+    file.read
+}
+
+startTime = Time.now
+
+(1 .. count).each { |i|
+    contents.each { |yaml|
+#        puts "yaml: '#{yaml}'"
+        YAML.load_stream(yaml).each do |doc|
+#          puts JSON.dump doc
+        end
+    }
+}
+endTime = Time.now
+elapsed = (endTime - startTime) * 1000
+puts elapsed
