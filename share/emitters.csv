@@ -26,6 +26,7 @@ perl-pplibyaml.event,event,Perl,perl-pplibyaml,YAML::PP::LibYAML,0.003,https://m
 perl-pplibyaml.json,json,Perl,perl-pplibyaml,YAML::PP::LibYAML,0.003,https://metacpan.org/release/YAML-PP-LibYAML,JSON
 perl-pplibyaml.perl,perl,Perl,perl-pplibyaml,YAML::PP::LibYAML,0.003,https://metacpan.org/release/YAML-PP-LibYAML,Perl Native
 perl-pplibyaml.yaml,yaml,Perl,perl-pplibyaml,YAML::PP::LibYAML,0.003,https://metacpan.org/release/YAML-PP-LibYAML,YAML
+perl-refparser.event,yaml,Perl,perl-refparser,RefParser,0.0.1,https://github.com/yaml/yaml-grammar,YAML
 perl-syck.json,json,Perl,perl-syck,YAML::Syck,1.32,https://metacpan.org/release/YAML-Syck,JSON
 perl-syck.perl,perl,Perl,perl-syck,YAML::Syck,1.32,https://metacpan.org/release/YAML-Syck,Perl Native
 perl-tiny.json,json,Perl,perl-tiny,YAML::Tiny,1.73,https://metacpan.org/release/YAML-Tiny,JSON
