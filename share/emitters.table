@@ -27,22 +27,23 @@
 | 25 | perl-pplibyaml.json     | Perl YAML::PP::LibYAML  | JSON          |
 | 26 | perl-pplibyaml.perl     | Perl YAML::PP::LibYAML  | Perl Native   |
 | 27 | perl-pplibyaml.yaml     | Perl YAML::PP::LibYAML  | YAML          |
-| 28 | perl-syck.json          | Perl YAML::Syck         | JSON          |
-| 29 | perl-syck.perl          | Perl YAML::Syck         | Perl Native   |
-| 30 | perl-tiny.json          | Perl YAML::Tiny         | JSON          |
-| 31 | perl-tiny.perl          | Perl YAML::Tiny         | Perl Native   |
-| 32 | perl-xs.json            | Perl YAML::XS (libyaml) | JSON          |
-| 33 | perl-xs.perl            | Perl YAML::XS (libyaml) | Perl Native   |
-| 34 | perl-yaml.json          | Perl YAML.pm            | JSON          |
-| 35 | perl-yaml.perl          | Perl YAML.pm            | Perl Native   |
-| 36 | py-pyyaml.event         | Python PyYAML           | Event Stream  |
-| 37 | py-pyyaml.json          | Python PyYAML           | JSON          |
-| 38 | py-pyyaml.py            | Python PyYAML           | Python Native |
-| 39 | py-pyyaml.yaml          | Python PyYAML           | YAML          |
-| 40 | py-ruamel.event         | Python ruamel.yaml      | Event Stream  |
-| 41 | py-ruamel.json          | Python ruamel.yaml      | JSON          |
-| 42 | py-ruamel.py            | Python ruamel.yaml      | Python Native |
-| 43 | py-ruamel.yaml          | Python ruamel.yaml      | YAML          |
-| 44 | raku-yamlish.json       | Raku YAMLish            | JSON          |
-| 45 | raku-yamlish.raku       | Raku YAMLish            | Raku Native   |
-| 46 | ruby-psych.json         | Ruby psych              | JSON          |
+| 28 | perl-refparser.event    | Perl RefParser          | Event Stream  |
+| 29 | perl-syck.json          | Perl YAML::Syck         | JSON          |
+| 30 | perl-syck.perl          | Perl YAML::Syck         | Perl Native   |
+| 31 | perl-tiny.json          | Perl YAML::Tiny         | JSON          |
+| 32 | perl-tiny.perl          | Perl YAML::Tiny         | Perl Native   |
+| 33 | perl-xs.json            | Perl YAML::XS (libyaml) | JSON          |
+| 34 | perl-xs.perl            | Perl YAML::XS (libyaml) | Perl Native   |
+| 35 | perl-yaml.json          | Perl YAML.pm            | JSON          |
+| 36 | perl-yaml.perl          | Perl YAML.pm            | Perl Native   |
+| 37 | py-pyyaml.event         | Python PyYAML           | Event Stream  |
+| 38 | py-pyyaml.json          | Python PyYAML           | JSON          |
+| 39 | py-pyyaml.py            | Python PyYAML           | Python Native |
+| 40 | py-pyyaml.yaml          | Python PyYAML           | YAML          |
+| 41 | py-ruamel.event         | Python ruamel.yaml      | Event Stream  |
+| 42 | py-ruamel.json          | Python ruamel.yaml      | JSON          |
+| 43 | py-ruamel.py            | Python ruamel.yaml      | Python Native |
+| 44 | py-ruamel.yaml          | Python ruamel.yaml      | YAML          |
+| 45 | raku-yamlish.json       | Raku YAMLish            | JSON          |
+| 46 | raku-yamlish.raku       | Raku YAMLish            | Raku Native   |
+| 47 | ruby-psych.json         | Ruby psych              | JSON          |
