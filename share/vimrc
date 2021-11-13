@@ -64,10 +64,6 @@ function SaveTestml()
   wincmd L
 endfunction
 
-" A minimal YAML theme from the web:
-if exists("b:did_indent")
-  finish
-endif
 "runtime! indent/ruby.vim
 "unlet! b:did_indent
 let b:did_indent = 1
@@ -96,3 +92,8 @@ function! GetYamlIndent()
     return indent
   endif
 endfunction
+
+" A minimal YAML theme from the web:
+if exists("b:did_indent")
+  finish
+endif
