@@ -20,6 +20,7 @@ f,file=     Use a YAML file as starting input
 t,testml=   Use a \$YAML_TEST_SUITE case as YAML input
 c,compile   Compile yaml-editor before starting it
 local       Use local sources for dynamic languages
+shareddir=  Path to yaml-runtimes shared dir
  
 x,debug     Debug - Turn on Bash trace (set -x) output
 "
@@ -52,6 +53,8 @@ main() {
     list-all
   elif [[ ! -e /.dockerenv ]]; then
     docker-run "$@"
+  elif [[ $command == RUN && -e /shared ]]; then
+    "run-all-daemon"
   elif [[ $command == RUN ]]; then
     "run-all"
   elif [[ $command == TESTML ]]; then
@@ -102,10 +105,15 @@ foo: bar
     mount_suite="-v $YAML_TEST_SUITE/test:/suite"
   fi
 
+  extra_opts=()
+  if [[ -n $option_shareddir ]]; then
+    extra_opts+=(-v "$root/../yaml-runtimes/shared":/shared)
+  fi
   docker run --rm -it \
     --user "$UID:$(id -g)" \
     -v "$work":/yaml/edit \
     -v "$root":/yaml-editor \
+    ${extra_opts[@]} \
     $mount_suite \
     $local_source \
     $DOCKER_USER/yaml-editor \
@@ -180,6 +188,45 @@ get-yaml() {
       -e 's/^\\//mg;'
   )
   echo "$yaml" > $input_file
+}
+
+run-all-daemon() {
+  # Cleanup any leftover input/output files from previous runs
+  rm -f /shared/*.*
+  v=($(cat .views))
+  # Tell the daemons which views we want to have processed
+  for view in ${v[@]}; do
+    touch /shared/"$view.request"
+  done
+  # Creating the input file will trigger the daemom
+  cp input.yaml /shared/
+  echo "Processing..."
+  # Wait until all views are processed and no *.view files are left
+  for i in {1..40}; do
+    leftover=false
+    seen=false
+    ls /shared/*.request >/dev/null 2>&1 && leftover=true
+    ls /shared/*.view >/dev/null 2>&1 && seen=true
+#    echo "[$i] leftover=$leftover seen=$seen"
+    if ! $leftover && ! $seen; then
+        break
+    fi
+    if ! $seen && $leftover && [[ $i > 20 ]]; then
+        for i in /shared/*.request; do
+            na="$(basename "$i")"
+            echo "View not available" >"${na/.request}"
+        done
+        break
+    fi
+#    echo "...WAIT $i..."
+    sleep 0.1
+  done
+  # Get the results
+  for view in "${v[@]}"; do
+    [[ -e /shared/$view ]] && mv /shared/$view .
+  done
+  # Cleanup any input/output files
+  rm /shared/*.*
 }
 
 run-all() {
@@ -308,6 +355,11 @@ get-views() {
   cols=(- 1 2 3 2 3 3 3 3 3 4 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 6 6)
   col=${cols[$total]}
   n=0
+
+  for view in "${views[@]}"; do
+    echo "$view" >>.views
+  done
+
   views=()
   for view in "${views2[@]}"; do
     if [[ $n -ge $col ]]; then
