@@ -35,6 +35,8 @@ map \h :!(clear; less -FRX help)<cr>
 map \l :!(clear; yaml-editor -l <bar> less -FRX)<cr>
 map \M :set mouse=a<cr>
 map \m :set mouse=<cr>
+map \p :call PlayUrl()<cr>
+map \P :call PlayData()<cr>
 
 " Handy window commands:
 nnoremap <c-j> <c-w>j<c-w><Esc>
@@ -62,6 +64,25 @@ function SaveTestml()
   let file = system("yaml-editor SAVE")
   execute "rightbelow vsplit" file
   wincmd L
+endfunction
+
+function PlayUrl()
+  sb input.yaml
+  write
+  let b64 = get(systemlist("base64 input.yaml | sed ':a;N;$!ba;s/\\n//g'"), 0, "")
+  echom "https://play.yaml.io/main/parser?input=" . b64
+endfunction
+
+function PlayData()
+  let url = input('Enter YAML Playground URL: ')
+  if !empty(url)
+    sb input
+    normal! gg_dG
+    call setline(1, url)
+    write
+    let x = system("cat input.yaml | sed 's/^[^=]*=//' | base64 -d - | tee input.yaml")
+    edit!
+  endif
 endfunction
 
 "runtime! indent/ruby.vim

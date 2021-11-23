@@ -13,6 +13,8 @@ Editor commands (press these keys in vim NORMAL mode):
 \l        List all available views
 \o        Open a new output pane below
 \O        Open a new output pane to right
+\p        Show playground URL for current YAML input
+\P        Set current YAML input from playground URL
 \=        Make all panes equal size
 \8        Make current pane 80 wide
 \|        Make current pane max wide
