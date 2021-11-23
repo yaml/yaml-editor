@@ -104,7 +104,7 @@ foo: bar
 
   mount_suite=''
   if [[ -n $YAML_TEST_SUITE ]]; then
-    [[ -e $YAML_TEST_SUITE/test/229Q.tml ]] ||
+    [[ -e $YAML_TEST_SUITE/src/229Q.yaml ]] ||
       die "YAML_TEST_SUITE='$YAML_TEST_SUITE' seems to be invalid"
     mount_suite="-v $YAML_TEST_SUITE/test:/suite"
   fi
