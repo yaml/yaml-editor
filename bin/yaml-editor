@@ -45,13 +45,6 @@ fi
 
 main() {
   input_file=input.yaml
-  if [[ $(uname) == Darwin ]]; then
-    uid=$(/usr/bin/stat -f%u $0)
-    gid=$(/usr/bin/stat -f%g $0)
-  else
-    uid=$(stat -c%u $0)
-    gid=$(stat -c%g $0)
-  fi
 
   get-options "$@"
 
@@ -110,6 +103,7 @@ foo: bar
   fi
 
   docker run --rm -it \
+    --user "$UID:$(id -g)" \
     -v "$work":/yaml/edit \
     -v "$root":/yaml-editor \
     $mount_suite \
@@ -128,10 +122,8 @@ editor-start() {
   cp /yaml-editor/share/help help
 
   for view in "${views[@]}"; do
-    touch $view
+    [[ $view == / ]] || touch $view
   done
-
-  chown -R "$uid.$gid" .
 
   if [[ -e /local_source ]]; then
     set-local-sources
@@ -229,7 +221,6 @@ save-tml() {
 
   make-tml
   echo "$tml" > "$file"
-  chown "$uid.$gid" "$file"
   echo $file
 }
 
