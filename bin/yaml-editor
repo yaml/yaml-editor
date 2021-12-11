@@ -108,7 +108,7 @@ foo: bar
   extra_opts=()
   image=yaml-editor
   if [[ -n $option_shareddir ]]; then
-    extra_opts+=(-v "$root/../yaml-runtimes/shared":/shared)
+    extra_opts+=(-v "$option_shareddir":/shared)
     image=yaml-editor-small
   fi
   docker run --rm -it \
