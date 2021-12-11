@@ -106,8 +106,10 @@ foo: bar
   fi
 
   extra_opts=()
+  image=yaml-editor
   if [[ -n $option_shareddir ]]; then
     extra_opts+=(-v "$root/../yaml-runtimes/shared":/shared)
+    image=yaml-editor-small
   fi
   docker run --rm -it \
     --user "$UID:$(id -g)" \
@@ -116,7 +118,7 @@ foo: bar
     ${extra_opts[@]} \
     $mount_suite \
     $local_source \
-    $DOCKER_USER/yaml-editor \
+    $DOCKER_USER/$image \
     yaml-editor "$@"
 
   echo "Files saved in '$work'"

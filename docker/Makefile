@@ -4,7 +4,7 @@ DOCKER_USER ?= yamlio
 #------------------------------------------------------------------------------
 
 all:
-	docker build -t $(DOCKER_USER)/yaml-editor .
+	docker build -t $(DOCKER_USER)/yaml-editor-small .
 
 run:
 	yaml-editor '/-(pegex|pm|syck|tiny|xs)\.|nim/'
